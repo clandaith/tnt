@@ -1,0 +1,77 @@
+<th:block th:fragment="character" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<div class="form-group double">
+		<input type="hidden" th:field="${character.id}" />
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Character Name:</label>
+			<div class="col-sm-10 input-group">
+				<input type="text" class="form-control" th:field="${character.name}" />
+			</div>
+		</div>
+
+<!--
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Character Back Story:</label>
+			<div class="col-sm-10 input-group">
+				<input type="text" class="form-control" th:field="${character.backStory}" />
+			</div>
+		</div>
+-->
+
+		<div class="form-group">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Melee Weapons:</label>
+				<div class="col-sm-10">
+
+					<select th:field="${character.weaponsMelee}" class="selectpicker" th:multiple="true" data-width="75%" data-live-search="true"
+						data-actions-box="true" data-header="Select Melee Weapons">
+									
+						<option th:each="weaponMelee : ${weaponsMelee}" th:value="${weaponMelee.id}" th:text="${weaponMelee.name}" 
+							th:attr="data-subtext=${weaponMelee.xpCost} + ' XP ['+${weaponMelee.className}+']'" />
+										
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Ranged Weapons:</label>
+				<div class="col-sm-10">
+					<select th:field="${character.weaponsRanged}" class="selectpicker" th:multiple="true" data-width="75%" data-live-search="true"
+						data-actions-box="true" data-header="Select Ranged Weapons">
+						<option th:each="weaponRanged : ${weaponsRanged}" th:value="${weaponRanged.id}" th:text="${weaponRanged.name}" 
+							th:attr="data-subtext=${weaponRanged.xpCost} + ' XP ['+${weaponRanged.className}+']'" />
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Armours:</label>
+				<div class="col-sm-10">
+					<!--  data-max-options="1"  -->
+					<select th:field="${character.armours}" class="selectpicker" th:multiple="true" data-width="75%" data-live-search="true"
+						data-actions-box="true" data-header="Select Armours">
+						<option th:each="armour : ${armours}" th:value="${armour.id}" th:text="${armour.name}" 
+							th:attr="data-subtext=${armour.xpCost} + ' XP ['+${armour.className}+']'" />
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Traits:</label>
+				<div class="col-sm-10">
+					<select th:field="${character.traits}" class="selectpicker" th:multiple="true" data-width="75%" data-live-search="true" data-actions-box="true"
+						data-header="Select Traits">
+						<option th:each="trait : ${traits}" th:value="${trait.id}" th:text="${trait.name}"
+							th:attr="data-subtext=${trait.xpCost} + ' XP ['+${trait.classTypesStr}+']'" />
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<span class="col-sm-2 row-delete-button">
+				<button type="submit" class="btn tn-default" th:value="${character.id}" name="removeCharacter">
+					<i class="glyphicon glyphicon-trash icon-white"></i>
+				</button>
+			</span>
+		</div>
+	</div>
+</th:block>
