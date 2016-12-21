@@ -6,7 +6,7 @@ CREATE TABLE ranged_weapons (
 	max_range INTEGER NOT NULL ,
 	strength INTEGER NOT NULL ,
 	one_handed BOOLEAN NOT NULL ,
-	reliabiltiy INTEGER NOT NULL ,
+	reliability INTEGER NOT NULL ,
 	cost INTEGER NOT NULL ,
 	rarity_id  INTEGER NOT NULL,
 	catagory_id INTEGER NOT NULL 
