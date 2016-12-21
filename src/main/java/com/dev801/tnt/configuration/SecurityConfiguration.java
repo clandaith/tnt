@@ -20,27 +20,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.authorizeRequests()
-			.antMatchers("/", "/home", "/about801dev", "/character/", "/warband", "/roadmap", "/print").permitAll()
-			.antMatchers("/manage/**").access("hasRole('ADMIN')")
-			.anyRequest().authenticated()
-			.and()
-				.formLogin()
-					.loginPage("/login")
-						.usernameParameter("multipassName")
-						.passwordParameter("multipassIdent")
-					.permitAll()
-			.and()
-				.logout()
-					.permitAll();
+		httpSecurity.authorizeRequests().antMatchers("/", "/index", "/about801dev", "/warband", "/roadmap", "/print").permitAll()
+						.antMatchers("/manage/**").access("hasRole('ADMIN')").anyRequest().authenticated().and().formLogin()
+						.loginPage("/login").usernameParameter("multipassName").passwordParameter("multipassIdent").permitAll().and().csrf()
+						.and().logout().permitAll();
 	}
 
 	@Autowired
 	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().dataSource(dataSource)
-			.usersByUsernameQuery("select username, password, enabled from users where username = ?")
-			.authoritiesByUsernameQuery("select username, role from user_roles where username = ?")
-			.passwordEncoder(passwordEncoder());
+						.usersByUsernameQuery("select username, password, enabled from users where username = ?")
+						.authoritiesByUsernameQuery("select username, role from user_roles where username = ?")
+						.passwordEncoder(passwordEncoder());
 	}
 
 	@Bean
