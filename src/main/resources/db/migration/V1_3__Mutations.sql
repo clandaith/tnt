@@ -19,3 +19,6 @@ CREATE TABLE mutations (
 );
 ALTER TABLE mutations ADD CONSTRAINT FK_mutl1 FOREIGN KEY (mutation_type_id) REFERENCES mutation_types(id) ON DELETE CASCADE;
 
+create view mutations_view as
+select mutations.*, mutation_types.name as mutation_type_name from mutations join mutation_types on mutations.mutation_type_id = mutation_types.id
+

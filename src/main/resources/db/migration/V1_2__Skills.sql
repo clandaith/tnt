@@ -14,3 +14,7 @@ CREATE TABLE skills (
 );
 
 ALTER TABLE skills ADD CONSTRAINT FK_skills FOREIGN KEY (skill_type_id) REFERENCES skill_types(id) ON DELETE CASCADE;
+
+create view skills_view as
+select skills.*, skill_types.name as skill_type_name from skills join skill_types on skills.skill_type_id = skill_types.id
+

@@ -14,10 +14,12 @@ ALTER TABLE melee_weapons ADD CONSTRAINT FK_melee_weapons_rarity FOREIGN KEY (ra
 --+++
 
 create table melee_weapons_special_rules_link(
-	melee_weapons_id INTEGER NOT NULL ,
+	melee_weapon_id INTEGER NOT NULL ,
 	special_rule_id INTEGER NOT NULL 
 );
-ALTER TABLE melee_weapons_special_rules_link ADD CONSTRAINT FK_mw_srl1 FOREIGN KEY (melee_weapons_id ) REFERENCES melee_weapons(id) ON DELETE CASCADE;
+ALTER TABLE melee_weapons_special_rules_link ADD CONSTRAINT FK_mw_srl1 FOREIGN KEY (melee_weapon_id ) REFERENCES melee_weapons(id) ON DELETE CASCADE;
 ALTER TABLE melee_weapons_special_rules_link ADD CONSTRAINT FK_mw_srl2 FOREIGN KEY (special_rule_id) REFERENCES special_rules(id) ON DELETE CASCADE;
 
 
+create view melee_weapons_view as
+select melee_weapons.*, rarity_levels.name as rarity_level_name from melee_weapons join rarity_levels on melee_weapons.rarity_id = rarity_levels.id

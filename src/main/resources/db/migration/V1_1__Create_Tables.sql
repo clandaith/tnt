@@ -1,4 +1,4 @@
-create SEQUENCE  hibernate_sequence;
+--create SEQUENCE  hibernate_sequence;
 
 --+++++++++++++++++++++
 CREATE TABLE special_rules(
