@@ -79,8 +79,12 @@ public class TntCharacter {
 	@JoinTable(name = "warband_character_grenade_link", joinColumns = @JoinColumn(name = "warband_character_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "grenade_id", referencedColumnName = "id"))
 	private Set<Grenade> grenades;
 
-	public TntCharacter(Integer id) {
+	public TntCharacter() {
+	}
+
+	public TntCharacter(Integer id, String name) {
 		this.id = id;
+		this.name = name;
 	}
 
 	public Integer getId() {
@@ -265,5 +269,10 @@ public class TntCharacter {
 
 	public void setGrenades(Set<Grenade> grenades) {
 		this.grenades = grenades;
+	}
+
+	@Override
+	public String toString() {
+		return getId() + " :: " + getName();
 	}
 }

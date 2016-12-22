@@ -14,6 +14,11 @@
 
 	<!-- +++++++++++++++++++++++++++++++++++++++++++++++++ -->
 	<script src="../static/js/jquery-2.2.4.min.js" th:src="@{/js/jquery-2.2.4.min.js}"></script>
+	
+	
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
 	<script src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
 	<script src="../static/js/bootstrap-tooltip.js" th:src="@{js/bootstrap-tooltip.js}"></script>
 	<script src="../static/js/bootstrap-select.js" th:src="@{js/bootstrap-select.js}"></script>
@@ -31,6 +36,12 @@
 	  ga('send', 'pageview');
 	
 	</script>
+	
+  <script>
+  $( function() {
+    $( "#tabs" ).tabs();
+  } );
+  </script>
 </head>
 
 <body>

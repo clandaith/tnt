@@ -35,8 +35,96 @@
 				
 				<!-- Character Section -->	
 
-				<div class="form-group double character" th:each="tntCharacter, rowStat : *{tntCharacters}">
-				
+	  <ul class="tab">
+	    <li th:each="tntCharacter, rowStat : *{tntCharacters}">
+	    	<a class="tablinks" th:href="'javascript:void(0)'" 
+	    		th:onclick="'openWarbandCharacter(event, \'tab-'+ *{tntCharacters[__${rowStat.index}__].id} +'\')'" 
+	    		th:text="*{tntCharacters[__${rowStat.index}__].name}" ></a>
+	    </li>
+	  </ul>
+  
+				<div class="form-group character tabcontent" th:each="tntCharacter, rowStat : *{tntCharacters}" 
+					th:id="'tab-' + *{tntCharacters[__${rowStat.index}__].id}">
+					<input type="hidden" th:field="*{tntCharacters[__${rowStat.index}__].id}" />
+			
+					<div class="form-group character-name">
+						<label class="col-sm-2 control-label">Character Name:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{tntCharacters[__${rowStat.index}__].Name}" />
+						</div>
+					</div>				
+		
+			
+					<div class="form-group character-name">
+						<label class="col-sm-2 control-label">Title:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{tntCharacters[__${rowStat.index}__].title}" />
+						</div>
+					</div>
+			
+					<div class="form-group character-name">
+						<label class="col-sm-2 control-label">Unit Type:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{tntCharacters[__${rowStat.index}__].unitTypeId}" />
+						</div>
+					</div>
+			
+					<div class="form-group character-name">
+						<label class="col-sm-2 control-label">Defense:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{tntCharacters[__${rowStat.index}__].defense}" />
+						</div>
+					</div>
+			
+					<div class="form-group character-name">
+						<label class="col-sm-2 control-label">Wounds:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{tntCharacters[__${rowStat.index}__].wounds}" />
+						</div>
+					</div>
+			
+					<div class="form-group character-name">
+						<label class="col-sm-2 control-label">Move:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{tntCharacters[__${rowStat.index}__].move}" />
+						</div>
+					</div>
+			
+					<div class="form-group character-name">
+						<label class="col-sm-2 control-label">Melee:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{tntCharacters[__${rowStat.index}__].melee}" />
+						</div>
+					</div>
+			
+					<div class="form-group character-name">
+						<label class="col-sm-2 control-label">Ranged:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{tntCharacters[__${rowStat.index}__].ranged}" />
+						</div>
+					</div>
+			
+					<div class="form-group character-name">
+						<label class="col-sm-2 control-label">Strength:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{tntCharacters[__${rowStat.index}__].strength}" />
+						</div>
+					</div>
+			
+					<div class="form-group character-name">
+						<label class="col-sm-2 control-label">Mettle:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{tntCharacters[__${rowStat.index}__].mettle}" />
+						</div>
+					</div>
+			
+					<div class="form-group character-name">
+						<label class="col-sm-2 control-label">Base Cost:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{tntCharacters[__${rowStat.index}__].baseCost}" />
+						</div>
+					</div>
+		
 					<!-- +++++++++++++++++++++++++++ -->
 				
 					<div class="form-group character-trait">
@@ -149,10 +237,9 @@
 								</select>
 						</div>
 					</div>
-				
-				
+		
 				</div>
-				
+		
 				<!-- End Character Section -->
 				
 				<!-- Print warband -->
