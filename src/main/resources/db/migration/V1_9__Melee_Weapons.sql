@@ -7,6 +7,7 @@ CREATE TABLE melee_weapons (
 	strength INTEGER NOT NULL ,
 	one_handed BOOLEAN NOT NULL ,
 	cost INTEGER NOT NULL ,
+	reliability INTEGER NOT NULL default 0,
 	rarity_id  INTEGER NOT NULL 
 );
 ALTER TABLE melee_weapons ADD CONSTRAINT FK_melee_weapons_rarity FOREIGN KEY (rarity_id) REFERENCES rarity_levels(id) ON DELETE CASCADE;

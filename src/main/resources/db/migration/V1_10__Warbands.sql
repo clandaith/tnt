@@ -17,7 +17,7 @@ insert into unit_type (name) values ('Robot');
 CREATE TABLE warband (
 	id SERIAL  not null primary key,
 	warband_name VARCHAR(64) NOT NULL ,
-	background VARCHAR(512) default ''
+	background VARCHAR(4096) default ''
 );
 
 
@@ -29,7 +29,7 @@ CREATE TABLE warband_character (
 	warband_id INTEGER NOT NULL ,
 	title VARCHAR(32) NOT NULL ,
 	name  VARCHAR(32) NOT NULL ,
-	background VARCHAR(512) default '',
+	background VARCHAR(4096) default '',
 	unit_type_id INTEGER NOT NULL ,
 	defense INTEGER NOT NULL ,
 	wounds INTEGER NOT NULL ,

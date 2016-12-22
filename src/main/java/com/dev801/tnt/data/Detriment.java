@@ -18,8 +18,6 @@ public class Detriment {
 
 	private String description;
 
-	private Integer cost;
-
 	@Column(name = "detriment_type_id")
 	private Integer detrimentTypeId;
 
@@ -48,14 +46,6 @@ public class Detriment {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public Integer getCost() {
-		return cost;
-	}
-
-	public void setCost(Integer cost) {
-		this.cost = cost;
 	}
 
 	public Integer getDetrimentTypeId() {

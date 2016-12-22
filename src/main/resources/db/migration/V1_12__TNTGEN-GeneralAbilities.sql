@@ -1,0 +1,23 @@
+insert into general_abilities (name, description) values ('Soft-bellied', 'This model has lived its entire life under the protection of the settlements or has poor survival skills. The model receives a -2 to all Survival tests.');
+
+ insert into general_abilities (name, description) values ('Coward', 'This model is craven and will forsake friends and allies if ever put into real danger. When making any Morale or Grazed test, this model receives a -2 penalty.');
+
+ insert into general_abilities (name, description) values ('Dumb', 'This model is not particularly bright. This model receives a -2 penalty when taking any Intelligence test.');
+
+ insert into general_abilities (name, description) values ('Frenzied', 'This model is deranged and is not really capable of controlling its bloodlust. At the beginning of its activation, this model must take an Intelligence test (MET/TN10). This test does not cost AP and success means it may activate as normal; failure indicates the model has lost control. When this occurs, the model may not take any other actions other than to charge or move towards the closest enemy model, or make a melee attack if in base contact with an enemy. Additionally, while frenzied the model gains the Brave skill. On subsequent activations, the model may test to restrain its anger by taking another Intelligence test (MET/TN 10) to return to normal. This test does not require AP.');
+
+ insert into general_abilities (name, description) values ('Hatred', 'The model has a burning anger towards a particular person or group. When this model fight against an opposing warband containing models the model "hates" he gains the Frenzied general ability for the duration of game.');
+
+ insert into general_abilities (name, description) values ('Huge', 'This model is extremely large, standing at least 12 tall. The model gains an additional wound and receives the combat bonus for being Large even against other Large opponents. Otherwise this model follows all other rules associated with Large models. Huge models should be placed on a larger sized base than Large models.');
+
+ insert into general_abilities (name, description) values ('Integral', 'This robot has a melee or ranged weapon permanently attached to one of its arms. The weapon may not be disarmed or lost by the model unless they are killed. Further, the model is allowed to have the integral weapon be a two-handed weapon, which allows them to use both the two-handed weapon and a single- handed weapon at the same time; they may not be armed with two two-handed weapons simultaneously. In between games the model is free to change or remove the integral weapon. A robot may only have two integral weapons. Note that having an integral weapon inhibits the robots ability to function in its environment, so players should agree that if the robot attempts such an action, such as climbing, they should receive a penalty of some type. This is not delineated here due to the possible number of exceptions, just be gentlemanly or lady-like about it. Note: to differentiate its special status, this model should be placed on a larger than normal base.');
+
+ insert into general_abilities (name, description) values ('Large', 'This model is bigger than the average-sized human, standing 8 feet tall. This model receives a +1 bonus to Melee when in combat with models without the Large special rule, an additional wound, and may take a Strength test (STR/TN 10) to resist any ability that will involuntarily move or knock the model prone. Also, smaller models do not block line of sight to this model.'); 
+
+ insert into general_abilities (name, description) values ('Up-Armed', 'Within their warband this model is assigned to use and maintain any heavy weapons. This model may purchase any support weapon.');
+
+ insert into general_abilities (name, description) values ('Medic', 'This model is medically trained or is a natural healer. When in base contact, the model may try to heal any model of its warband that has been taken out-of-action. By spending 1 AP the Medic may attempt an Intelligence test (MET/TN 12). Success means the model is brought back into play with one wound. Additionally, after the battle, assuming this model does not go out-of-action, one model in the warband may be nominated to receive a +1 bonus when rolling on the Survival Table. Does not work on models with the Robot type.');
+
+ insert into general_abilities (name, description) values ('Ragtag', 'The model is poorly armed and equipped. It may never have more than 15 Barter Scrip worth of equipment, including weaponry and armor.');
+
+ insert into general_abilities (name, description) values ('Ungainly', 'This model is not so quick on its feet. It receives a -2 to all Agility tests.');

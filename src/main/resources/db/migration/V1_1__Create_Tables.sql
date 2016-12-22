@@ -1,10 +1,10 @@
---create SEQUENCE  hibernate_sequence;
+create SEQUENCE  hibernate_sequence;
 
 --+++++++++++++++++++++
 CREATE TABLE special_rules(
 	id SERIAL  not null primary key,
 	name VARCHAR(32) unique NOT NULL ,
-	description  VARCHAR(1024) unique NOT NULL 
+	description  VARCHAR(4096) unique NOT NULL 
 );
 --insert into special_rule (name, description) values ('', '');
 
@@ -14,7 +14,7 @@ CREATE TABLE special_rules(
 CREATE TABLE general_abilities (
 	id SERIAL  not null primary key,
 	name VARCHAR(32) unique NOT NULL ,
-	description VARCHAR(32) unique NOT NULL 
+	description VARCHAR(4096) unique NOT NULL 
 );
 --insert into general_abilities (name, description) values ('', '');
 

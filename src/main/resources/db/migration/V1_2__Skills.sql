@@ -9,7 +9,7 @@ CREATE TABLE skill_types (
 CREATE TABLE skills (
 	id SERIAL  not null primary key,
 	name VARCHAR(32) unique NOT NULL ,
-	description VARCHAR(32) unique NOT NULL  ,
+	description VARCHAR(4096) unique NOT NULL  ,
 	skill_type_id  INTEGER NOT NULL
 );
 

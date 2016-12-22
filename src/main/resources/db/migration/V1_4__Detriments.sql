@@ -9,8 +9,7 @@ CREATE TABLE detriment_types(
 CREATE TABLE detriments(
 	id SERIAL  not null primary key,
 	name VARCHAR(32) unique NOT NULL ,
-	description VARCHAR(32) unique NOT NULL ,
-	cost INTEGER not null,
+	description VARCHAR(4096) unique NOT NULL ,
 	detriment_type_id INTEGER not null
 );
 ALTER TABLE detriments ADD CONSTRAINT FK_detriments FOREIGN KEY (detriment_type_id) REFERENCES detriment_types(id) ON DELETE CASCADE;

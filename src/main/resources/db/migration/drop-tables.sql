@@ -18,7 +18,6 @@ drop table warband_character_mutation_link;
 drop table warband_character_ranged_weapon_link;
 drop table warband_character_skills_link;
 drop table warband_character_general_abilities_link;
-drop table warband_character_general_abilities_link;
 
 drop table warband_character;
 drop table warband;
