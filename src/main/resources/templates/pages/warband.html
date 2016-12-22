@@ -16,197 +16,141 @@
 		</div>
 		
 		<div>
-			<form class="form-horizontal" th:object="${warband}" th:action="@{/}" method="post" id="warbandForm">
+			<form class="form-horizontal" th:object="${warband}" th:action="@{/warband}" method="post" id="warbandForm">
 				
-
-				<div class="form-group warband-theme">
-					<label class="col-sm-2 control-label">Theme:</label>
-					<div class="col-sm-10">
-						<select th:field="*{themeId}" th:id="themeSelector" class="selectpicker"
-						 	data-max-options="1"  th:multiple="true" data-live-search="true" data-header="Select A Theme">
-							<option th:each="theme : ${themes}" th:value="${theme.id}" th:text="${theme.name}"/>
-						</select>
-					</div>
-				</div>
-
-				<div th:each="theme : ${themes}" th:class="theme-desc" th:id="'theme-desc-'+${theme.id}" th:text="${theme.notes}"></div>
-
-				<div class="form-group warband-tactical">
-					<label class="col-sm-2 control-label">Tactical Discipline:</label>
-					<div class="col-sm-10">
-						<select th:field="*{tacticleDisciplineId}" th:id="tacDisSelector" class="selectpicker" 
-							data-live-search="true" data-max-options="1"  th:multiple="true" data-header="Select A Tacticle Discipline">
-							<option th:each="tacticleDiscipline : ${tacticleDisciplines}" th:value="${tacticleDiscipline.id}" th:text="${tacticleDiscipline.name}" />
-						</select>
-					</div>
-				</div>
-
 				<div class="form-group warband-name">
 					<label class="col-sm-2 control-label">Warband Name:</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" th:field="*{name}" placeholder="Enter a name" />
+						<input type="text" class="form-control" th:field="*{warbandName}" placeholder="Enter a Warband Name" />
 					</div>
 				</div>
-
-				<div class="form-group warband-xp">
-					<label class="col-sm-2 control-label">Warband XP Cost:</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" th:id="total-value-box" th:value="*{warbandXpCost}" th:disabled="disabled"/>
-					</div>
-				</div>
-
-				<!--
 
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Back Story:</label>
+					<label class="col-sm-2 control-label">Background:</label>
 					<div class="col-sm-10">
-						<textarea class="form-control" rows="4" cols="80" th:field="*{backStory}" placeholder="Enter a back story"></textarea>
+						<textarea class="form-control" rows="4" cols="80" th:field="*{background}" placeholder="Enter a back story"></textarea>
 					</div>
 				</div>
+				
+				
+				<!-- Character Section -->	
 
--->
-
-				<!-- Character Section -->
-
-				<div id="characterDiv"></div>		
-
-				<div class="form-group double character" th:each="character, rowStat : *{characters}">
-					<input type="hidden" th:field="*{characters[__${rowStat.index}__].id}" />
-
-					<input type="hidden" th:id="'meleeTotal-' + *{characters[__${rowStat.index}__].id}" th:value="*{characters[__${rowStat.index}__].meleeWeaponsTotal}" />
-					<input type="hidden" th:id="'rangedTotal-' + *{characters[__${rowStat.index}__].id}" th:value="*{characters[__${rowStat.index}__].rangedWeaponsTotal}" />
-					<input type="hidden" th:id="'armourTotal-' + *{characters[__${rowStat.index}__].id}" th:value="*{characters[__${rowStat.index}__].armourTotal}" />
-					<input type="hidden" th:id="'traitTotal-' + *{characters[__${rowStat.index}__].id}" th:value="*{characters[__${rowStat.index}__].traitsTotal}" />
-					<input type="hidden" th:id="'equipmentTotal-' + *{characters[__${rowStat.index}__].id}" th:value="*{characters[__${rowStat.index}__].equipmentTotal}" />
-								
-					<div class="form-group character-name">
-						<label class="col-sm-2 control-label">Character Name:</label>
+				<div class="form-group double character" th:each="tntCharacter, rowStat : *{tntCharacters}">
+				
+					<!-- +++++++++++++++++++++++++++ -->
+				
+					<div class="form-group character-trait">
+						<label class="col-sm-2 control-label">Armor:</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" th:field="*{characters[__${rowStat.index}__].name}" />
-						</div>
-					</div>
 
-					<div class="form-group character-xp">
-						<label class="col-sm-2 control-label">Character XP Cost:</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" th:id="'charTotal-' + *{characters[__${rowStat.index}__].id}" 
-							th:value="*{characters[__${rowStat.index}__].meleeWeaponsTotal 
-								+ characters[__${rowStat.index}__].rangedWeaponsTotal
-								+ characters[__${rowStat.index}__].armourTotal
-								+ characters[__${rowStat.index}__].traitsTotal
-								+ characters[__${rowStat.index}__].equipmentTotal }" th:disabled="disabled"/>
-						</div>
-					</div>
-
-					<!--
-
-					<div class="form-group">
-						<label class="col-sm-2 control-label">Character Back Story:</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" th:field="*{characters[__${rowStat.index}__].backStory}" />
-						</div>
-					</div>
--->
-
-
-					<div class="form-group character-melee">
-						<label class="col-sm-2 control-label">Melee Weapons:</label>
-						<div class="col-sm-10">
-							<select th:field="*{characters[__${rowStat.index}__].weaponsMelee}" class="meleeWeapon selectpicker" th:multiple="true" data-width="100%"
-								data-live-search="true" data-actions-box="true" data-header="Select Melee Weapons" th:id="'meleeWeapon-' + *{characters[__${rowStat.index}__].id}">
-									
-									<option th:each="weaponMelee : ${weaponsMelee}" th:value="${weaponMelee.id}" 
-										th:text="${weaponMelee.name}" th:attr="data-subtext=${weaponMelee.xpCost} + ' XP ['+${weaponMelee.className}+']'" />
-										
-								</select>
-						</div>
-					</div>
-
-					<div class="form-group character-ranged">
-						<label class="col-sm-2 control-label">Ranged Weapons:</label>
-						<div class="col-sm-10">
-							<select th:field="*{characters[__${rowStat.index}__].weaponsRanged}" class="rangedWeapon selectpicker" th:multiple="true"
-								data-width="100%" data-live-search="true" data-actions-box="true" data-header="Select Ranged Weapons" th:id="'rangedWeapon-' + *{characters[__${rowStat.index}__].id}">
+							<select th:field="*{tntCharacters[__${rowStat.index}__].armors}" class="armor selectpicker" th:multiple="true" data-width="100%"
+								data-live-search="true" data-actions-box="true" data-header="Select armor" th:id="'asdf-' + *{tntCharacters[__${rowStat.index}__].id}">
 							
-									<option th:each="weaponRanged : ${weaponsRanged}" th:value="${weaponRanged.id}" th:text="${weaponRanged.name}" 
-										th:attr="data-subtext=${weaponRanged.xpCost} + ' XP ['+${weaponRanged.className}+']'" />
+									<option th:each="armor : ${armorList}" th:value="${armor.id}" th:text="${armor.type}" 
+										th:attr="data-subtext=${armor.costByWound1} + ' Cost'"/>
 								</select>
 						</div>
 					</div>
-
-					<div class="form-group character-armour">
-						<label class="col-sm-2 control-label">Armours:</label>
+					
+					<!-- +++++++++++++++++++++++++++ -->
+				
+					<div class="form-group character-trait">
+						<label class="col-sm-2 control-label">Detriments:</label>
 						<div class="col-sm-10">
-							<select th:field="*{characters[__${rowStat.index}__].armours}" class="armour selectpicker" th:multiple="true" data-width="100%"
-								data-live-search="true" data-max-options="1" data-actions-box="true" data-header="Select Armours" th:id="'armour-' + *{characters[__${rowStat.index}__].id}">
-									
-									<option th:each="armour :${armours}" th:value="${armour.id}" th:text="${armour.name}" 
-										th:attr="data-subtext=${armour.xpCost} + ' XP ['+${armour.className}+']'" />
+
+							<select th:field="*{tntCharacters[__${rowStat.index}__].detriments}" class="detriments selectpicker" th:multiple="true" data-width="100%"
+								data-live-search="true" data-actions-box="true" data-header="Select detriment" th:id="'trait-' + *{tntCharacters[__${rowStat.index}__].id}">
+							
+									<option th:each="detriment : ${detrimentsList}" th:value="${detriment.id}" th:text="${detriment.name}" />
 								</select>
 						</div>
 					</div>
-
-					<div class="form-group character-equipment">
+				
+					<div class="form-group character-trait">
 						<label class="col-sm-2 control-label">Equipment:</label>
 						<div class="col-sm-10">
-							<select th:field="*{characters[__${rowStat.index}__].equipment}" class="equipment selectpicker" th:multiple="true" data-width="100%"
-								data-live-search="true" data-actions-box="true" data-header="Select Equipment" th:id="'equipment-' + *{characters[__${rowStat.index}__].id}">
+
+							<select th:field="*{tntCharacters[__${rowStat.index}__].equipment}" class="equipments selectpicker" th:multiple="true" data-width="100%"
+								data-live-search="true" data-actions-box="true" data-header="Select equipment" th:id="'trait-' + *{tntCharacters[__${rowStat.index}__].id}">
 							
-									<option th:each="equipment : ${equipments}" th:value="${equipment.id}" th:text="${equipment.name}"
-										th:attr="data-subtext=${equipment.xpCost} + ' XP ['+${equipment.classTypesStr}+']'" />
+									<option th:each="equipment : ${equipmentList}" th:value="${equipment.id}" th:text="${equipment.item}" />
 								</select>
 						</div>
 					</div>
-					
-					<!-- +++++++++++++++++++++++++++ -->
-					
+				
 					<div class="form-group character-trait">
-						<label class="col-sm-2 control-label">Traits:</label>
+						<label class="col-sm-2 control-label">General Abilities:</label>
 						<div class="col-sm-10">
 
-							<select th:field="*{characters[__${rowStat.index}__].traits}" class="trait selectpicker" th:multiple="true" data-width="100%"
-								data-live-search="true" data-actions-box="true" data-header="Select Traits" th:id="'trait-' + *{characters[__${rowStat.index}__].id}">
+							<select th:field="*{tntCharacters[__${rowStat.index}__].generalAbilities}" class="generalAbilities selectpicker" th:multiple="true" data-width="100%"
+								data-live-search="true" data-actions-box="true" data-header="Select general abilities" th:id="'trait-' + *{tntCharacters[__${rowStat.index}__].id}">
 							
-									<option th:each="trait : ${traits}" th:value="${trait.id}" th:text="${trait.name}"
-										th:attr="data-subtext=${trait.xpCost} + ' XP ['+${trait.classTypesStr}+']'" />
+									<option th:each="generalAbility : ${generalAbilitiesList}" th:value="${generalAbility.id}" th:text="${generalAbility.name}" />
 								</select>
 						</div>
 					</div>
-					
-					<!-- +++++++++++++++++++++++++++ -->
-					
-					
-					
+				
 					<div class="form-group character-trait">
-						<label class="col-sm-2 control-label">Starting Traits:</label>
+						<label class="col-sm-2 control-label">Melee Weapons:</label>
 						<div class="col-sm-10">
-							<select th:field="*{characters[__${rowStat.index}__].startingTraits}" class="trait selectpicker" th:multiple="true" data-width="100%"
-								data-live-search="true" data-actions-box="true" data-header="Select Traits" th:id="'trait-' + *{characters[__${rowStat.index}__].id}">
+
+							<select th:field="*{tntCharacters[__${rowStat.index}__].meleeWeapons}" class="meleeWeapons selectpicker" th:multiple="true" data-width="100%"
+								data-live-search="true" data-actions-box="true" data-header="Select melee weapons" th:id="'trait-' + *{tntCharacters[__${rowStat.index}__].id}">
 							
-								<optgroup th:each="startingTrait : ${startingTraitsList}" 
-									th:label="${startingTrait.traitName + ' [' + startingTrait.classTypesStr + ']'}">
-									
-									<option th:each="levelCount : ${#numbers.sequence(1, __${startingTrait.maxLevel}__)} " 
-										th:value="${startingTrait.traitId}" 
-										th:text="${startingTrait.traitName + (__${startingTrait.maxLevel}__ > 1 ? ' Level ' + levelCount : '') + ' [' + (startingTrait.xpCost * levelCount) + ' XP]'}"
-										th:attr="xp-cost=${startingTrait.xpCost * levelCount}"/>
-								</optgroup>
-							</select>
+									<option th:each="meleeWeapon : ${meleeWeaponsList}" th:value="${meleeWeapon.id}" th:text="${meleeWeapon.type}" />
+								</select>
 						</div>
-					</div>					
-					
-					
-					<!-- +++++++++++++++++++++++++++ -->
-					
-					<div class="form-group row-delete-button">
-						<span class="col-sm-2">
-							<button class="btn tn-default btn-danger deleteCharacter" th:id="*{'submit-' + characters[__${rowStat.index}__].id}" 
-								th:value="*{characters[__${rowStat.index}__].id}" name="removeCharacter">
-								<i class="glyphicon glyphicon-trash icon-white"></i> Remove Character
-							</button>
-						</span>
 					</div>
-														
+				
+					<div class="form-group character-trait">
+						<label class="col-sm-2 control-label">Ranged Weapons:</label>
+						<div class="col-sm-10">
+
+							<select th:field="*{tntCharacters[__${rowStat.index}__].rangedWeapons}" class="rangedWeapons selectpicker" th:multiple="true" data-width="100%"
+								data-live-search="true" data-actions-box="true" data-header="Select ranged weapons" th:id="'trait-' + *{tntCharacters[__${rowStat.index}__].id}">
+							
+									<option th:each="rangedWeapon : ${rangedWeaponsList}" th:value="${rangedWeapon.id}" th:text="${rangedWeapon.type}" />
+								</select>
+						</div>
+					</div>
+				
+					<div class="form-group character-trait">
+						<label class="col-sm-2 control-label">Mutations:</label>
+						<div class="col-sm-10">
+
+							<select th:field="*{tntCharacters[__${rowStat.index}__].mutations}" class="mutations selectpicker" th:multiple="true" data-width="100%"
+								data-live-search="true" data-actions-box="true" data-header="Select mutations" th:id="'trait-' + *{tntCharacters[__${rowStat.index}__].id}">
+							
+									<option th:each="mutation : ${mutationsList}" th:value="${mutation.id}" th:text="${mutation.name}" />
+								</select>
+						</div>
+					</div>
+				
+					<div class="form-group character-trait">
+						<label class="col-sm-2 control-label">Skills:</label>
+						<div class="col-sm-10">
+
+							<select th:field="*{tntCharacters[__${rowStat.index}__].skills}" class="skills selectpicker" th:multiple="true" data-width="100%"
+								data-live-search="true" data-actions-box="true" data-header="Select skills" th:id="'trait-' + *{tntCharacters[__${rowStat.index}__].id}">
+							
+									<option th:each="skill : ${skillsList}" th:value="${skill.id}" th:text="${skill.name}" />
+								</select>
+						</div>
+					</div>
+				
+					<div class="form-group character-trait">
+						<label class="col-sm-2 control-label">Grenades:</label>
+						<div class="col-sm-10">
+
+							<select th:field="*{tntCharacters[__${rowStat.index}__].grenades}" class="grenades selectpicker" th:multiple="true" data-width="100%"
+								data-live-search="true" data-actions-box="true" data-header="Select grenades" th:id="'trait-' + *{tntCharacters[__${rowStat.index}__].id}">
+							
+									<option th:each="grenade : ${grenadesList}" th:value="${grenade.id}" th:text="${grenade.type}" />
+								</select>
+						</div>
+					</div>
+				
+				
 				</div>
 				
 				<!-- End Character Section -->
@@ -232,30 +176,6 @@
 		</div>
 		
 	</div>
-
-
-
-<!-- 
-This is all the information about this warband type.  If you're wanting to make your own warband builder site, copy the JSON 
-below for the values.
-
-I figured I can help out to keep you from having to type all the stuff.  ;)  - Troy 
-
- -->
-	<script th:inline="javascript">
-		var rangedWeapons = /*[[ ${rangedWeaponsJSON} ]]*/ [];
-		
-		var meleeWeapons = /*[[ ${meleeWeaponsJSON} ]]*/ [];
-		
-		var armours = /*[[ ${armoursJSON} ]]*/ [];
-		
-		var traits = /*[[ ${traitsJSON} ]]*/ [];
-		
-		var equipment = /*[[ ${equipmentJSON}]]*/ [];	
-
-		var characterIds = /*[[ ${characterIds}]]*/ [];	
-	</script>
-
 
 	<!--/*/ <th:block th:include="fragments/bottom-menu :: footer"></th:block> /*/-->
 

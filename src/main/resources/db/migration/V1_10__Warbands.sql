@@ -147,3 +147,19 @@ ALTER TABLE warband_character_general_abilities_link ADD CONSTRAINT FK_wcdel1 FO
 ALTER TABLE warband_character_general_abilities_link ADD CONSTRAINT FK_wcdel2 FOREIGN KEY (general_ability_id) REFERENCES general_abilities(id) ON DELETE CASCADE;
 
 
+
+
+--+++
+--+++
+--+++
+--+++
+create table warband_character_grenade_link
+(
+	warband_character_id integer NOT NULL ,
+	grenade_id integer NOT NULL, 
+	CONSTRAINT PK_warband_character_grenade_link UNIQUE (warband_character_id, grenade_id)
+);
+ALTER TABLE warband_character_grenade_link ADD CONSTRAINT FK_wcdel1 FOREIGN KEY (warband_character_id) REFERENCES warband_character(id) ON DELETE CASCADE;
+ALTER TABLE warband_character_grenade_link ADD CONSTRAINT FK_wcdel2 FOREIGN KEY (grenade_id) REFERENCES grenades(id) ON DELETE CASCADE;
+
+

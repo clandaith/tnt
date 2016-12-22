@@ -75,6 +75,14 @@ public class TntCharacter {
 	@JoinTable(name = "warband_character_general_abilities_link", joinColumns = @JoinColumn(name = "warband_character_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "general_ability_id", referencedColumnName = "id"))
 	private Set<GeneralAbility> generalAbilities;
 
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "warband_character_grenade_link", joinColumns = @JoinColumn(name = "warband_character_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "grenade_id", referencedColumnName = "id"))
+	private Set<Grenade> grenades;
+
+	public TntCharacter(Integer id) {
+		this.id = id;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -241,5 +249,21 @@ public class TntCharacter {
 
 	public void setMutations(Set<Mutation> mutations) {
 		this.mutations = mutations;
+	}
+
+	public Set<GeneralAbility> getGeneralAbilities() {
+		return generalAbilities;
+	}
+
+	public void setGeneralAbilities(Set<GeneralAbility> generalAbilities) {
+		this.generalAbilities = generalAbilities;
+	}
+
+	public Set<Grenade> getGrenades() {
+		return grenades;
+	}
+
+	public void setGrenades(Set<Grenade> grenades) {
+		this.grenades = grenades;
 	}
 }
