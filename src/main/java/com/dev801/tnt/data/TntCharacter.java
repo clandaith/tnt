@@ -14,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "warband_character")
@@ -22,24 +24,43 @@ public class TntCharacter {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "warband_id")
 	private Warband warband;
 
+	@NotNull
 	private String title;
+	@NotNull
 	private String name;
 	private String background;
+	@Min(0)
+	@NotNull
 	private Integer defense;
+	@Min(1)
+	@NotNull
 	private Integer wounds;
+	@Min(0)
+	@NotNull
 	private Integer move;
+	@Min(0)
+	@NotNull
 	private Integer melee;
+	@Min(0)
+	@NotNull
 	private Integer ranged;
+	@Min(0)
+	@NotNull
 	private Integer strength;
+	@Min(0)
+	@NotNull
 	private Integer mettle;
-
+	@Min(0)
+	@NotNull
 	@Column(name = "base_cost")
 	private Integer baseCost;
 
+	@NotNull
 	@Column(name = "unit_type_id")
 	private Integer unitTypeId;
 

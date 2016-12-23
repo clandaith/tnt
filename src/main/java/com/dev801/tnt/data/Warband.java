@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "warband")
@@ -18,11 +19,13 @@ public class Warband {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	@NotNull
 	@Column(name = "warband_name")
 	private String warbandName;
 
 	private String background;
 
+	@NotNull
 	@OneToMany(mappedBy = "warband")
 	private List<TntCharacter> tntCharacters;
 
@@ -64,5 +67,15 @@ public class Warband {
 		}
 
 		this.tntCharacters.add(tntCharacter);
+	}
+
+	@Override
+	public String toString() {
+		String s = "\nWarband ID: '" + getId() + "' :: " + getWarbandName() + "\n";
+		for (TntCharacter tntCharacter : tntCharacters) {
+			s += tntCharacter.toString() + "\n";
+		}
+
+		return s;
 	}
 }

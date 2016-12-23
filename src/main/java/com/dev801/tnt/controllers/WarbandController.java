@@ -1,5 +1,7 @@
 package com.dev801.tnt.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -26,6 +28,7 @@ import com.dev801.tnt.repositories.RangedWeaponsRepository;
 import com.dev801.tnt.repositories.SkillsRepository;
 import com.dev801.tnt.repositories.SpecialRulesRepository;
 import com.dev801.tnt.repositories.TntCharactersRepository;
+import com.dev801.tnt.repositories.UnitTypesRepository;
 import com.dev801.tnt.repositories.WarbandsRepository;
 import com.google.common.collect.Lists;
 
@@ -60,6 +63,8 @@ public class WarbandController {
 	TntCharactersRepository tntCharactersRepository;
 	@Autowired
 	WarbandsRepository warbandsRepository;
+	@Autowired
+	UnitTypesRepository unitTypesRepository;
 
 	@RequestMapping(value = "/warband", method = RequestMethod.GET)
 	public String newWarband(Model model, HttpSession session) {
@@ -67,7 +72,7 @@ public class WarbandController {
 
 		Warband warband = new Warband();
 		warband.addTntCharacter(new TntCharacter(ProjectHelpers.getIdHolder(), "Character 1"));
-		warband.addTntCharacter(new TntCharacter(ProjectHelpers.getIdHolder(), "Character 2"));
+		// warband.addTntCharacter(new TntCharacter(ProjectHelpers.getIdHolder(), "Character 2"));
 
 		model.addAttribute(WARBAND_ATTRIBUTE, warband);
 		session.setAttribute(WARBAND_ATTRIBUTE, warband);
@@ -79,20 +84,36 @@ public class WarbandController {
 	@RequestMapping(value = "/warband", method = RequestMethod.POST)
 	public String addNewCharacter(@Valid Warband warband, BindingResult bindingResult, Model model, HttpServletRequest request,
 					HttpSession session) {
-		LOGGER.info("add a new warband character");
+		LOGGER.info("persist warband");
 
-		for (TntCharacter tntCharacter : warband.getTntCharacters()) {
+		if (bindingResult.hasErrors()) {
+			LOGGER.info("Warband has errors");
+			return WARBAND_PAGE;
+		}
+
+		LOGGER.info("Pre:  " + warband.toString());
+
+		List<TntCharacter> chars = warband.getTntCharacters();
+		warband = warbandsRepository.save(warband);
+
+		for (TntCharacter tntCharacter : chars) {
 			LOGGER.info("Pre:  " + tntCharacter);
 
 			if (tntCharacter.getId() != null && tntCharacter.getId() < 0) {
 				tntCharacter.setId(null);
 			}
 
-			tntCharacter.setUnitTypeId(1);
+			tntCharacter.setWarband(warband);
+			tntCharacter.setId(tntCharactersRepository.save(tntCharacter).getId());
+
 			LOGGER.info("Post: " + tntCharacter);
 		}
 
-		warbandsRepository.save(warband);
+		chars.add(new TntCharacter(ProjectHelpers.getIdHolder(), "New Character"));
+
+		warband.setTntCharacters(chars);
+
+		LOGGER.info("Post: " + warband.toString());
 
 		session.setAttribute(WARBAND_ATTRIBUTE, warband);
 		model.addAttribute(WARBAND_ATTRIBUTE, warband);
@@ -112,5 +133,6 @@ public class WarbandController {
 		model.addAttribute("rangedWeaponsList", Lists.newArrayList(rangedWeaponsRepository.findAll()));
 		model.addAttribute("skillsList", Lists.newArrayList(skillsRepository.findAll()));
 		model.addAttribute("specialRulesList", Lists.newArrayList(specialRulesRepository.findAll()));
+		model.addAttribute("unitTypesList", Lists.newArrayList(unitTypesRepository.findAll()));
 	}
 }
