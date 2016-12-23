@@ -1,0 +1,82 @@
+package com.dev801.tnt.data;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "warband")
+public class Warband {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	@NotNull
+	@Column(name = "warband_name")
+	private String warbandName;
+
+	private String background;
+
+	@NotNull
+	@OneToMany(mappedBy = "warband")
+	private List<TntCharacter> tntCharacters = new ArrayList<>();
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getWarbandName() {
+		return warbandName;
+	}
+
+	public void setWarbandName(String warbandName) {
+		this.warbandName = warbandName;
+	}
+
+	public String getBackground() {
+		return background;
+	}
+
+	public void setBackground(String background) {
+		this.background = background;
+	}
+
+	public List<TntCharacter> getTntCharacters() {
+		return tntCharacters;
+	}
+
+	public void setTntCharacters(List<TntCharacter> tntCharacters) {
+		this.tntCharacters = tntCharacters;
+	}
+
+	public void addTntCharacter(TntCharacter tntCharacter) {
+		if (this.tntCharacters == null) {
+			this.tntCharacters = new ArrayList<TntCharacter>();
+		}
+
+		this.tntCharacters.add(tntCharacter);
+	}
+
+	@Override
+	public String toString() {
+		String s = "\nWarband ID: '" + getId() + "' :: " + getWarbandName() + "\n";
+
+		for (TntCharacter tntCharacter : tntCharacters) {
+			s += tntCharacter.toString() + "\n";
+		}
+
+		return s;
+	}
+}

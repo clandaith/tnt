@@ -7,15 +7,34 @@
 </head>
 
 <body>
-
 	<div class="container">
-		<div class="jumbotron">
-			<img src="../static/images/rs-book-cover.jpg" height="200" th:src="@{images/rs-book-cover.jpg}" />
+		<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
 
-			<h1>Hello</h1>
+		<h1>Welcome!</h1>
 
-			<h2>Fellow This Is Not A Test fans!!!</h2>
+		<div th:if="${param.logout}">
+			<strong>You have been logged out.</strong>
 		</div>
+
+		<div th:if="${param.requestmembership}">
+			<strong>We've received your request for membership. Thanks!</strong>
+		</div>
+
+		<p>
+			Thanks for your interest in <strong>VOLRUN</strong>.
+		</p>
+
+		<p>
+			What does <strong>VOLRUN</strong> mean? Absolutly nothing! I just needed a
+			place holder for the name of this project until it has been launched. The
+			first three letters are related to the final project. The last three I just
+			selected.
+		</p>
+
+
 	</div>
+
+	<!--/*/ <th:block th:include="fragments/bottom-menu :: footer"></th:block> /*/-->
+
 </body>
 </html>
