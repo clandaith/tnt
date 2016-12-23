@@ -27,7 +27,7 @@ public class Warband {
 
 	@NotNull
 	@OneToMany(mappedBy = "warband")
-	private List<TntCharacter> tntCharacters;
+	private List<TntCharacter> tntCharacters = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
@@ -72,6 +72,7 @@ public class Warband {
 	@Override
 	public String toString() {
 		String s = "\nWarband ID: '" + getId() + "' :: " + getWarbandName() + "\n";
+
 		for (TntCharacter tntCharacter : tntCharacters) {
 			s += tntCharacter.toString() + "\n";
 		}

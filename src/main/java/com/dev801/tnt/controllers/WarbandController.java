@@ -71,7 +71,7 @@ public class WarbandController {
 		LOGGER.info("main get method");
 
 		Warband warband = new Warband();
-		warband.addTntCharacter(new TntCharacter(ProjectHelpers.getIdHolder(), "Character 1"));
+		// warband.addTntCharacter(new TntCharacter(ProjectHelpers.getIdHolder(), "Character 1"));
 		// warband.addTntCharacter(new TntCharacter(ProjectHelpers.getIdHolder(), "Character 2"));
 
 		model.addAttribute(WARBAND_ATTRIBUTE, warband);

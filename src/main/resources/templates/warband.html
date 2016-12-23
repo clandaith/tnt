@@ -38,7 +38,7 @@
 
 	  <ul class="tab">
 	    <li th:each="tntCharacter, rowStat : *{tntCharacters}">
-	    	<a class="tablinks" th:href="'javascript:void(0)'" th:id="'tabasdf-' + *{tntCharacters[__${rowStat.index}__].id}"
+	    	<a class="tablinks" th:href="'javascript:void(0)'" th:id="'tabText-' + *{tntCharacters[__${rowStat.index}__].id}"
 	    		th:onclick="'openWarbandCharacter(event, \'tab-'+ *{tntCharacters[__${rowStat.index}__].id} +'\')'" 
 	    		th:text="*{tntCharacters[__${rowStat.index}__].name}" ></a>
 	    </li>
@@ -51,7 +51,8 @@
 					<div class="form-group character-name">
 						<label class="col-sm-2 control-label">Character Name:</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" th:field="*{tntCharacters[__${rowStat.index}__].Name}" />
+							<input type="text" class="form-control nameTabChange" th:field="*{tntCharacters[__${rowStat.index}__].Name}" 
+								th:attr="nameFieldId=*{tntCharacters[__${rowStat.index}__].id}"/>
 						</div>
 					</div>				
 		

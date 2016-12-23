@@ -1,5 +1,17 @@
 $(document).ready(function () {
 	
+	$(".nameTabChange").change(function () {
+		var id = $(this).attr('nameFieldId');
+		//var nameText = $(this).val();
+		//id = id.replace("charName-", "");		
+		$("#tabText-" + id).text($(this).val());		
+	});
+	
+	$('.printWarband').click(function () {
+		$('#warbandForm').attr('target', '_blank');
+		$("#warbandForm").attr("action", "/print");
+		$('#warbandForm').submit();
+	});	
 });
 
 
