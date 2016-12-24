@@ -138,22 +138,18 @@ public class WarbandController {
 	@RequestMapping(value = "/warband", params = { "removeCharacter" }, method = RequestMethod.POST)
 	public String removeCharacter(@Valid Warband warband, BindingResult bindingResult, Model model, HttpSession session,
 					final HttpServletRequest req) {
+		LOGGER.info("remove warband character id: " + Integer.valueOf(req.getParameter("removeCharacter")));
 
-		LOGGER.info("remove warband character");
+		for (TntCharacter rogueStarCharacter : warband.getTntCharacters()) {
+			if (rogueStarCharacter.getId().equals(Integer.valueOf(req.getParameter("removeCharacter")))) {
+				warband.getTntCharacters().remove(rogueStarCharacter);
+				break;
+			}
+		}
 
-		// Integer characterId = Integer.valueOf(req.getParameter("removeCharacter"));
-		// for (RogueStarCharacter rogueStarCharacter : warband.getCharacters()) {
-		// if (rogueStarCharacter.getId().equals(characterId)) {
-		// warband.getCharacters().remove(rogueStarCharacter);
-		// break;
-		// }
-		// }
-		//
-		// session.setAttribute(WARBAND_ATTRIBUTE, warband);
-		// model.addAttribute(WARBAND_ATTRIBUTE, warband);
-		// model.addAttribute("characterIds", getCharacterIds(warband));
-		//
-		// updateModel(warband, model);
+		session.setAttribute(WARBAND_ATTRIBUTE, warband);
+		model.addAttribute(WARBAND_ATTRIBUTE, warband);
+		loadModelVariables(model);
 
 		return null;
 	}
@@ -162,21 +158,9 @@ public class WarbandController {
 	public String printWarband(@Valid Warband warband, BindingResult bindingResult, Model model, HttpSession session,
 					final HttpServletRequest req) {
 
-		LOGGER.info("remove warband character");
+		LOGGER.info("print warband");
 
-		// Integer characterId = Integer.valueOf(req.getParameter("removeCharacter"));
-		// for (RogueStarCharacter rogueStarCharacter : warband.getCharacters()) {
-		// if (rogueStarCharacter.getId().equals(characterId)) {
-		// warband.getCharacters().remove(rogueStarCharacter);
-		// break;
-		// }
-		// }
-		//
-		// session.setAttribute(WARBAND_ATTRIBUTE, warband);
-		// model.addAttribute(WARBAND_ATTRIBUTE, warband);
-		// model.addAttribute("characterIds", getCharacterIds(warband));
-		//
-		// updateModel(warband, model);
+		session.setAttribute(WARBAND_ATTRIBUTE, warband);
 
 		return "redirect:/print";
 	}

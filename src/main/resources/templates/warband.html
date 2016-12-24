@@ -19,6 +19,8 @@
 			<form class="form-horizontal" th:object="${warband}" th:action="@{/warband}" method="post" id="warbandForm">
 					<input type="hidden" th:field="*{id}" />
 				
+				<!-- Main warband section -->
+				
 				<div class="form-group warband-name">
 					<label class="col-sm-2 control-label">Warband Name:</label>
 					<div class="col-sm-10">
@@ -33,16 +35,45 @@
 					</div>
 				</div>
 				
+				<!-- End main warband section -->
+				
+				<!-- Button Section -->
+				
+				<div class="col-lg-12 align-center">
+						<span class="character-add">
+							<button id="addCharacter" class="btn btn-success" name="addCharacter" value="Add Character" >
+								<i class="glyphicon glyphicon-plus-sign icon-white"></i> Add Character
+							</button>
+						</span>
+						
+						<span class="character-add">
+							<button class="btn tn-default btn-warning printWarband" id="printWarband" value="true" name="printWarband">
+								<i class="glyphicon glyphicon-print"></i> Print Warband
+							</button>
+						</span>
+						
+						<span class="character-add">
+							<button class="btn tn-default btn-info printWarband" id="saveWarband" value="true" name="saveWarband">
+								<i class="glyphicon glyphicon-floppy-save"></i> Save Warband
+							</button>
+						</span>
+				</div>
+				
+				<!-- End Button Section -->
+
+				<!-- Tab section -->
+
+			  <ul class="tab">
+			    <li th:each="tntCharacter, rowStat : *{tntCharacters}">
+			    	<a class="tablinks" th:href="'javascript:void(0)'" th:id="'tabText-' + *{tntCharacters[__${rowStat.index}__].id}"
+			    		th:onclick="'openWarbandCharacter(event, \'tab-'+ *{tntCharacters[__${rowStat.index}__].id} +'\')'" 
+			    		th:text="*{tntCharacters[__${rowStat.index}__].name}" ></a>
+			    </li>
+			  </ul>
+
+				<!-- End tab section -->
 				
 				<!-- Character Section -->	
-
-	  <ul class="tab">
-	    <li th:each="tntCharacter, rowStat : *{tntCharacters}">
-	    	<a class="tablinks" th:href="'javascript:void(0)'" th:id="'tabText-' + *{tntCharacters[__${rowStat.index}__].id}"
-	    		th:onclick="'openWarbandCharacter(event, \'tab-'+ *{tntCharacters[__${rowStat.index}__].id} +'\')'" 
-	    		th:text="*{tntCharacters[__${rowStat.index}__].name}" ></a>
-	    </li>
-	  </ul>
   
 				<div class="form-group character tabcontent" th:each="tntCharacter, rowStat : *{tntCharacters}" 
 					th:id="'tab-' + *{tntCharacters[__${rowStat.index}__].id}">
@@ -270,28 +301,6 @@
 				</div>
 		
 				<!-- End Character Section -->
-				
-				<!-- Button Section -->
-				
-				<div class="col-lg-12 align-center">
-						<span class="character-add">
-							<button id="addCharacter" class="btn btn-success" name="addCharacter" value="Add Character" >
-								<i class="glyphicon glyphicon-plus-sign icon-white"></i> Add Character
-							</button>
-						</span>
-						
-						<span class="character-add">
-							<button class="btn tn-default btn-danger printWarband" id="printWarband" value="true" name="printWarband">
-								<i class="glyphicon glyphicon-print"></i> Print Warband
-							</button>
-						</span>
-						
-						<span class="character-add">
-							<button class="btn tn-default btn-danger printWarband" id="saveWarband" value="true" name="saveWarband">
-								<i class="glyphicon glyphicon-floppy-save"></i> Save Warband
-							</button>
-						</span>
-				</div>
 			</form>
 		</div>
 		

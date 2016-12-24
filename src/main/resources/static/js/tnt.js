@@ -12,8 +12,6 @@ $(document).ready(function () {
 //		$("#warbandForm").attr("action", "/print");
 //		$('#warbandForm').submit();
 //	});	
-	
-	
 
 	
 	$('.deleteCharacter').click(function () {
