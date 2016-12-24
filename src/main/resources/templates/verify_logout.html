@@ -8,13 +8,12 @@
 <body>
 	<div class="container">
 		<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
-		<h1 th:inline="text">[[${#httpServletRequest.remoteUser}]], are
-			you REALLY sure you want to logout?</h1>
+		
+		<h1 th:inline="text">[[${#httpServletRequest.remoteUser}]], are you REALLY sure you want to logout?</h1>
+		
 		<form th:action="@{/logout}" method="post">
 			<input type="submit" value="Yes, I want to log out" />
 		</form>
-
-
 
 	</div>
 
