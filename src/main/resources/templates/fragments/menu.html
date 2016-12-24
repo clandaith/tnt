@@ -23,12 +23,17 @@
 					<div class="collapse navbar-collapse" id="myNavbar">
 					
 						<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
-							<li><a href="#" th:href="@{/warband}">Warband</a></li>
+							<li><a href="#" th:href="@{/warband}">Warbands</a></li>
 						</ul>
 						
 						<ul class="nav navbar-nav navbar-right" sec:authorize="isAuthenticated()">
 							<li><a href="#" th:href="@{/verify_logout}">Logout <span
 									class="glyphicon glyphicon-log-out"></span></a></li>
+						</ul>
+
+						<ul class="nav navbar-nav navbar-right" sec:authorize="isAnonymous()">
+							<li><a href="#" th:href="@{/register}">Register <span
+									class="glyphicon glyphicon-edit"></span></a></li>
 						</ul>
 
 						<ul class="nav navbar-nav navbar-right" sec:authorize="isAnonymous()">

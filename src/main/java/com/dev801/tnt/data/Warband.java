@@ -26,6 +26,10 @@ public class Warband {
 	private String background;
 
 	@NotNull
+	@Column(name = "user_id")
+	private Integer userId;
+
+	@NotNull
 	@OneToMany(mappedBy = "warband")
 	private List<TntCharacter> tntCharacters = new ArrayList<>();
 
@@ -78,5 +82,13 @@ public class Warband {
 		}
 
 		return s;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 }

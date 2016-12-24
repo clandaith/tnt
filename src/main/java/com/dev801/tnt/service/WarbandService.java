@@ -1,0 +1,52 @@
+package com.dev801.tnt.service;
+
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.dev801.tnt.data.TntCharacter;
+import com.dev801.tnt.data.Warband;
+import com.dev801.tnt.repositories.TntCharactersRepository;
+import com.dev801.tnt.repositories.WarbandsRepository;
+
+@Service
+public class WarbandService {
+	private static final Logger LOGGER = Logger.getLogger(WarbandService.class);
+
+	@Autowired
+	WarbandsRepository warbandsRepository;
+	@Autowired
+	TntCharactersRepository tntCharactersRepository;
+
+	public boolean saveWarband(Warband warband) {
+		try {
+			LOGGER.info("Pre:  " + warband.toString());
+
+			List<TntCharacter> chars = warband.getTntCharacters();
+			warband = warbandsRepository.save(warband);
+
+			for (TntCharacter tntCharacter : chars) {
+				LOGGER.info("Pre:  " + tntCharacter);
+
+				if (tntCharacter.getId() != null && tntCharacter.getId() < 0) {
+					tntCharacter.setId(null);
+				}
+
+				tntCharacter.setWarband(warband);
+				tntCharacter.setId(tntCharactersRepository.save(tntCharacter).getId());
+
+				LOGGER.info("Post: " + tntCharacter);
+			}
+
+			warband.setTntCharacters(chars);
+
+			LOGGER.info("Post: " + warband.toString());
+			return true;
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+			return false;
+		}
+	}
+}
