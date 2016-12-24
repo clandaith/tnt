@@ -259,26 +259,38 @@
 						</div>
 					</div>
 		
+					<div class="form-group row-delete-button">
+						<span class="col-sm-2">
+							<button class="btn tn-default btn-danger deleteCharacter" th:id="*{'submit-' + tntCharacters[__${rowStat.index}__].id}" 
+								th:value="*{tntCharacters[__${rowStat.index}__].id}" name="removeCharacter">
+								<i class="glyphicon glyphicon-trash icon-white"></i> Remove Character
+							</button>				
+						</span>
+					</div>
 				</div>
 		
 				<!-- End Character Section -->
 				
-				<!-- Print warband -->
-
-					<div class="form-group row-delete-button">
-						<span class="col-sm-2">
-							<button class="btn tn-default btn-danger printWarband" id="printWarband" value="true" name="printWarband">
-								<span class="glyphicon glyphicon-print"></span> Print Warband
+				<!-- Button Section -->
+				
+				<div class="col-lg-12 align-center">
+						<span class="character-add">
+							<button id="addCharacter" class="btn btn-success" name="addCharacter" value="Add Character" >
+								<i class="glyphicon glyphicon-plus-sign icon-white"></i> Add Character
 							</button>
 						</span>
-					</div>
-
-				<!-- Add character -->
-				
-				<div class="col-lg-12 button-col-align-right character-add">
-					<button id="addCharacter" class="btn btn-success" name="addCharacter" value="Add Character" >
-								<i class="glyphicon glyphicon-plus-sign icon-white"></i> Add Character
-					</button>
+						
+						<span class="character-add">
+							<button class="btn tn-default btn-danger printWarband" id="printWarband" value="true" name="printWarband">
+								<i class="glyphicon glyphicon-print"></i> Print Warband
+							</button>
+						</span>
+						
+						<span class="character-add">
+							<button class="btn tn-default btn-danger printWarband" id="saveWarband" value="true" name="saveWarband">
+								<i class="glyphicon glyphicon-floppy-save"></i> Save Warband
+							</button>
+						</span>
 				</div>
 			</form>
 		</div>

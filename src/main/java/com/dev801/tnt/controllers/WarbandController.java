@@ -71,8 +71,6 @@ public class WarbandController {
 		LOGGER.info("main get method");
 
 		Warband warband = new Warband();
-		// warband.addTntCharacter(new TntCharacter(ProjectHelpers.getIdHolder(), "Character 1"));
-		// warband.addTntCharacter(new TntCharacter(ProjectHelpers.getIdHolder(), "Character 2"));
 
 		model.addAttribute(WARBAND_ATTRIBUTE, warband);
 		session.setAttribute(WARBAND_ATTRIBUTE, warband);
@@ -83,6 +81,20 @@ public class WarbandController {
 
 	@RequestMapping(value = "/warband", method = RequestMethod.POST)
 	public String addNewCharacter(@Valid Warband warband, BindingResult bindingResult, Model model, HttpServletRequest request,
+					HttpSession session) {
+		LOGGER.info("add a character");
+
+		warband.addTntCharacter(new TntCharacter(ProjectHelpers.getIdHolder(), "New Character"));
+
+		session.setAttribute(WARBAND_ATTRIBUTE, warband);
+		model.addAttribute(WARBAND_ATTRIBUTE, warband);
+
+		loadModelVariables(model);
+		return WARBAND_PAGE;
+	}
+
+	@RequestMapping(value = "/warband/save", method = RequestMethod.POST)
+	private String save(@Valid Warband warband, BindingResult bindingResult, Model model, HttpServletRequest request,
 					HttpSession session) {
 		LOGGER.info("persist warband");
 
@@ -109,7 +121,7 @@ public class WarbandController {
 			LOGGER.info("Post: " + tntCharacter);
 		}
 
-		chars.add(new TntCharacter(ProjectHelpers.getIdHolder(), "New Character"));
+		// chars.add(new TntCharacter(ProjectHelpers.getIdHolder(), "New Character"));
 
 		warband.setTntCharacters(chars);
 
@@ -120,6 +132,53 @@ public class WarbandController {
 
 		loadModelVariables(model);
 		return WARBAND_PAGE;
+
+	}
+
+	@RequestMapping(value = "/warband", params = { "removeCharacter" }, method = RequestMethod.POST)
+	public String removeCharacter(@Valid Warband warband, BindingResult bindingResult, Model model, HttpSession session,
+					final HttpServletRequest req) {
+
+		LOGGER.info("remove warband character");
+
+		// Integer characterId = Integer.valueOf(req.getParameter("removeCharacter"));
+		// for (RogueStarCharacter rogueStarCharacter : warband.getCharacters()) {
+		// if (rogueStarCharacter.getId().equals(characterId)) {
+		// warband.getCharacters().remove(rogueStarCharacter);
+		// break;
+		// }
+		// }
+		//
+		// session.setAttribute(WARBAND_ATTRIBUTE, warband);
+		// model.addAttribute(WARBAND_ATTRIBUTE, warband);
+		// model.addAttribute("characterIds", getCharacterIds(warband));
+		//
+		// updateModel(warband, model);
+
+		return null;
+	}
+
+	@RequestMapping(value = "/warband", params = { "printWarband" }, method = RequestMethod.POST)
+	public String printWarband(@Valid Warband warband, BindingResult bindingResult, Model model, HttpSession session,
+					final HttpServletRequest req) {
+
+		LOGGER.info("remove warband character");
+
+		// Integer characterId = Integer.valueOf(req.getParameter("removeCharacter"));
+		// for (RogueStarCharacter rogueStarCharacter : warband.getCharacters()) {
+		// if (rogueStarCharacter.getId().equals(characterId)) {
+		// warband.getCharacters().remove(rogueStarCharacter);
+		// break;
+		// }
+		// }
+		//
+		// session.setAttribute(WARBAND_ATTRIBUTE, warband);
+		// model.addAttribute(WARBAND_ATTRIBUTE, warband);
+		// model.addAttribute("characterIds", getCharacterIds(warband));
+		//
+		// updateModel(warband, model);
+
+		return "redirect:/print";
 	}
 
 	private void loadModelVariables(Model model) {

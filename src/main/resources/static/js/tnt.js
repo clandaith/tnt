@@ -7,11 +7,22 @@ $(document).ready(function () {
 		$("#tabText-" + id).text($(this).val());		
 	});
 	
-	$('.printWarband').click(function () {
-		$('#warbandForm').attr('target', '_blank');
-		$("#warbandForm").attr("action", "/print");
-		$('#warbandForm').submit();
-	});	
+//	$('.printWarband').click(function () {
+//		$('#warbandForm').attr('target', '_blank');
+//		$("#warbandForm").attr("action", "/print");
+//		$('#warbandForm').submit();
+//	});	
+	
+	
+
+	
+	$('.deleteCharacter').click(function () {
+		if (confirm('Are you sure you want to remove this character?')) {
+			$('#warbandForm').submit();
+		}else{
+			return false;
+		}
+	});
 });
 
 
