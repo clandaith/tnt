@@ -77,16 +77,16 @@ public class WarbandController extends ControllerHelper {
 		warband.setUserId(getUser(session).getId());
 		warband.setDateCreated(new Date());
 
-		if (bindingResult.hasErrors()) {
-			LOGGER.info("Warband has errors");
-
-			session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
-			model.addAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
-			model.addAttribute("returnMessage", "There was a problem saving the warband.  Please try again.");
-
-			loadModelVariables(model);
-			return ProjectHelpers.WARBAND_PAGE;
-		}
+		// if (bindingResult.hasErrors()) {
+		// LOGGER.info("Warband has errors");
+		//
+		// session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
+		// model.addAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
+		// model.addAttribute("returnMessage", "There was a problem saving the warband.  Please try again.");
+		//
+		// loadModelVariables(model);
+		// return ProjectHelpers.WARBAND_PAGE;
+		// }
 
 		boolean saveSuccessful = warbandService.saveWarband(warband);
 

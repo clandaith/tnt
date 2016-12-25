@@ -35,17 +35,15 @@
 						<td th:text="${warband.warbandName}"></td>
 						<td th:text="${warband.dateCreated}">Date Added</td>
 						<td>
-							<button id="addCharacter" class="btn btn-success" name="addCharacter" value="Add Character" >
+							<a id="addCharacter" class="btn btn-success" th:href="${'/warband/' + warband.id}">
 								<i class="glyphicon glyphicon-plus-sign icon-white"></i> Edit
-							</button>
+							</a>
 						</td>
 						<td>
-							<button class="btn tn-default btn-danger deleteWarband" th:id="*{'submit-' + tntCharacters[__${rowStat.index}__].id}" 
-								th:value="*{tntCharacters[__${rowStat.index}__].id}" name="removeCharacter">
-								<i class="glyphicon glyphicon-trash icon-white"></i> Remove Character
-							</button>				
-						
-						<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/deleteuser} + '/' + ${user.id}" th:text="'DELETE'"></a></td>
+							<button class="btn tn-default btn-danger deleteWarband" th:id="${'warbandDelete-' + warband.id}" name="removeWarband">
+								<i class="glyphicon glyphicon-trash icon-white"></i> Delete Warband
+							</button>		
+						</td>
 					</tr>
 				</tbody>
 			</table>
