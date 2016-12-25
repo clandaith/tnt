@@ -11,9 +11,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dev801.tnt.data.TntCharacter;
 import com.dev801.tnt.data.Warband;
@@ -24,28 +24,22 @@ public class WarbandController extends ControllerHelper {
 	private static final Logger LOGGER = Logger.getLogger(WarbandController.class);
 
 	@RequestMapping(value = "/warband", method = RequestMethod.GET)
-	public String newWarband(Model model, HttpSession session) {
-		LOGGER.info("Start a warband.  User: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+	public String newWarband(Model model, @RequestParam(value = "warbandId", defaultValue = "-1") Integer warbandId,
+					HttpSession session) {
+		LOGGER.info("Loading a warband.  User: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
 		Warband warband = new Warband();
 
-		model.addAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
-		session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
+		if (warbandId > -1) {
+			LOGGER.info("Getting the requested warband id: " + warbandId);
 
-		loadModelVariables(model);
-		return ProjectHelpers.WARBAND_PAGE;
-	}
+			warband = warbandsRepository.findOne(warbandId);
 
-	@RequestMapping(value = "/warband/{warbandId}", method = RequestMethod.GET)
-	public String loadWarband(Model model, HttpSession session, @PathVariable(value = "warbandId") Integer warbandId) {
-		LOGGER.info("Loading a warband.  Warband ID: " + warbandId + "  User: "
-						+ SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-
-		Warband warband = warbandsRepository.findOne(warbandId);
-
-		if (!warband.getUserId().equals(getUser(session).getId())) {
-			LOGGER.error("User tried to get a warband that doesn't belong to them.  User id for warband: " + warband.getUserId());
-			return "redirect:/?wrongWarbandId";
+			if (warband == null || !warband.getUserId().equals(getUser(session).getId())) {
+				LOGGER.error("User tried to get a warband that doesn't belong to them or is null.");
+				model.addAttribute("returnMessage", "There was a problem getting that warband.  Please try again.");
+				return ProjectHelpers.WARBANDS_PAGE;
+			}
 		}
 
 		model.addAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);

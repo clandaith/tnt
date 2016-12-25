@@ -32,15 +32,10 @@ public class WarbandsController extends ControllerHelper {
 		Integer userId = getUser(session).getId();
 		Warband warband = warbandsRepository.findOne(warbandId);
 
-		if (warband.getUserId().equals(userId)) {
+		if (warband != null && warband.getUserId().equals(userId)) {
 			warbandsRepository.delete(warband);
-			model.addAttribute("returnMessage", "Warband deleted");
-		} else {
-			model.addAttribute("returnMessage", "There was a problem deleting the warband.  Please try again.");
 		}
 
-		model.addAttribute(ProjectHelpers.WARBANDS_ATTRIBUTE, warbandsRepository.findWarbandsByUserId(getUser(session).getId()));
-
-		return ProjectHelpers.WARBANDS_PAGE;
+		return "redirect:/" + ProjectHelpers.WARBANDS_PAGE;
 	}
 }

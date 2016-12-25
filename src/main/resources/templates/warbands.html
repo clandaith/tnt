@@ -35,8 +35,8 @@
 						<td th:text="${warband.warbandName}"></td>
 						<td th:text="${warband.dateCreated}">Date Added</td>
 						<td>
-							<a id="addCharacter" class="btn btn-success" th:href="${'/warband/' + warband.id}">
-								<i class="glyphicon glyphicon-plus-sign icon-white"></i> Edit
+							<a id="addCharacter" class="btn btn-success" th:href="${'/warband?warbandId=' + warband.id}">
+								<i class="glyphicon glyphicon-edit icon-white"></i> Edit
 							</a>
 						</td>
 						<td>
