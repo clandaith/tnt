@@ -1,5 +1,7 @@
 package com.dev801.tnt.controllers;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -67,15 +69,22 @@ public class WarbandController extends ControllerHelper {
 		return ProjectHelpers.WARBAND_PAGE;
 	}
 
-	@RequestMapping(value = "/warband/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/warband", params = { "saveWarband" }, method = RequestMethod.POST)
 	private String save(@Valid Warband warband, BindingResult bindingResult, Model model, HttpServletRequest request,
 					HttpSession session) {
 		LOGGER.info("Persist warband.  User: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
 		warband.setUserId(getUser(session).getId());
+		warband.setDateCreated(new Date());
 
 		if (bindingResult.hasErrors()) {
 			LOGGER.info("Warband has errors");
+
+			session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
+			model.addAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
+			model.addAttribute("returnMessage", "There was a problem saving the warband.  Please try again.");
+
+			loadModelVariables(model);
 			return ProjectHelpers.WARBAND_PAGE;
 		}
 
