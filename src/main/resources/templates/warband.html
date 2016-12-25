@@ -8,8 +8,9 @@
 </head>
 
 <body>
+	<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
+
 	<div class="container">
-			<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
 		
 		<div th:if="${errorMessage}">
 			<span th:text="${errorMessage}"></span>

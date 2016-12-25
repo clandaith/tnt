@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import com.dev801.tnt.data.Warband;
 
 public interface WarbandsRepository extends CrudRepository<Warband, Integer> {
-	@Query("select w from Warband w where w.user_id = :user_id")
+	@Query("select w from Warband w where w.userId = :user_id")
 	public List<Warband> findWarbandsByUserId(@Param("user_id") Integer userId);
 
 }

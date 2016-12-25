@@ -84,7 +84,6 @@ public class WarbandController extends ControllerHelper {
 		LOGGER.info("Warband save success: " + saveSuccessful);
 
 		return "redirect:/" + ProjectHelpers.WARBANDS_PAGE + "?saved=" + saveSuccessful;
-
 	}
 
 	@RequestMapping(value = "/warband", params = { "removeCharacter" }, method = RequestMethod.POST)

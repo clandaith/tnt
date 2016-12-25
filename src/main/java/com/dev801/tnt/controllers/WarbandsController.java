@@ -5,8 +5,12 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.dev801.tnt.data.Warband;
+import com.dev801.tnt.helpers.ProjectHelpers;
 
 @Controller
 public class WarbandsController extends ControllerHelper {
@@ -16,13 +20,27 @@ public class WarbandsController extends ControllerHelper {
 	public String getWarbands(Model model, HttpSession session) {
 		LOGGER.info("Getting warbands for user: " + getUser(session));
 
-		model.addAttribute("warbands", warbandsRepository.findWarbandsByUserId(getUser(session).getId()));
+		model.addAttribute(ProjectHelpers.WARBANDS_ATTRIBUTE, warbandsRepository.findWarbandsByUserId(getUser(session).getId()));
 
-		return "warbands";
+		return ProjectHelpers.WARBANDS_PAGE;
 	}
 
-	@RequestMapping(value = "/warbands", method = RequestMethod.POST)
-	public String deleteWarband() {
-		return "redirect/warbands?deleted";
+	@RequestMapping(value = "/warbands/{warbandId}", method = RequestMethod.POST)
+	public String deleteWarband(Model model, HttpSession session, @PathVariable(value = "warbandId") Integer warbandId) {
+		LOGGER.info("Deleting warband id: " + warbandId);
+
+		Integer userId = getUser(session).getId();
+		Warband warband = warbandsRepository.findOne(warbandId);
+
+		if (warband.getUserId().equals(userId)) {
+			warbandsRepository.delete(warband);
+			model.addAttribute("returnMessage", "Warband deleted");
+		} else {
+			model.addAttribute("returnMessage", "There was a problem deleting the warband.  Please try again.");
+		}
+
+		model.addAttribute(ProjectHelpers.WARBANDS_ATTRIBUTE, warbandsRepository.findWarbandsByUserId(getUser(session).getId()));
+
+		return ProjectHelpers.WARBANDS_PAGE;
 	}
 }

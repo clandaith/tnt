@@ -14,6 +14,16 @@ $(document).ready(function () {
 //	});	
 
 	
+	$('.deleteWarband').click(function () {
+		if (confirm('Are you sure you want to delete this warband?')) {
+			var warbandId = -1;
+			$("#deleteWarbandForm").attr("action", "/warbands/" + warbandId);
+			$('#deleteWarbandForm').submit();
+		}else{
+			return false;
+		}
+	});
+		
 	$('.deleteCharacter').click(function () {
 		if (confirm('Are you sure you want to remove this character?')) {
 			$('#warbandForm').submit();
