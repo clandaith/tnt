@@ -2,16 +2,33 @@ $(document).ready(function () {
 	
 	$(".nameTabChange").change(function () {
 		var id = $(this).attr('nameFieldId');
-		//var nameText = $(this).val();
-		//id = id.replace("charName-", "");		
 		$("#tabText-" + id).text($(this).val());		
 	});
 	
-	$('.printWarband').click(function () {
-		$('#warbandForm').attr('target', '_blank');
-		$("#warbandForm").attr("action", "/print");
-		$('#warbandForm').submit();
-	});	
+//	$('.printWarband').click(function () {
+//		$('#warbandForm').attr('target', '_blank');
+//		$("#warbandForm").attr("action", "/print");
+//		$('#warbandForm').submit();
+//	});	
+
+	
+	$('.deleteWarband').click(function () {
+		if (confirm('Are you sure you want to delete this warband?')) {
+			var warbandId = $(this).attr("id").replace("warbandDelete-","");
+			$("#deleteWarbandForm").attr("action", "/warbands/" + warbandId);
+			$('#deleteWarbandForm').submit();
+		}else{
+			return false;
+		}
+	});
+		
+	$('.deleteCharacter').click(function () {
+		if (confirm('Are you sure you want to remove this character?')) {
+			$('#warbandForm').submit();
+		}else{
+			return false;
+		}
+	});
 });
 
 

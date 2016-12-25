@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
+</head>
+
+<body>
+	<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
+
+	<div class="container">
+		
+		<div th:if="${returnMessage}">
+			<span th:text="${returnMessage}"></span>
+		</div>
+		
+		<div th:if="${#lists.isEmpty(warbands)}">
+			You have no Warbands. <a href="#" th:href="@{/warband}">Create one!</a>.
+		</div>		
+		
+		<div th:if="${not #lists.isEmpty(warbands)}">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Date Created</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="warband : ${warbands}">
+						<td th:text="${warband.warbandName}"></td>
+						<td th:text="${warband.dateCreated}">Date Added</td>
+						<td>
+							<a id="addCharacter" class="btn btn-success" th:href="${'/warband?warbandId=' + warband.id}">
+								<i class="glyphicon glyphicon-edit icon-white"></i> Edit
+							</a>
+						</td>
+						<td>
+							<button class="btn tn-default btn-danger deleteWarband" th:id="${'warbandDelete-' + warband.id}" name="removeWarband">
+								<i class="glyphicon glyphicon-trash icon-white"></i> Delete Warband
+							</button>		
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>		
+		
+	</div>
+	
+	<form th:action="@{/warbands}" method="post" id="deleteWarbandForm"></form>
+
+	<!--/*/ <th:block th:include="fragments/bottom-menu :: footer"></th:block> /*/-->
+
+</body>
+
+</html>

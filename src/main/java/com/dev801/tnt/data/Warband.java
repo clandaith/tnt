@@ -1,6 +1,7 @@
 package com.dev801.tnt.data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -24,6 +27,14 @@ public class Warband {
 	private String warbandName;
 
 	private String background;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "date_created")
+	private Date dateCreated;
+
+	@NotNull
+	@Column(name = "user_id")
+	private Integer userId;
 
 	@NotNull
 	@OneToMany(mappedBy = "warband")
@@ -78,5 +89,21 @@ public class Warband {
 		}
 
 		return s;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 }

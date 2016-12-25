@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 
 <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
@@ -10,23 +11,27 @@
 	<div class="container">
 		<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
 
-		<h1>Welcome!</h1>
-
-		<div th:if="${param.logout}">
-			<strong>You have been logged out.</strong>
-		</div>
-
-		<div th:if="${param.requestmembership}">
-			<strong>We've received your request for membership. Thanks!</strong>
-		</div>
-
 		<p>
-			<strong>Right now this is still in development.</strong>
+			<strong>We're still in development.  Please excuse our dust</strong>
 		</p>
 
-		<p>
-			Thanks for your interest in <strong>TNT Warband Generator</strong>.  Right now, the login isn't working.  Just <a href="#" th:href="@{/warband}"><h2>click here</h2></a>.
-		</p>
+		<div  sec:authorize="isAnonymous()">
+			<h2>Welcome!</h2>
+		
+			<div th:if="${param.requestmembership}">
+				<strong>We've received your request for membership. Thanks!</strong>
+			</div>
+		
+			<div>
+				Thank you for your interest in the <strong>TNT Warband Generator</strong>.  Please register to use the site.
+			</div>
+		</div>
+		
+		<div sec:authorize="isAuthenticated()">
+			<h2 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]!</h2>
+			
+			You can start making a warband by clicking on the menu item titled "Warbands".
+		</div>
 
 	</div>
 

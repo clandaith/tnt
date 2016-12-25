@@ -20,11 +20,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
+		//authorize requests	
 		httpSecurity.authorizeRequests()
-						.antMatchers("/", "/index", "/about801dev", "/roadmap", "/print", "/warband", "/forgotpassword", "/register")
-						.permitAll().antMatchers("/manage/**").access("hasRole('ADMIN')").anyRequest().authenticated().and().formLogin()
-						.loginPage("/login").usernameParameter("multipassName").passwordParameter("multipassIdent").permitAll().and()
-						.logout().permitAll();
+						.antMatchers("/", "/index", "/about801dev", "/roadmap", "/forgotpassword", "/register").permitAll()
+						.antMatchers("/warbands", "/warband", "/character", "/print", "/verify_logout").access("hasRole('USER') or hasRole('ADMIN')")
+						.antMatchers("/manage/**").access("hasRole('ADMIN')").anyRequest()
+							.authenticated()
+							.and()
+							.formLogin()
+								.loginPage("/login")
+									.usernameParameter("multipassName")
+									.passwordParameter("multipassIdent")
+							.permitAll()
+							.and()
+							.logout()
+								.permitAll();
 	}
 
 	@Autowired

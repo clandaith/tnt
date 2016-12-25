@@ -19,6 +19,10 @@ body {
 	float: right;
 }
 
+.align-center{
+	margin: auto;
+}
+
 .roadmap {
     
 }
