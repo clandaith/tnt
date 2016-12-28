@@ -16,10 +16,8 @@
 			<span th:text="${returnMessage}"></span>
 		</div>
 		
-		<div th:if="${#lists.isEmpty(warbands)}">
-			You have no Warbands. <a href="#" th:href="@{/warband}">Create one!</a>.
-		</div>		
-		
+		<a href="#" th:href="@{/warband}" class="btn btn-success" ><i class="glyphicon glyphicon-plus-sign icon-white"></i> Add Warband</a>
+				
 		<div th:if="${not #lists.isEmpty(warbands)}">
 			<table class="table table-striped">
 				<thead>

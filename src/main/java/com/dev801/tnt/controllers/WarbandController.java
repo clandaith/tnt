@@ -44,6 +44,7 @@ public class WarbandController extends ControllerHelper {
 
 		model.addAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
 		session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
+		model.addAttribute("showRules", getUser(session).getShowDetails());
 
 		loadModelVariables(model);
 		return ProjectHelpers.WARBAND_PAGE;
@@ -58,6 +59,7 @@ public class WarbandController extends ControllerHelper {
 
 		session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
 		model.addAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
+		model.addAttribute("showRules", getUser(session).getShowDetails());
 
 		loadModelVariables(model);
 		return ProjectHelpers.WARBAND_PAGE;
@@ -103,13 +105,25 @@ public class WarbandController extends ControllerHelper {
 
 		session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
 		model.addAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
+		model.addAttribute("showRules", getUser(session).getShowDetails());
 		loadModelVariables(model);
 
 		return ProjectHelpers.WARBAND_PAGE;
 	}
 
+	@RequestMapping(value = "/warband", params = { "printWarbandRules" }, method = RequestMethod.POST)
+	public String printWarbandRules(@Valid Warband warband, BindingResult bindingResult, Model model, HttpSession session,
+					final HttpServletRequest req) {
+
+		LOGGER.info("print warband.  User: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+
+		session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
+
+		return "redirect:/printWithRules";
+	}
+
 	@RequestMapping(value = "/warband", params = { "printWarband" }, method = RequestMethod.POST)
-	public String printWarband(@Valid Warband warband, BindingResult bindingResult, Model model, HttpSession session,
+	public String printWarbandNoRules(@Valid Warband warband, BindingResult bindingResult, Model model, HttpSession session,
 					final HttpServletRequest req) {
 
 		LOGGER.info("print warband.  User: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
@@ -118,4 +132,5 @@ public class WarbandController extends ControllerHelper {
 
 		return "redirect:/print";
 	}
+
 }

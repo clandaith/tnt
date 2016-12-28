@@ -17,17 +17,30 @@ import com.dev801.tnt.data.Warband;
 import com.dev801.tnt.helpers.PdfPrinter;
 
 @Controller
-public class PrintController {
+public class PrintController extends ControllerHelper {
 	private static Logger LOGGER = Logger.getLogger(PrintController.class);
 
+	@RequestMapping(value = "/printWithRules", method = RequestMethod.GET)
+	public void printWarbandWithRules(HttpServletResponse response, HttpSession session) {
+		LOGGER.info("Printing Warband with rules");
+
+		printWarband(response, session, true);
+	}
+
 	@RequestMapping(value = "/print", method = RequestMethod.GET)
-	public void printWarband(HttpServletResponse response, HttpSession session) {
+	public void printWarbandNoRules(HttpServletResponse response, HttpSession session) {
+		LOGGER.info("Printing Warband no rules");
+
+		printWarband(response, session, false);
+	}
+
+	public void printWarband(HttpServletResponse response, HttpSession session, boolean showRules) {
 		LOGGER.info("Printing Warband");
 
 		try {
 			Warband warband = (Warband)session.getAttribute("warband");
 
-			byte[] warbandBytes = PdfPrinter.printWarband(warband);
+			byte[] warbandBytes = PdfPrinter.printWarband(warband, getUser(session), showRules);
 
 			response.setContentType("application/pdf");
 			response.setHeader("Content-Disposition", String.format("inline; filename=\"" + warband.getWarbandName() + ".pdf\""));

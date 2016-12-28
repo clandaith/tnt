@@ -13,6 +13,7 @@ import com.dev801.tnt.repositories.DetrimentsRepository;
 import com.dev801.tnt.repositories.EquipmentRepository;
 import com.dev801.tnt.repositories.GeneralAbilitiesRepository;
 import com.dev801.tnt.repositories.GrenadesRepository;
+import com.dev801.tnt.repositories.InjuriesRepository;
 import com.dev801.tnt.repositories.MeleeWeaponsRepository;
 import com.dev801.tnt.repositories.MutationsRepository;
 import com.dev801.tnt.repositories.RangedWeaponsRepository;
@@ -58,6 +59,8 @@ public class ControllerHelper {
 	UsersService usersService;
 	@Autowired
 	WarbandService warbandService;
+	@Autowired
+	InjuriesRepository injuriesRepository;
 
 	protected User getUser(HttpSession session) {
 		User user = usersService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -78,5 +81,6 @@ public class ControllerHelper {
 		model.addAttribute("skillsList", Lists.newArrayList(skillsRepository.findAll()));
 		model.addAttribute("specialRulesList", Lists.newArrayList(specialRulesRepository.findAll()));
 		model.addAttribute("unitTypesList", Lists.newArrayList(unitTypesRepository.findAll()));
+		model.addAttribute("injuriesList", Lists.newArrayList(injuriesRepository.findAll()));
 	}
 }
