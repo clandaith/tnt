@@ -1,5 +1,6 @@
 package com.dev801.tnt.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -25,7 +26,17 @@ public class WarbandService {
 			LOGGER.info("Pre:  " + warband.toString());
 
 			List<TntCharacter> chars = warband.getTntCharacters();
-			warband = warbandsRepository.save(warband);
+			warband.setTntCharacters(new ArrayList<TntCharacter>());
+
+			if (warband.getId() == null) {
+				warband = warbandsRepository.save(warband);
+			} else {
+				for (TntCharacter tntChar : chars) {
+					if (tntChar.getId() > 0) {
+						warband.addTntCharacter(tntChar);
+					}
+				}
+			}
 
 			for (TntCharacter tntCharacter : chars) {
 				LOGGER.info("Pre:  " + tntCharacter);

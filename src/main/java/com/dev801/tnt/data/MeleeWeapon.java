@@ -30,6 +30,7 @@ public class MeleeWeapon {
 	private Integer thrownRange;
 
 	private Integer strength;
+	private Integer reliability;
 
 	@Column(name = "one_handed")
 	private Boolean oneHanded;
@@ -124,6 +125,14 @@ public class MeleeWeapon {
 
 	public void setSpecialRules(Set<SpecialRule> specialRules) {
 		this.specialRules = specialRules;
+	}
+
+	public Integer getReliability() {
+		return reliability;
+	}
+
+	public void setReliability(Integer reliability) {
+		this.reliability = reliability;
 	}
 
 }

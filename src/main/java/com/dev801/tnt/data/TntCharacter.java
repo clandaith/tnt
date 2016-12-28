@@ -108,6 +108,10 @@ public class TntCharacter {
 		this.name = name;
 	}
 
+	public TntCharacter(String name) {
+		this.name = name;
+	}
+
 	public Integer getId() {
 		return id;
 	}

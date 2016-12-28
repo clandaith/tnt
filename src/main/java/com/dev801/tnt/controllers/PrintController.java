@@ -17,7 +17,7 @@ import com.dev801.tnt.data.Warband;
 import com.dev801.tnt.helpers.PdfPrinter;
 
 @Controller
-public class PrintController {
+public class PrintController extends ControllerHelper {
 	private static Logger LOGGER = Logger.getLogger(PrintController.class);
 
 	@RequestMapping(value = "/print", method = RequestMethod.GET)
@@ -27,7 +27,7 @@ public class PrintController {
 		try {
 			Warband warband = (Warband)session.getAttribute("warband");
 
-			byte[] warbandBytes = PdfPrinter.printWarband(warband);
+			byte[] warbandBytes = PdfPrinter.printWarband(warband, getUser(session));
 
 			response.setContentType("application/pdf");
 			response.setHeader("Content-Disposition", String.format("inline; filename=\"" + warband.getWarbandName() + ".pdf\""));

@@ -27,6 +27,7 @@ public class User {
 	private String emailAddress;
 
 	private Boolean enabled;
+	private Boolean showDetails;
 
 	public Integer getId() {
 		return id;
@@ -82,5 +83,13 @@ public class User {
 
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
+	}
+
+	public Boolean getShowDetails() {
+		return showDetails;
+	}
+
+	public void setShowDetails(Boolean showDetails) {
+		this.showDetails = showDetails;
 	}
 }
