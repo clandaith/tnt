@@ -21,6 +21,9 @@
 					</div>
 
 					<div class="collapse navbar-collapse" id="myNavbar">
+						<ul class="nav navbar-nav" sec:authorize="hasRole('ROLE_ADMIN')">
+							<li><a href="#" th:href="@{/admin}">Admin</a></li>
+						</ul>
 					
 						<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
 							<li><a href="#" th:href="@{/warbands}">Warbands</a></li>
