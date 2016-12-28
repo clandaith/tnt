@@ -100,6 +100,10 @@ public class TntCharacter {
 	@JoinTable(name = "warband_character_grenade_link", joinColumns = @JoinColumn(name = "warband_character_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "grenade_id", referencedColumnName = "id"))
 	private Set<Grenade> grenades;
 
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "warband_character_injuries_link", joinColumns = @JoinColumn(name = "warband_character_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "injury_id", referencedColumnName = "id"))
+	private Set<Injury> injuries;
+
 	public TntCharacter() {
 	}
 
@@ -299,5 +303,13 @@ public class TntCharacter {
 	@Override
 	public String toString() {
 		return getId() + " :: " + getName();
+	}
+
+	public Set<Injury> getInjuries() {
+		return injuries;
+	}
+
+	public void setInjuries(Set<Injury> injuries) {
+		this.injuries = injuries;
 	}
 }

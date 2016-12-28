@@ -9,6 +9,8 @@ import com.dev801.tnt.data.Armor;
 import com.dev801.tnt.data.Detriment;
 import com.dev801.tnt.data.Equipment;
 import com.dev801.tnt.data.GeneralAbility;
+import com.dev801.tnt.data.Grenade;
+import com.dev801.tnt.data.Injury;
 import com.dev801.tnt.data.MeleeWeapon;
 import com.dev801.tnt.data.Mutation;
 import com.dev801.tnt.data.RangedWeapon;
@@ -27,7 +29,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class PdfPrinter {
 	private static final Logger LOGGER = Logger.getLogger(PdfPrinter.class);
 
-	public static byte[] printWarband(Warband warband, User user) {
+	public static byte[] printWarband(Warband warband, User user, boolean showRules) {
 		try {
 			Document document = new Document();
 
@@ -39,7 +41,7 @@ public class PdfPrinter {
 			handleWarbandSection(warband, chapter);
 
 			chapter.setNumberDepth(0);
-			handleCharacters(warband, chapter, user);
+			handleCharacters(warband, chapter, user, showRules);
 
 			document.add(chapter);
 			document.close();
@@ -59,23 +61,23 @@ public class PdfPrinter {
 		chapter.add(p);
 	}
 
-	private static void handleCharacters(Warband warband, Chapter chapter, User user) {
+	private static void handleCharacters(Warband warband, Chapter chapter, User user, boolean showRules) {
 		for (TntCharacter tntCharacter : warband.getTntCharacters()) {
-			handleCharacter(tntCharacter, chapter, user);
+			handleCharacter(tntCharacter, chapter, user, showRules);
 		}
 	}
 
-	private static void handleCharacter(TntCharacter tntCharacter, Chapter chapter, User user) {
+	private static void handleCharacter(TntCharacter tntCharacter, Chapter chapter, User user, boolean showRules) {
 		Paragraph p = new Paragraph("Name: '" + tntCharacter.getName() + "'");
 		chapter.add(p);
 		p = new Paragraph("Background: '" + tntCharacter.getBackground() + "'");
 		chapter.add(p);
 
-		chapter.add(setCharacterStats(tntCharacter, user));
+		chapter.add(setCharacterStats(tntCharacter, user, showRules));
 
 	}
 
-	private static PdfPTable setCharacterStats(TntCharacter tntCharacter, User user) {
+	private static PdfPTable setCharacterStats(TntCharacter tntCharacter, User user, boolean showRules) {
 		PdfPTable pTable = new PdfPTable(1);
 		pTable.setWidthPercentage(100);
 
@@ -83,35 +85,39 @@ public class PdfPrinter {
 		buildStatLine(tntCharacter, pTable);
 
 		if (!tntCharacter.getMutations().isEmpty()) {
-			buildMutationsLine(tntCharacter, pTable, user);
+			buildMutationsLine(tntCharacter, pTable, user, showRules);
 		}
 
 		if (!tntCharacter.getDetriments().isEmpty()) {
-			buildDetrimentsLine(tntCharacter, pTable, user);
+			buildDetrimentsLine(tntCharacter, pTable, user, showRules);
 		}
 
 		if (!tntCharacter.getGeneralAbilities().isEmpty()) {
-			buildSpecialRulesLine(tntCharacter, pTable, user);
+			buildSpecialRulesLine(tntCharacter, pTable, user, showRules);
 		}
 
 		if (!tntCharacter.getEquipment().isEmpty()) {
 			buildEquipmentLine(tntCharacter, pTable);
 		}
 
-		// if(!tntCharacter.getInjuries().isEmpty()){
-		// buildInjuriesLine(tntCharacter, pTable);
-		// }
+		if (!tntCharacter.getInjuries().isEmpty()) {
+			buildInjuriesLine(tntCharacter, pTable, user, showRules);
+		}
 
 		if (!tntCharacter.getArmors().isEmpty()) {
-			buildArmorLine(tntCharacter, pTable, user);
+			buildArmorLine(tntCharacter, pTable, user, showRules);
 		}
 
 		if (!tntCharacter.getRangedWeapons().isEmpty()) {
-			buildRangedWeaponLine(tntCharacter, pTable, user);
+			buildRangedWeaponLine(tntCharacter, pTable, user, showRules);
 		}
 
 		if (!tntCharacter.getMeleeWeapons().isEmpty()) {
-			buildMeleeWeaponLine(tntCharacter, pTable, user);
+			buildMeleeWeaponLine(tntCharacter, pTable, user, showRules);
+		}
+
+		if (!tntCharacter.getGrenades().isEmpty()) {
+			buildGrenadeLine(tntCharacter, pTable, user);
 		}
 
 		return pTable;
@@ -177,15 +183,15 @@ public class PdfPrinter {
 		outerTable.addCell(equipmentTable);
 	}
 
-	private static void buildMutationsLine(TntCharacter tntCharacter, PdfPTable outerTable, User user) {
+	private static void buildMutationsLine(TntCharacter tntCharacter, PdfPTable outerTable, User user, boolean showRules) {
 		PdfPTable mutationTable = new PdfPTable(8);
 		mutationTable.setWidthPercentage(100);
 		mutationTable.addCell("Mutations");
 
 		String mutationText = "";
 		for (Mutation mutation : tntCharacter.getMutations()) {
-			mutationText += mutation.getName() + " [" + mutation.getMutationTypeName() + "] "
-							+ (user.getShowDetails() ? " : " + mutation.getDescription() : "") + ", ";
+			mutationText += mutation.getName()
+							+ (showRules ? " [" + mutation.getMutationTypeName() + "]  : " + mutation.getDescription() : "") + ", ";
 		}
 
 		PdfPCell cell = new PdfPCell(new Phrase(mutationText));
@@ -195,15 +201,15 @@ public class PdfPrinter {
 		outerTable.addCell(mutationTable);
 	}
 
-	private static void buildDetrimentsLine(TntCharacter tntCharacter, PdfPTable outerTable, User user) {
+	private static void buildDetrimentsLine(TntCharacter tntCharacter, PdfPTable outerTable, User user, boolean showRules) {
 		PdfPTable detrimentTable = new PdfPTable(8);
 		detrimentTable.setWidthPercentage(100);
 		detrimentTable.addCell("Detriments");
 
 		String detrimentsText = "";
 		for (Detriment detriment : tntCharacter.getDetriments()) {
-			detrimentsText += detriment.getName() + " [" + detriment.getDetrimentTypeId() + "] "
-							+ (user.getShowDetails() ? " : " + detriment.getDescription() : "") + ", ";
+			detrimentsText += detriment.getName()
+							+ (showRules ? " [" + detriment.getDetrimentTypeId() + "] : " + detriment.getDescription() : "") + ", ";
 		}
 
 		PdfPCell cell = new PdfPCell(new Phrase(detrimentsText));
@@ -213,14 +219,14 @@ public class PdfPrinter {
 		outerTable.addCell(detrimentTable);
 	}
 
-	private static void buildSpecialRulesLine(TntCharacter tntCharacter, PdfPTable outerTable, User user) {
+	private static void buildSpecialRulesLine(TntCharacter tntCharacter, PdfPTable outerTable, User user, boolean showRules) {
 		PdfPTable specialRulesTable = new PdfPTable(8);
 		specialRulesTable.setWidthPercentage(100);
 		specialRulesTable.addCell("Special Rules");
 
 		String specialRulesText = "";
 		for (GeneralAbility generalAbility : tntCharacter.getGeneralAbilities()) {
-			specialRulesText += generalAbility.getName() + (user.getShowDetails() ? ": " + generalAbility.getDescription() : "") + ", ";
+			specialRulesText += generalAbility.getName() + (showRules ? ": " + generalAbility.getDescription() : "") + ", ";
 		}
 		PdfPCell cell = new PdfPCell(new Phrase(specialRulesText));
 		cell.setColspan(7);
@@ -230,24 +236,49 @@ public class PdfPrinter {
 
 	}
 
-	// private static void buildInjuriesLine(TntCharacter tntCharacter, PdfPTable outerTable) {
-	// PdfPTable injuryTable = new PdfPTable(8);
-	// injuryTable.addCell("Injuries");
-	//
-	// // String equipmentText = "";
-	// // for (Equipment equipment : tntCharacter.getEquipment()) {
-	// // equipmentText += equipment.getItem() + ", ";
-	// // }
-	// PdfPCell cell = new PdfPCell(new Phrase(""));
-	// cell.setColspan(7);
-	// injuryTable.addCell(cell);
-	//
-	// outerTable.addCell(injuryTable);
-	//
-	// }
+	private static void buildInjuriesLine(TntCharacter tntCharacter, PdfPTable outerTable, User user, boolean showRules) {
+		PdfPTable injuryTable = new PdfPTable(8);
+		injuryTable.addCell("Injuries");
 
-	private static void buildArmorLine(TntCharacter tntCharacter, PdfPTable outerTable, User user) {
-		PdfPTable armorTable = new PdfPTable(7);
+		String injuriesText = "";
+		for (Injury injury : tntCharacter.getInjuries()) {
+			injuriesText += injury.getName() + (showRules ? ": " + injury.getDescription() : "") + ", ";
+		}
+
+		PdfPCell cell = new PdfPCell(new Phrase(injuriesText));
+		cell.setColspan(7);
+		injuryTable.addCell(cell);
+
+		outerTable.addCell(injuryTable);
+	}
+
+	private static void buildArmorLine(TntCharacter tntCharacter, PdfPTable outerTable, User user, boolean showRules) {
+
+		PdfPTable rangedWeaponsTable = new PdfPTable(8);
+		rangedWeaponsTable.setWidthPercentage(100);
+		rangedWeaponsTable.addCell("Armor");
+
+		PdfPCell cell;
+
+		if (showRules) {
+			cell = new PdfPCell(buildArmorBlah(tntCharacter));
+		} else {
+			String armorText = "";
+			for (Armor armor : tntCharacter.getArmors()) {
+				armorText += armor.getType() + ", ";
+			}
+
+			cell = new PdfPCell(new Phrase(armorText));
+		}
+
+		cell.setColspan(7);
+		rangedWeaponsTable.addCell(cell);
+
+		outerTable.addCell(rangedWeaponsTable);
+	}
+
+	private static PdfPTable buildArmorBlah(TntCharacter tntCharacter) {
+		PdfPTable armorTable = new PdfPTable(5);
 		armorTable.setWidthPercentage(100);
 
 		armorTable.addCell("Type");
@@ -294,15 +325,26 @@ public class PdfPrinter {
 			}
 		}
 
-		outerTable.addCell(armorTable);
+		return armorTable;
 	}
 
-	private static void buildRangedWeaponLine(TntCharacter tntCharacter, PdfPTable outerTable, User user) {
+	private static void buildRangedWeaponLine(TntCharacter tntCharacter, PdfPTable outerTable, User user, boolean showRules) {
 		PdfPTable rangedWeaponsTable = new PdfPTable(8);
 		rangedWeaponsTable.setWidthPercentage(100);
 		rangedWeaponsTable.addCell("Ranged Weapons");
 
-		PdfPCell cell = new PdfPCell(buildRangedWeaponTable(tntCharacter.getRangedWeapons()));
+		PdfPCell cell;
+		if (showRules) {
+			cell = new PdfPCell(buildRangedWeaponTable(tntCharacter.getRangedWeapons()));
+		} else {
+			String rangedWeaponsText = "";
+			for (RangedWeapon weapon : tntCharacter.getRangedWeapons()) {
+				rangedWeaponsText += weapon.getType() + ", ";
+			}
+
+			cell = new PdfPCell(new Phrase(rangedWeaponsText));
+		}
+
 		cell.setColspan(7);
 		rangedWeaponsTable.addCell(cell);
 
@@ -340,12 +382,24 @@ public class PdfPrinter {
 		return weaponTable;
 	}
 
-	private static void buildMeleeWeaponLine(TntCharacter tntCharacter, PdfPTable outerTable, User user) {
+	private static void buildMeleeWeaponLine(TntCharacter tntCharacter, PdfPTable outerTable, User user, boolean showRules) {
 		PdfPTable meleeWeaponsTable = new PdfPTable(8);
 		meleeWeaponsTable.setWidthPercentage(100);
 		meleeWeaponsTable.addCell("Melee Weapons");
 
-		PdfPCell cell = new PdfPCell(buildMeleeWeaponTable(tntCharacter.getMeleeWeapons()));
+		PdfPCell cell;
+
+		if (showRules) {
+			cell = new PdfPCell(buildMeleeWeaponTable(tntCharacter.getMeleeWeapons()));
+		} else {
+			String meleeWeaponsText = "";
+			for (MeleeWeapon weapon : tntCharacter.getMeleeWeapons()) {
+				meleeWeaponsText += weapon.getType() + ", ";
+			}
+
+			cell = new PdfPCell(new Phrase(meleeWeaponsText));
+		}
+
 		cell.setColspan(7);
 		meleeWeaponsTable.addCell(cell);
 
@@ -384,5 +438,23 @@ public class PdfPrinter {
 		}
 
 		return weaponTable;
+	}
+
+	private static void buildGrenadeLine(TntCharacter tntCharacter, PdfPTable outerTable, User user) {
+
+		PdfPTable rangedWeaponsTable = new PdfPTable(8);
+		rangedWeaponsTable.setWidthPercentage(100);
+		rangedWeaponsTable.addCell("Grenades");
+
+		String grenadeText = "";
+		for (Grenade grenade : tntCharacter.getGrenades()) {
+			grenadeText += grenade.getType() + ", ";
+		}
+
+		PdfPCell cell = new PdfPCell(new Phrase(grenadeText));
+		cell.setColspan(7);
+		rangedWeaponsTable.addCell(cell);
+
+		outerTable.addCell(rangedWeaponsTable);
 	}
 }
