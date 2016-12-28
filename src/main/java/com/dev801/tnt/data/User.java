@@ -1,11 +1,15 @@
 package com.dev801.tnt.data;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "users")
@@ -28,6 +32,10 @@ public class User {
 
 	private Boolean enabled;
 	private Boolean showDetails;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "date_added")
+	private Date dateAdded;
 
 	public Integer getId() {
 		return id;
@@ -91,5 +99,13 @@ public class User {
 
 	public void setShowDetails(Boolean showDetails) {
 		this.showDetails = showDetails;
+	}
+
+	public Date getDateAdded() {
+		return dateAdded;
+	}
+
+	public void setDateAdded(Date dateAdded) {
+		this.dateAdded = dateAdded;
 	}
 }

@@ -1,5 +1,7 @@
 package com.dev801.tnt.controllers;
 
+import java.util.Date;
+
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -42,6 +44,8 @@ public class RegisterController {
 		user.setPassword(bcryptEncoder.encode(user.getPassword()));
 
 		user.setEnabled(false);
+		user.setShowDetails(false);
+		user.setDateAdded(new Date());
 		usersRepository.save(user);
 
 		UserRole userRole = new UserRole();
