@@ -9,6 +9,8 @@ $(document).ready(function () {
 //		$('#warbandForm').attr('target', '_blank');
 //		$("#warbandForm").attr("action", "/print");
 //		$('#warbandForm').submit();
+//		$('#warbandForm').attr('target', '_self');
+//		$("#warbandForm").attr("action", "/warband");
 //	});	
 
 	

@@ -40,7 +40,7 @@ public class RegisterController {
 		LOGGER.info("Creating a new user: " + user.getUsername());
 
 		BCryptPasswordEncoder bcryptEncoder = new BCryptPasswordEncoder();
-		LOGGER.info("Password: " + user.getPassword() + " :: " + bcryptEncoder.encode(user.getPassword()));
+		// LOGGER.info("Password: " + user.getPassword() + " :: " + bcryptEncoder.encode(user.getPassword()));
 		user.setPassword(bcryptEncoder.encode(user.getPassword()));
 
 		user.setEnabled(false);

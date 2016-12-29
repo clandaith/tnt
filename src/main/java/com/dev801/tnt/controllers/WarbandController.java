@@ -40,6 +40,8 @@ public class WarbandController extends ControllerHelper {
 				model.addAttribute("returnMessage", "There was a problem getting that warband.  Please try again.");
 				return ProjectHelpers.WARBANDS_PAGE;
 			}
+		} else {
+			warband.addTntCharacter(new TntCharacter(ProjectHelpers.getIdHolder(), "New Character"));
 		}
 
 		model.addAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
