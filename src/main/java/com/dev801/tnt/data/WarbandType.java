@@ -10,16 +10,18 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "unit_type")
-public class UnitType {
+@Table(name = "warband_types")
+public class WarbandType {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
 	private String name;
 
-	@OneToMany(mappedBy = "unitType")
-	private Set<TntCharacter> tntCharacters;
+	@OneToMany(mappedBy = "warbandType")
+	private Set<WarbandUnit> warbandUnits;
+
+	@OneToMany(mappedBy = "warbandTypeId")
+	private Set<Warband> warbands;
 
 	public Integer getId() {
 		return id;
@@ -37,12 +39,12 @@ public class UnitType {
 		this.name = name;
 	}
 
-	public Set<TntCharacter> getTntCharacters() {
-		return tntCharacters;
+	public Set<WarbandUnit> getWarbandUnits() {
+		return warbandUnits;
 	}
 
-	public void setTntCharacters(Set<TntCharacter> tntCharacters) {
-		this.tntCharacters = tntCharacters;
+	public void setWarbandUnits(Set<WarbandUnit> warbandUnits) {
+		this.warbandUnits = warbandUnits;
 	}
 
 }

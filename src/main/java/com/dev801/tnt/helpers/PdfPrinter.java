@@ -134,8 +134,8 @@ public class PdfPrinter {
 		basicInfoTable.addCell("XP - Total");
 		basicInfoTable.addCell("Base Cost");
 
-		basicInfoTable.addCell(tntCharacter.getTitle());
-		basicInfoTable.addCell(tntCharacter.getUnitTypeId().toString());
+		basicInfoTable.addCell(tntCharacter.getWarbandUnit().getTitle());
+		basicInfoTable.addCell(tntCharacter.getUnitType().getName());
 		basicInfoTable.addCell("");
 		basicInfoTable.addCell("");
 		basicInfoTable.addCell("");

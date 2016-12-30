@@ -27,6 +27,17 @@
 						<input type="text" class="form-control" th:field="*{warbandName}" placeholder="Enter a Warband Name" />
 					</div>
 				</div>
+				
+					<div class="form-group character-trait">
+						<label class="col-sm-2 control-label">Warband Type:</label>
+						<div class="col-sm-10">
+
+							<select th:field="*{warbandTypeId}" class="warbandType selectpicker" data-width="100%"
+								data-actions-box="true" data-header="Select warband type" id="warbandTypeId">
+									<option th:each="warbandType : ${warbandTypes}" th:value="${warbandType.id}" th:text="${warbandType.name}" />
+								</select>
+						</div>
+					</div>
 
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Background:</label>
@@ -91,22 +102,30 @@
 							<input type="text" class="form-control nameTabChange" th:field="*{tntCharacters[__${rowStat.index}__].Name}" 
 								th:attr="nameFieldId=*{tntCharacters[__${rowStat.index}__].id}"/>
 						</div>
-					</div>				
-		
+					</div>			
 			
 					<div class="form-group character-name">
 						<label class="col-sm-2 control-label">Title:</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" th:field="*{tntCharacters[__${rowStat.index}__].title}" />
+							<select class="form-control" th:field="*{tntCharacters[__${rowStat.index}__].warbandUnit}" >							
+									<option th:each="warbandUnit : ${warbandUnits}" th:value="${warbandUnit.id}" th:text="${warbandUnit.title}" />
+								</select>
 						</div>
 					</div>
 			
 					<div class="form-group character-name">
 						<label class="col-sm-2 control-label">Unit Type:</label>
 						<div class="col-sm-10">
-							<select class="form-control" th:field="*{tntCharacters[__${rowStat.index}__].unitTypeId}" >							
+							<select class="form-control" th:field="*{tntCharacters[__${rowStat.index}__].unitType}" >							
 									<option th:each="unitType : ${unitTypesList}" th:value="${unitType.id}" th:text="${unitType.name}" />
 								</select>
+						</div>
+					</div>
+			
+					<div class="form-group character-name">
+						<label class="col-sm-2 control-label">Base Cost:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{tntCharacters[__${rowStat.index}__].baseCost}" />
 						</div>
 					</div>
 			
@@ -170,13 +189,6 @@
 							<select class="form-control"  th:field="*{tntCharacters[__${rowStat.index}__].mettle}">
 								<option th:each="i : ${#numbers.sequence(0, 10)}" th:value="${i}" th:text="${i}" />
 							</select>
-						</div>
-					</div>
-			
-					<div class="form-group character-name">
-						<label class="col-sm-2 control-label">Base Cost:</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" th:field="*{tntCharacters[__${rowStat.index}__].baseCost}" />
 						</div>
 					</div>
 		

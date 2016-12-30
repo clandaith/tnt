@@ -21,6 +21,8 @@ import com.dev801.tnt.repositories.SkillsRepository;
 import com.dev801.tnt.repositories.SpecialRulesRepository;
 import com.dev801.tnt.repositories.TntCharactersRepository;
 import com.dev801.tnt.repositories.UnitTypesRepository;
+import com.dev801.tnt.repositories.WarbandTypesRepository;
+import com.dev801.tnt.repositories.WarbandUnitsRepository;
 import com.dev801.tnt.repositories.WarbandsRepository;
 import com.dev801.tnt.service.UsersService;
 import com.dev801.tnt.service.WarbandService;
@@ -61,6 +63,10 @@ public class ControllerHelper {
 	WarbandService warbandService;
 	@Autowired
 	InjuriesRepository injuriesRepository;
+	@Autowired
+	WarbandTypesRepository warbandTypesRepository;
+	@Autowired
+	WarbandUnitsRepository warbandUnitsRepository;
 
 	protected User getUser(HttpSession session) {
 		User user = usersService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -82,5 +88,7 @@ public class ControllerHelper {
 		model.addAttribute("specialRulesList", Lists.newArrayList(specialRulesRepository.findAll()));
 		model.addAttribute("unitTypesList", Lists.newArrayList(unitTypesRepository.findAll()));
 		model.addAttribute("injuriesList", Lists.newArrayList(injuriesRepository.findAll()));
+		model.addAttribute("warbandTypes", Lists.newArrayList(warbandTypesRepository.findAll()));
+		model.addAttribute("warbandUnits", Lists.newArrayList(warbandUnitsRepository.findAll()));
 	}
 }
