@@ -33,7 +33,7 @@
 						<div class="col-sm-10">
 
 							<select th:field="*{warbandTypeId}" class="warbandType selectpicker" data-width="100%"
-								data-actions-box="true" data-header="Select warband type" id="warbandTypeId">
+								data-max-options="1" th:multiple="true" data-header="Select a warband type" id="warbandTypeId">
 									<option th:each="warbandType : ${warbandTypes}" th:value="${warbandType.id}" th:text="${warbandType.name}" />
 								</select>
 						</div>
@@ -107,7 +107,8 @@
 					<div class="form-group character-name">
 						<label class="col-sm-2 control-label">Title:</label>
 						<div class="col-sm-10">
-							<select class="form-control" th:field="*{tntCharacters[__${rowStat.index}__].warbandUnit}" >							
+							<select class="form-control unitTitle selectpicker" th:field="*{tntCharacters[__${rowStat.index}__].warbandUnit}" 
+							 data-width="100%" data-max-options="1" th:multiple="true" data-header="Select a Title">							
 									<option th:each="warbandUnit : ${warbandUnits}" th:value="${warbandUnit.id}" th:text="${warbandUnit.title}" />
 								</select>
 						</div>
@@ -202,7 +203,7 @@
 								data-live-search="true" data-actions-box="true" data-header="Select armor" th:id="'asdf-' + *{tntCharacters[__${rowStat.index}__].id}">
 							
 									<option th:each="armor : ${armorList}" th:value="${armor.id}" th:text="${armor.type}" 
-										th:attr="data-subtext=${armor.costByWound1} + ' Cost'"/>
+										th:attr="data-subtext=${armor.costByWound1} + ' Cost, Rarity: ' + ${armor.rarityLevelName}"/>
 								</select>
 						</div>
 					</div>
@@ -228,7 +229,8 @@
 							<select th:field="*{tntCharacters[__${rowStat.index}__].equipment}" class="equipments selectpicker" th:multiple="true" data-width="100%"
 								data-live-search="true" data-actions-box="true" data-header="Select equipment" th:id="'trait-' + *{tntCharacters[__${rowStat.index}__].id}">
 							
-									<option th:each="equipment : ${equipmentList}" th:value="${equipment.id}" th:text="${equipment.item}" />
+									<option th:each="equipment : ${equipmentList}" th:value="${equipment.id}" th:text="${equipment.item}"
+										th:attr="data-subtext=${equipment.cost} + ' Cost, Rarity: ' + ${equipment.rarityLevelName}" />
 								</select>
 						</div>
 					</div>
@@ -252,7 +254,8 @@
 							<select th:field="*{tntCharacters[__${rowStat.index}__].meleeWeapons}" class="meleeWeapons selectpicker" th:multiple="true" data-width="100%"
 								data-live-search="true" data-actions-box="true" data-header="Select melee weapons" th:id="'trait-' + *{tntCharacters[__${rowStat.index}__].id}">
 							
-									<option th:each="meleeWeapon : ${meleeWeaponsList}" th:value="${meleeWeapon.id}" th:text="${meleeWeapon.type}" />
+									<option th:each="meleeWeapon : ${meleeWeaponsList}" th:value="${meleeWeapon.id}" th:text="${meleeWeapon.type}"
+										th:attr="data-subtext=${meleeWeapon.cost} + ' Cost, Rarity: ' + ${meleeWeapon.rarityLevelName}" />
 								</select>
 						</div>
 					</div>
@@ -263,9 +266,12 @@
 
 							<select th:field="*{tntCharacters[__${rowStat.index}__].rangedWeapons}" class="rangedWeapons selectpicker" th:multiple="true" data-width="100%"
 								data-live-search="true" data-actions-box="true" data-header="Select ranged weapons" th:id="'trait-' + *{tntCharacters[__${rowStat.index}__].id}">
-							
-									<option th:each="rangedWeapon : ${rangedWeaponsList}" th:value="${rangedWeapon.id}" th:text="${rangedWeapon.type}" />
-								</select>
+														
+								<optgroup th:each="rangedGroup : ${rangedOptgroupList}" th:label="${rangedGroup.key}">									
+									<option th:each="rangedWeapon : ${rangedGroup.value}" th:value="${rangedWeapon.id}" th:text="${rangedWeapon.type}" 
+										th:attr="data-subtext=${rangedWeapon.cost} + ' Cost, Rarity: ' + ${rangedWeapon.rarityLevelName}"/>
+								</optgroup>	
+							</select>
 						</div>
 					</div>
 				
@@ -276,10 +282,12 @@
 							<select th:field="*{tntCharacters[__${rowStat.index}__].mutations}" class="mutations selectpicker" th:multiple="true" data-width="100%"
 								data-live-search="true" data-actions-box="true" data-header="Select mutations" th:id="'trait-' + *{tntCharacters[__${rowStat.index}__].id}">
 							
-									<option th:each="mutation : ${mutationsList}" th:value="${mutation.id}" th:text="${mutation.name}" />
-								</select>
+								<optgroup th:each="mutationGroup : ${mutationOptgroupList}" th:label="${mutationGroup.key}">
+									<option th:each="mutation : ${mutationGroup.value}" th:value="${mutation.id}" th:text="${mutation.name}" />
+								</optgroup>				
+							</select>
 						</div>
-					</div>
+					</div>					
 				
 					<div class="form-group character-trait">
 						<label class="col-sm-2 control-label">Skills:</label>
@@ -288,8 +296,10 @@
 							<select th:field="*{tntCharacters[__${rowStat.index}__].skills}" class="skills selectpicker" th:multiple="true" data-width="100%"
 								data-live-search="true" data-actions-box="true" data-header="Select skills" th:id="'trait-' + *{tntCharacters[__${rowStat.index}__].id}">
 							
-									<option th:each="skill : ${skillsList}" th:value="${skill.id}" th:text="${skill.name}" />
-								</select>
+								<optgroup th:each="skillGroup : ${skillOptgroupList}" th:label="${skillGroup.key}">
+									<option th:each="skill : ${skillGroup.value}" th:value="${skill.id}" th:text="${skill.name}" />
+								</optgroup>				
+							</select>
 						</div>
 					</div>
 				
@@ -300,7 +310,8 @@
 							<select th:field="*{tntCharacters[__${rowStat.index}__].grenades}" class="grenades selectpicker" th:multiple="true" data-width="100%"
 								data-live-search="true" data-actions-box="true" data-header="Select grenades" th:id="'trait-' + *{tntCharacters[__${rowStat.index}__].id}">
 							
-									<option th:each="grenade : ${grenadesList}" th:value="${grenade.id}" th:text="${grenade.type}" />
+									<option th:each="grenade : ${grenadesList}" th:value="${grenade.id}" th:text="${grenade.type}" 
+										th:attr="data-subtext=${grenade.cost} + ' Cost, Rarity: ' + ${grenade.rarityLevelName}"/>
 								</select>
 						</div>
 					</div>

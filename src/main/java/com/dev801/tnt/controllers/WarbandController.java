@@ -72,6 +72,16 @@ public class WarbandController extends ControllerHelper {
 					HttpSession session) {
 		LOGGER.info("Persist warband.  User: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
+		if (warband.getWarbandName() == null || warband.getWarbandTypeId() == null) {
+			LOGGER.info("The warband name is null");
+			model.addAttribute("warbandNameError", "The warband needs a name that it will be known throughout the wastelands!");
+
+			session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
+			model.addAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
+			loadModelVariables(model);
+			return ProjectHelpers.WARBAND_PAGE;
+		}
+
 		warband.setUserId(getUser(session).getId());
 		warband.setDateCreated(new Date());
 

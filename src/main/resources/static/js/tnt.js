@@ -31,7 +31,32 @@ $(document).ready(function () {
 			return false;
 		}
 	});
+	
+	$(".unitTitle").change(function () {
+		var selectedTitleId = $(this).val();
+		var tntCharId = $(this).attr("id");
+		
+		tntCharId = tntCharId.replace("tntCharacters","");
+		tntCharId = tntCharId.replace(".warbandUnit","");
+		
+		//console.log("selectedId: " + selectedTitleId + " :: tntCharId: " + tntCharId);
+		
+		$(jq("tntCharacters" + tntCharId + ".baseCost")).val(warbandUnits[selectedTitleId].baseCost);
+		$(jq("tntCharacters" + tntCharId + ".defense")).val(warbandUnits[selectedTitleId].defense);
+		$(jq("tntCharacters" + tntCharId + ".wounds")).val(warbandUnits[selectedTitleId].wounds);
+		$(jq("tntCharacters" + tntCharId + ".move")).val(warbandUnits[selectedTitleId].move);
+		$(jq("tntCharacters" + tntCharId + ".melee")).val(warbandUnits[selectedTitleId].melee);
+		$(jq("tntCharacters" + tntCharId + ".ranged")).val(warbandUnits[selectedTitleId].ranged);
+		$(jq("tntCharacters" + tntCharId + ".strength")).val(warbandUnits[selectedTitleId].strength);
+		$(jq("tntCharacters" + tntCharId + ".mettle")).val(warbandUnits[selectedTitleId].mettle);
+		
+	});
+	
 });
+
+function jq( myid ) {
+    return "#" + myid.replace( /(:|\.|\[|\]|,|=)/g, "\\$1" );
+}
 
 
 function openWarbandCharacter(evt, warbandCharacterId) {

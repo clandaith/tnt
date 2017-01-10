@@ -1,6 +1,8 @@
 package com.dev801.tnt.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -10,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 
+import com.dev801.tnt.data.Mutation;
+import com.dev801.tnt.data.RangedWeapon;
+import com.dev801.tnt.data.Skill;
 import com.dev801.tnt.data.User;
 import com.dev801.tnt.data.WarbandUnit;
 import com.dev801.tnt.data.WarbandUnitJSON;
@@ -100,7 +105,43 @@ public class ControllerHelper {
 		for (WarbandUnit warbandUnit : Lists.newArrayList(warbandUnitsRepository.findAll())) {
 			jsonWarbandUnits.put(warbandUnit.getId(), new WarbandUnitJSON(warbandUnit));
 		}
-
 		model.addAttribute("warbandUnitsJson", jsonWarbandUnits);
+
+		// +++++++++++++++++++++++++++++++++++++++++++++++
+
+		Map<String, List<Skill>> skillOptgroupList = new HashMap<>();
+		for (Skill skill : skillsRepository.findAll()) {
+			if (!skillOptgroupList.containsKey(skill.getSkillTypeName())) {
+				skillOptgroupList.put(skill.getSkillTypeName(), new ArrayList<Skill>());
+			}
+
+			skillOptgroupList.get(skill.getSkillTypeName()).add(skill);
+		}
+		model.addAttribute("skillOptgroupList", skillOptgroupList);
+
+		// +++++++++++++++++++++++++++++++++++++++++++++++
+
+		Map<String, List<Mutation>> mutationOptgroupList = new HashMap<>();
+		for (Mutation mutation : mutationsRepository.findAll()) {
+			if (!mutationOptgroupList.containsKey(mutation.getMutationTypeName())) {
+				mutationOptgroupList.put(mutation.getMutationTypeName(), new ArrayList<Mutation>());
+			}
+
+			mutationOptgroupList.get(mutation.getMutationTypeName()).add(mutation);
+		}
+		model.addAttribute("mutationOptgroupList", mutationOptgroupList);
+
+		// +++++++++++++++++++++++++++++++++++++++++++++++
+
+		Map<String, List<RangedWeapon>> rangedOptgroupList = new HashMap<>();
+		for (RangedWeapon rangedWeapon : rangedWeaponsRepository.findAll()) {
+			if (!rangedOptgroupList.containsKey(rangedWeapon.getCatagoryName())) {
+				rangedOptgroupList.put(rangedWeapon.getCatagoryName(), new ArrayList<RangedWeapon>());
+			}
+
+			rangedOptgroupList.get(rangedWeapon.getCatagoryName()).add(rangedWeapon);
+		}
+		model.addAttribute("rangedOptgroupList", rangedOptgroupList);
+
 	}
 }
