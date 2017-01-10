@@ -1,5 +1,8 @@
 package com.dev801.tnt.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -8,6 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 
 import com.dev801.tnt.data.User;
+import com.dev801.tnt.data.WarbandUnit;
+import com.dev801.tnt.data.WarbandUnitJSON;
 import com.dev801.tnt.repositories.ArmorsRepository;
 import com.dev801.tnt.repositories.DetrimentsRepository;
 import com.dev801.tnt.repositories.EquipmentRepository;
@@ -90,5 +95,12 @@ public class ControllerHelper {
 		model.addAttribute("injuriesList", Lists.newArrayList(injuriesRepository.findAll()));
 		model.addAttribute("warbandTypes", Lists.newArrayList(warbandTypesRepository.findAll()));
 		model.addAttribute("warbandUnits", Lists.newArrayList(warbandUnitsRepository.findAll()));
+
+		Map<Integer, WarbandUnitJSON> jsonWarbandUnits = new HashMap<>();
+		for (WarbandUnit warbandUnit : Lists.newArrayList(warbandUnitsRepository.findAll())) {
+			jsonWarbandUnits.put(warbandUnit.getId(), new WarbandUnitJSON(warbandUnit));
+		}
+
+		model.addAttribute("warbandUnitsJson", jsonWarbandUnits);
 	}
 }
