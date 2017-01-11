@@ -36,7 +36,7 @@ public class AdminController extends ControllerHelper {
 		if (user == null) {
 			model.addAttribute("message", "User id '" + userId + "' doesn't exist.");
 		} else {
-			user.setEnabled(true);
+			user.setEnabled(!user.getEnabled());
 			usersRepository.save(user);
 			model.addAttribute("message", "'" + user.getUsername() + "' has been enabled.");
 		}
@@ -54,7 +54,7 @@ public class AdminController extends ControllerHelper {
 		if (user == null) {
 			model.addAttribute("message", "User id '" + userId + "' doesn't exist.");
 		} else {
-			user.setShowDetails(true);
+			user.setShowDetails(!user.getShowDetails());
 			usersRepository.save(user);
 			model.addAttribute("message", "'" + user.getUsername() + "' has been set to show details.");
 		}
