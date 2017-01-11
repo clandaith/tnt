@@ -42,6 +42,8 @@ public class Warband {
 	@Column(name = "user_id")
 	private Integer userId;
 
+	private String notes;
+
 	@NotNull
 	@OneToMany(mappedBy = "warband")
 	private List<TntCharacter> tntCharacters = new ArrayList<>();
@@ -119,5 +121,13 @@ public class Warband {
 
 	public void setWarbandTypeId(WarbandType warbandTypeId) {
 		this.warbandTypeId = warbandTypeId;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 }
