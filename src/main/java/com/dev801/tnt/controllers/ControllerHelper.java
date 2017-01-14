@@ -31,10 +31,11 @@ import com.dev801.tnt.repositories.SkillsRepository;
 import com.dev801.tnt.repositories.SpecialRulesRepository;
 import com.dev801.tnt.repositories.TntCharactersRepository;
 import com.dev801.tnt.repositories.UnitTypesRepository;
+import com.dev801.tnt.repositories.UsersRepository;
 import com.dev801.tnt.repositories.WarbandTypesRepository;
 import com.dev801.tnt.repositories.WarbandUnitsRepository;
 import com.dev801.tnt.repositories.WarbandsRepository;
-import com.dev801.tnt.service.UsersService;
+import com.dev801.tnt.service.ForgotPasswordService;
 import com.dev801.tnt.service.WarbandService;
 import com.google.common.collect.Lists;
 
@@ -68,7 +69,7 @@ public class ControllerHelper {
 	@Autowired
 	UnitTypesRepository unitTypesRepository;
 	@Autowired
-	UsersService usersService;
+	UsersRepository usersRepository;
 	@Autowired
 	WarbandService warbandService;
 	@Autowired
@@ -77,11 +78,13 @@ public class ControllerHelper {
 	WarbandTypesRepository warbandTypesRepository;
 	@Autowired
 	WarbandUnitsRepository warbandUnitsRepository;
+	@Autowired
+	ForgotPasswordService forgotPasswordService;
 
 	protected User getUser(HttpSession session) {
-		User user = usersService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		User user = usersRepository.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
-		LOGGER.info("Email address: " + user.getEmailAddress());
+		LOGGER.info("User: " + user.getUsername());
 		return user;
 	}
 

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "users")
@@ -20,6 +21,9 @@ public class User {
 
 	private String username;
 	private String password;
+
+	@Transient
+	private String password2;
 
 	@Column(name = "first_name")
 	private String firstName;
@@ -107,5 +111,13 @@ public class User {
 
 	public void setDateAdded(Date dateAdded) {
 		this.dateAdded = dateAdded;
+	}
+
+	public String getPassword2() {
+		return password2;
+	}
+
+	public void setPassword2(String password2) {
+		this.password2 = password2;
 	}
 }

@@ -23,7 +23,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		//authorize requests	
 		httpSecurity.authorizeRequests()
 						.antMatchers("/", "/index", "/about801dev", "/roadmap", "/forgotpassword", "/register").permitAll()
-						.antMatchers("/warbands", "/warband", "/character", "/print", "/verify_logout").access("hasRole('USER') or hasRole('ADMIN')")
+						.antMatchers("/warbands", "/warband", "/character", "/print", "/verify_logout", "/useradmin").access("hasRole('USER') or hasRole('ADMIN')")
 						.antMatchers("/admin/**", "/manage/**").access("hasRole('ADMIN')")
 						.anyRequest().authenticated()
 							.and()
