@@ -35,7 +35,7 @@ public class ForgotPasswordService {
 		if (user != null) {
 			String newPassword = generateRandomPassword();
 
-			LOGGER.info(username + " :: " + newPassword);
+			LOGGER.info(username + " :: " + newPassword + " :: " + user.getEmailAddress());
 			user.setPassword(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
 			usersRepository.save(user);
 

@@ -28,6 +28,11 @@
 						<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
 							<li><a href="#" th:href="@{/warbands}">Warbands</a></li>
 						</ul>
+
+						<ul class="nav navbar-nav navbar-right" sec:authorize="isAuthenticated()">
+							<li><a href="#" th:href="@{/userinfo}">Account Information <span
+									class="glyphicon glyphicon-log-out"></span></a></li>
+						</ul>
 						
 						<ul class="nav navbar-nav navbar-right" sec:authorize="isAuthenticated()">
 							<li><a href="#" th:href="@{/verify_logout}">Logout <span

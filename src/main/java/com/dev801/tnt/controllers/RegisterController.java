@@ -51,7 +51,7 @@ public class RegisterController {
 		// LOGGER.info("Password: " + user.getPassword() + " :: " + bcryptEncoder.encode(user.getPassword()));
 		user.setPassword(bcryptEncoder.encode(user.getPassword()));
 
-		user.setEnabled(false);
+		user.setEnabled(true);
 		user.setShowDetails(false);
 		user.setDateAdded(new Date());
 		usersRepository.save(user);

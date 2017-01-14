@@ -24,6 +24,8 @@ public class User {
 
 	@Transient
 	private String password2;
+	@Transient
+	private String currentPassword;
 
 	@Column(name = "first_name")
 	private String firstName;
@@ -119,5 +121,13 @@ public class User {
 
 	public void setPassword2(String password2) {
 		this.password2 = password2;
+	}
+
+	public String getCurrentPassword() {
+		return currentPassword;
+	}
+
+	public void setCurrentPassword(String currentPassword) {
+		this.currentPassword = currentPassword;
 	}
 }

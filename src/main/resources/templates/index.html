@@ -16,10 +16,8 @@
 		</p>
 
 		<div  sec:authorize="isAnonymous()">
-			<h2>Welcome!</h2>
-		
 			<div th:if="${param.requestmembership}">
-				<strong>We've received your request for membership. Thanks!</strong>
+				<strong>We've received your request for membership and added you.  You can now log in.  Thanks!</strong>
 			</div>
 		
 			<div>

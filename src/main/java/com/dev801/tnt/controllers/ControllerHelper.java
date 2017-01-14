@@ -84,7 +84,7 @@ public class ControllerHelper {
 	protected User getUser(HttpSession session) {
 		User user = usersRepository.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
-		LOGGER.info("User: " + user.getUsername());
+		LOGGER.info("User from session: " + user.getUsername());
 		return user;
 	}
 
