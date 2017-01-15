@@ -40,6 +40,10 @@ public class PrintController extends ControllerHelper {
 		try {
 			Warband warband = (Warband)session.getAttribute("warband");
 
+			if (warband.getWarbandName() == null) {
+				warband.setWarbandName("Unknown");
+			}
+
 			byte[] warbandBytes = PdfPrinter.printWarband(warband, getUser(session), showRules);
 
 			response.setContentType("application/pdf");
