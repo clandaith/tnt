@@ -5,7 +5,7 @@
 	<title>TNT Warband Builder</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-	<link rel="icon" href="../static/images/favicon.ico" th:href="@{images/favicon.ico}" type="image/x-icon" />
+	<link rel="icon" href="../static/images/favicon.ico" th:href="@{/images/favicon.ico}" type="image/x-icon" />
 
 	<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
 		rel="stylesheet" media="screen" />
@@ -19,12 +19,12 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
-	<script src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
-	<script src="../static/js/bootstrap-tooltip.js" th:src="@{js/bootstrap-tooltip.js}"></script>
-	<script src="../static/js/bootstrap-select.js" th:src="@{js/bootstrap-select.js}"></script>
-	<script src="../static/js/bootstrap-confirmation.js" th:src="@{js/bootstrap-confirmation.js}"></script>
-	<script src="../static/js/bootstrap-submenu.min.js" th:src="@{js/bootstrap-submenu.min.js}"></script>
-	<script src="../static/js/tnt.js" th:src="@{js/tnt.js}"></script>
+	<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+	<script src="../static/js/bootstrap-tooltip.js" th:src="@{/js/bootstrap-tooltip.js}"></script>
+	<script src="../static/js/bootstrap-select.js" th:src="@{/js/bootstrap-select.js}"></script>
+	<script src="../static/js/bootstrap-confirmation.js" th:src="@{/js/bootstrap-confirmation.js}"></script>
+	<script src="../static/js/bootstrap-submenu.min.js" th:src="@{/js/bootstrap-submenu.min.js}"></script>
+	<script src="../static/js/tnt.js" th:src="@{/js/tnt.js}"></script>
 
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -32,15 +32,14 @@
 	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 	
-	  ga('create', 'UA-86943040-1', 'auto');
+	  ga('create', 'UA-3820764-16', 'auto');
 	  ga('send', 'pageview');
-	
 	</script>
 	
   <script>
-  $( function() {
-    $( "#tabs" ).tabs();
-  } );
+	  $( function() {
+	    $( "#tabs" ).tabs();
+	  } );
   </script>
 </head>
 

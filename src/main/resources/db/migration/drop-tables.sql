@@ -9,6 +9,7 @@ drop view armors_view;
 drop view melee_weapons_view;
 drop view ranged_weapons_view;
 drop view grenades_view;
+drop view warband_unit_types_view;
 
 drop table warband_character_armor_link;
 drop table warband_character_detriment_link;
@@ -20,8 +21,16 @@ drop table warband_character_skills_link;
 drop table warband_character_general_abilities_link;
 drop table warband_character_grenade_link;
 
+
+drop table warband_character_injuries_link;
+drop table injuries;
+
 drop table warband_character;
 drop table warband;
+
+drop table warband_units;
+drop table warband_types;
+drop table warband_unit_types;
 
 drop table user_roles;
 drop table users;

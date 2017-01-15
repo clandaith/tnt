@@ -29,8 +29,15 @@ public class TntCharacter {
 	@JoinColumn(name = "warband_id")
 	private Warband warband;
 
+	@ManyToOne
+	@JoinColumn(name = "warband_unit_id")
+	private WarbandUnit warbandUnit;
+
 	@NotNull
-	private String title;
+	@ManyToOne
+	@JoinColumn(name = "unit_type_id")
+	private UnitType unitType;
+
 	@NotNull
 	private String name;
 	private String background;
@@ -59,10 +66,6 @@ public class TntCharacter {
 	@NotNull
 	@Column(name = "base_cost")
 	private Integer baseCost;
-
-	@NotNull
-	@Column(name = "unit_type_id")
-	private Integer unitTypeId;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "warband_character_skills_link", joinColumns = @JoinColumn(name = "warband_character_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "skill_id", referencedColumnName = "id"))
@@ -130,14 +133,6 @@ public class TntCharacter {
 
 	public void setWarband(Warband warband) {
 		this.warband = warband;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public String getName() {
@@ -218,14 +213,6 @@ public class TntCharacter {
 
 	public void setBaseCost(Integer baseCost) {
 		this.baseCost = baseCost;
-	}
-
-	public Integer getUnitTypeId() {
-		return unitTypeId;
-	}
-
-	public void setUnitTypeId(Integer unitTypeId) {
-		this.unitTypeId = unitTypeId;
 	}
 
 	public Set<Skill> getSkills() {
@@ -311,5 +298,21 @@ public class TntCharacter {
 
 	public void setInjuries(Set<Injury> injuries) {
 		this.injuries = injuries;
+	}
+
+	public WarbandUnit getWarbandUnit() {
+		return warbandUnit;
+	}
+
+	public void setWarbandUnit(WarbandUnit warbandUnit) {
+		this.warbandUnit = warbandUnit;
+	}
+
+	public UnitType getUnitType() {
+		return unitType;
+	}
+
+	public void setUnitType(UnitType unitType) {
+		this.unitType = unitType;
 	}
 }

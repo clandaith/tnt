@@ -36,14 +36,22 @@ public class RegisterController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String saveUser(@Valid User user, BindingResult result) {
+	public String saveUser(@Valid User user, BindingResult result, Model model) {
 		LOGGER.info("Creating a new user: " + user.getUsername());
 
+		if (!user.getPassword().equals(user.getPassword2())) {
+			model.addAttribute("error", "Your password did not match.  Please try again.");
+			user.setPassword("");
+			user.setPassword2("");
+			model.addAttribute("user", user);
+			return "register";
+		}
+
 		BCryptPasswordEncoder bcryptEncoder = new BCryptPasswordEncoder();
-		LOGGER.info("Password: " + user.getPassword() + " :: " + bcryptEncoder.encode(user.getPassword()));
+		// LOGGER.info("Password: " + user.getPassword() + " :: " + bcryptEncoder.encode(user.getPassword()));
 		user.setPassword(bcryptEncoder.encode(user.getPassword()));
 
-		user.setEnabled(false);
+		user.setEnabled(true);
 		user.setShowDetails(false);
 		user.setDateAdded(new Date());
 		usersRepository.save(user);

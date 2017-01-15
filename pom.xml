@@ -78,10 +78,14 @@
 			<version>1.4.2.RELEASE</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
 		</dependency>
 
 		<!--WebJars -->
@@ -104,6 +108,12 @@
 		</dependency>
 
 		<!-- /WebJars -->
+
+		<dependency>
+			<groupId>com.sendgrid</groupId>
+			<artifactId>sendgrid-java</artifactId>
+			<version>3.1.0</version>
+		</dependency>
 
 		<!-- DB -->
 		<dependency>

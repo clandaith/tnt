@@ -1,5 +1,6 @@
 package com.dev801.tnt.data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +17,9 @@ public class Equipment {
 	private String item;
 	private Integer cost;
 	private Integer rarity_id;
-	private String rarity_level_name;
+
+	@Column(name = "rarity_level_name")
+	private String rarityLevelName;
 
 	public Integer getId() {
 		return id;
@@ -50,11 +53,11 @@ public class Equipment {
 		this.rarity_id = rarity_id;
 	}
 
-	public String getRarity_level_name() {
-		return rarity_level_name;
+	public String getRarityLevelName() {
+		return rarityLevelName;
 	}
 
-	public void setRarity_level_name(String rarity_level_name) {
-		this.rarity_level_name = rarity_level_name;
+	public void setRarityLevelName(String rarityLevelName) {
+		this.rarityLevelName = rarityLevelName;
 	}
 }

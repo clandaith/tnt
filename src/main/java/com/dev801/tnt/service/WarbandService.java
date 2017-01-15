@@ -52,6 +52,7 @@ public class WarbandService {
 			}
 
 			warband.setTntCharacters(chars);
+			warband = warbandsRepository.save(warband);
 
 			LOGGER.info("Post: " + warband.toString());
 			return true;

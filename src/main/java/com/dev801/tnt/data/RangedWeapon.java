@@ -45,7 +45,7 @@ public class RangedWeapon {
 	private Integer catagoryId;
 
 	@Column(name = "catagory_name")
-	private String caragoryName;
+	private String catagoryName;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "ranged_weapons_special_rules_link", joinColumns = @JoinColumn(name = "ranged_weapon_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "special_rule_id", referencedColumnName = "id"))
@@ -139,11 +139,11 @@ public class RangedWeapon {
 		this.catagoryId = catagoryId;
 	}
 
-	public String getCaragoryName() {
-		return caragoryName;
+	public String getCatagoryName() {
+		return catagoryName;
 	}
 
-	public void setCaragoryName(String caragoryName) {
-		this.caragoryName = caragoryName;
+	public void setCatagoryName(String catagoryName) {
+		this.catagoryName = catagoryName;
 	}
 }

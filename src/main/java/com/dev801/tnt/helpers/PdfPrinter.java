@@ -14,12 +14,14 @@ import com.dev801.tnt.data.Injury;
 import com.dev801.tnt.data.MeleeWeapon;
 import com.dev801.tnt.data.Mutation;
 import com.dev801.tnt.data.RangedWeapon;
+import com.dev801.tnt.data.Skill;
 import com.dev801.tnt.data.SpecialRule;
 import com.dev801.tnt.data.TntCharacter;
 import com.dev801.tnt.data.User;
 import com.dev801.tnt.data.Warband;
 import com.itextpdf.text.Chapter;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -28,6 +30,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class PdfPrinter {
 	private static final Logger LOGGER = Logger.getLogger(PdfPrinter.class);
+	private static final Font BOLD_FONT = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
 
 	public static byte[] printWarband(Warband warband, User user, boolean showRules) {
 		try {
@@ -54,11 +57,13 @@ public class PdfPrinter {
 	}
 
 	private static void handleWarbandSection(Warband warband, Chapter chapter) {
-		Paragraph p = new Paragraph("Warband '" + warband.getWarbandName() + "'");
+		Paragraph p = new Paragraph(warband.getWarbandName(), BOLD_FONT);
 		chapter.add(p);
 
-		p = new Paragraph("Warband Backstory: '" + warband.getBackground() + "'");
-		chapter.add(p);
+		if (warband.getBackground() != null) {
+			p = new Paragraph(warband.getBackground());
+			chapter.add(p);
+		}
 	}
 
 	private static void handleCharacters(Warband warband, Chapter chapter, User user, boolean showRules) {
@@ -68,10 +73,13 @@ public class PdfPrinter {
 	}
 
 	private static void handleCharacter(TntCharacter tntCharacter, Chapter chapter, User user, boolean showRules) {
-		Paragraph p = new Paragraph("Name: '" + tntCharacter.getName() + "'");
+		Paragraph p = new Paragraph(tntCharacter.getName(), BOLD_FONT);
 		chapter.add(p);
-		p = new Paragraph("Background: '" + tntCharacter.getBackground() + "'");
-		chapter.add(p);
+
+		if (tntCharacter.getBackground() != null) {
+			p = new Paragraph(tntCharacter.getBackground());
+			chapter.add(p);
+		}
 
 		chapter.add(setCharacterStats(tntCharacter, user, showRules));
 
@@ -94,6 +102,10 @@ public class PdfPrinter {
 
 		if (!tntCharacter.getGeneralAbilities().isEmpty()) {
 			buildSpecialRulesLine(tntCharacter, pTable, user, showRules);
+		}
+
+		if (!tntCharacter.getSkills().isEmpty()) {
+			buildSkillsLine(tntCharacter, pTable, user, showRules);
 		}
 
 		if (!tntCharacter.getEquipment().isEmpty()) {
@@ -134,8 +146,8 @@ public class PdfPrinter {
 		basicInfoTable.addCell("XP - Total");
 		basicInfoTable.addCell("Base Cost");
 
-		basicInfoTable.addCell(tntCharacter.getTitle());
-		basicInfoTable.addCell(tntCharacter.getUnitTypeId().toString());
+		basicInfoTable.addCell(tntCharacter.getWarbandUnit().getTitle());
+		basicInfoTable.addCell(tntCharacter.getUnitType().getName());
 		basicInfoTable.addCell("");
 		basicInfoTable.addCell("");
 		basicInfoTable.addCell("");
@@ -217,6 +229,23 @@ public class PdfPrinter {
 		detrimentTable.addCell(cell);
 
 		outerTable.addCell(detrimentTable);
+	}
+
+	private static void buildSkillsLine(TntCharacter tntCharacter, PdfPTable outerTable, User user, boolean showRules) {
+		PdfPTable skillsTable = new PdfPTable(8);
+		skillsTable.setWidthPercentage(100);
+		skillsTable.addCell("Skills");
+
+		String skillText = "";
+		for (Skill skill : tntCharacter.getSkills()) {
+			skillText += skill.getName() + (showRules ? ": " + skill.getDescription() : "") + ", ";
+		}
+		PdfPCell cell = new PdfPCell(new Phrase(skillText));
+		cell.setColspan(7);
+		skillsTable.addCell(cell);
+
+		outerTable.addCell(skillsTable);
+
 	}
 
 	private static void buildSpecialRulesLine(TntCharacter tntCharacter, PdfPTable outerTable, User user, boolean showRules) {

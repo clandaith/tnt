@@ -41,9 +41,9 @@
 					<td th:text="${user.enabled}">Enabled</td>
 					<td th:text="${user.showDetails}">Show Details</td>
 					
-					<td><a href="#" th:href="${'/admin/enable/' + user.id}" class="btn btn-success btn-sm" ><i class="glyphicon glyphicon-plus-sign icon-white"></i> Enable</a></td>
-					<td><a href="#" th:href="${'/admin/showdetails/' + user.id}" class="btn btn-success btn-sm" ><i class="glyphicon glyphicon-plus-sign icon-white"></i> Show Details</a></td>
-					<td><a href="#" th:href="${'/admin/delete/' + user.id}" class="btn btn-danger btn-sm" ><i class="glyphicon glyphicon-trash icon-white"></i> Delete</a></td>
+					<td><a href="#" th:href="${'/admin/enable/' + user.id}" class="btn btn-success btn-sm" th:text="${user.enabled ? ' Disable' : ' Enable'}"><i class="glyphicon glyphicon-plus-sign icon-white"></i> adsf</a></td>
+					<td><a href="#" th:href="${'/admin/showdetails/' + user.id}" class="btn btn-success btn-sm" th:text="${user.showDetails ? ' Hide Details' : ' Show Details'}"><i class="glyphicon glyphicon-plus-sign icon-white"></i> eee</a></td>
+					<td><a href="#" th:href="${'/admin/delete/' + user.id}" class="btn btn-danger btn-sm" th:text="${' Delete'}"><i class="glyphicon glyphicon-trash icon-white"></i> czc</a></td>
 				</tr>
 			</tbody>
 		</table>
