@@ -40,14 +40,18 @@ public class UserController extends ControllerHelper {
 		if (BCrypt.checkpw(user.getCurrentPassword(), repoUser.getPassword())) {
 			LOGGER.info("Passwords match");
 			repoUser.setEmailAddress(user.getEmailAddress());
-			repoUser.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+
+			if (user.getPassword() != null && user.getPassword().length() > 0) {
+				repoUser.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+			}
+
 			repoUser.setFirstName(user.getFirstName());
 			repoUser.setLastName(user.getLastName());
 			usersRepository.save(repoUser);
-			model.addAttribute("success", "Your information has been updated!");
+			model.addAttribute("message", "Your information has been updated!");
 		} else {
 			LOGGER.info("Passwords DO NOT match!");
-			model.addAttribute("currentpasword", "Your current password is incorrect.  Please try again.");
+			model.addAttribute("message", "Your current password is incorrect.  Please try again.");
 		}
 
 		repoUser.setCurrentPassword("");

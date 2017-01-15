@@ -46,6 +46,8 @@ public class PdfPrinter {
 			chapter.setNumberDepth(0);
 			handleCharacters(warband, chapter, user, showRules);
 
+			addNotes(warband, chapter);
+
 			document.add(chapter);
 			document.close();
 
@@ -54,6 +56,11 @@ public class PdfPrinter {
 			LOGGER.error(e.getMessage(), e);
 			return warband.toString().getBytes();
 		}
+	}
+
+	private static void addNotes(Warband warband, Chapter chapter) {
+		Paragraph p = new Paragraph(warband.getNotes());
+		chapter.add(p);
 	}
 
 	private static void handleWarbandSection(Warband warband, Chapter chapter) {
@@ -68,7 +75,11 @@ public class PdfPrinter {
 
 	private static void handleCharacters(Warband warband, Chapter chapter, User user, boolean showRules) {
 		for (TntCharacter tntCharacter : warband.getTntCharacters()) {
-			handleCharacter(tntCharacter, chapter, user, showRules);
+			try {
+				handleCharacter(tntCharacter, chapter, user, showRules);
+			} catch (Exception e) {
+				LOGGER.error(e.getMessage(), e);
+			}
 		}
 	}
 

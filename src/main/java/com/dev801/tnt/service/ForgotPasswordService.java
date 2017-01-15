@@ -44,7 +44,6 @@ public class ForgotPasswordService {
 			Email to = new Email(user.getEmailAddress());
 			Content content = new Content("text/plain", "You've requested a password reset.  Your new password is: " + newPassword);
 			Mail mail = new Mail(from, subject, to, content);
-			// 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
 
 			SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
 			Request request = new Request();
