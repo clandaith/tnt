@@ -11,9 +11,6 @@
 	<div class="container">
 		<!--/*/ <th:block th:include="fragments/menu :: header"></th:block> /*/-->
 
-		<p>
-			<strong>We're still in development.  Please excuse our dust</strong>
-		</p>
 
 		<div  sec:authorize="isAnonymous()">
 			<div th:if="${param.requestmembership}">
@@ -29,6 +26,18 @@
 			<h2 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]!</h2>
 			
 			You can start making a warband by clicking on the menu item titled "Warbands".
+		</div>
+
+<p></p>
+
+		<div>
+			<strong>Recent changes:</strong>
+			<ul>
+				<li>Added Mutant Cannibals, Survivors, and Outcasts warbands</li>
+				<li>Added all missing skills</li>
+				<li>Added Freelancers</li>
+				<li>Added flag to set if you want email notifications of changes.  Default is 'No'.</li>
+			</ul>
 		</div>
 
 	</div>

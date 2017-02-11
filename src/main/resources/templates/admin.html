@@ -23,6 +23,7 @@
 					<th>Name</th>
 					<th>Username</th>
 					<th>Email Address</th>
+					<th>Notifications</th>
 					<th>Date Joined</th>
 					<th>Enabled</th>
 					<th>Show Details</th>
@@ -37,6 +38,7 @@
 					<td th:text="${user.firstName} + ' ' + ${user.lastName} "></td>
 					<td th:text="${user.username}">Username</td>
 					<td th:text="${user.emailAddress}">EmailAddress</td>
+					<td th:text="${user.receiveEmail}">EmailAddress</td>
 					<td th:text="${user.dateAdded}">Date Added</td>
 					<td th:text="${user.enabled}">Enabled</td>
 					<td th:text="${user.showDetails}">Show Details</td>
