@@ -146,5 +146,21 @@ public class ControllerHelper {
 		}
 		model.addAttribute("rangedOptgroupList", rangedOptgroupList);
 
+		// +++++++++++++++++++++++++++++++++++++++++++++++
+
+		Map<String, List<WarbandUnit>> warbandUnitsOptgroupList = new HashMap<>();
+		for (WarbandUnit warbandUnit : warbandUnitsRepository.findAll()) {
+			if ("Unknown".equals(warbandUnit.getWarbandType().getName())) {
+				continue;
+			}
+
+			if (!warbandUnitsOptgroupList.containsKey(warbandUnit.getWarbandType().getName())) {
+				warbandUnitsOptgroupList.put(warbandUnit.getWarbandType().getName(), new ArrayList<WarbandUnit>());
+			}
+
+			warbandUnitsOptgroupList.get(warbandUnit.getWarbandType().getName()).add(warbandUnit);
+		}
+		model.addAttribute("warbandUnitsOptgroupList", warbandUnitsOptgroupList);
+
 	}
 }

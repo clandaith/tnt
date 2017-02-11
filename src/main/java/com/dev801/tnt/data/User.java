@@ -36,6 +36,9 @@ public class User {
 	@Column(name = "email_address")
 	private String emailAddress;
 
+	@Column(name = "receive_email")
+	private Boolean receiveEmail;
+
 	private Boolean enabled;
 	private Boolean showDetails;
 
@@ -129,5 +132,13 @@ public class User {
 
 	public void setCurrentPassword(String currentPassword) {
 		this.currentPassword = currentPassword;
+	}
+
+	public Boolean getReceiveEmail() {
+		return receiveEmail;
+	}
+
+	public void setReceiveEmail(Boolean receiveEmail) {
+		this.receiveEmail = receiveEmail;
 	}
 }

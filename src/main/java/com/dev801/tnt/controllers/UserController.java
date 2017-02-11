@@ -40,6 +40,7 @@ public class UserController extends ControllerHelper {
 		if (BCrypt.checkpw(user.getCurrentPassword(), repoUser.getPassword())) {
 			LOGGER.info("Passwords match");
 			repoUser.setEmailAddress(user.getEmailAddress());
+			repoUser.setReceiveEmail(user.getReceiveEmail());
 
 			if (user.getPassword() != null && user.getPassword().length() > 0) {
 				repoUser.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
