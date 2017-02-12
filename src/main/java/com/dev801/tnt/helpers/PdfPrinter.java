@@ -252,32 +252,32 @@ public class PdfPrinter {
 			chapter.add(addMeleeList(meleeWeapons));
 		}
 
-		if (!mutationList.isEmpty()) {
+		if (!mutationList.isEmpty() && showRules) {
 			chapter.add(new Paragraph(" "));
 			chapter.add(addMutationList(mutationList));
 		}
 
-		if (!detrimentList.isEmpty()) {
+		if (!detrimentList.isEmpty() && showRules) {
 			chapter.add(new Paragraph(" "));
 			chapter.add(addDetrimentList(detrimentList));
 		}
 
-		if (!injuryList.isEmpty()) {
+		if (!injuryList.isEmpty() && showRules) {
 			chapter.add(new Paragraph(" "));
 			chapter.add(addInjuryList(injuryList));
 		}
 
-		if (!specialRules.isEmpty()) {
+		if (!specialRules.isEmpty() && showRules) {
 			chapter.add(new Paragraph(" "));
 			chapter.add(addSpecialRulesList(specialRules));
 		}
 
-		if (!skillList.isEmpty()) {
+		if (!skillList.isEmpty() && showRules) {
 			chapter.add(new Paragraph(" "));
 			chapter.add(addSkillList(skillList));
 		}
 
-		if (!generalAbilityList.isEmpty()) {
+		if (!generalAbilityList.isEmpty() && showRules) {
 			chapter.add(new Paragraph(" "));
 			chapter.add(addGeneralAbilityList(generalAbilityList));
 		}
