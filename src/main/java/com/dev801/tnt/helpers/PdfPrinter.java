@@ -1,6 +1,7 @@
 package com.dev801.tnt.helpers;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -21,9 +22,12 @@ import com.dev801.tnt.data.User;
 import com.dev801.tnt.data.Warband;
 import com.itextpdf.text.Chapter;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.GrayColor;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -31,6 +35,17 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class PdfPrinter {
 	private static final Logger LOGGER = Logger.getLogger(PdfPrinter.class);
 	private static final Font BOLD_FONT = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
+
+	private static final Font font = new Font(FontFamily.HELVETICA, 8);
+
+	private static final PdfPCell leftCell = new PdfPCell();
+
+	private static final PdfPCell centeredCell = new PdfPCell();
+
+	static {
+		leftCell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		centeredCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	}
 
 	public static byte[] printWarband(Warband warband, User user, boolean showRules) {
 		try {
@@ -44,6 +59,7 @@ public class PdfPrinter {
 			handleWarbandSection(warband, chapter);
 
 			chapter.setNumberDepth(0);
+			// handleCharactersOld(warband, chapter, user, showRules);
 			handleCharacters(warband, chapter, user, showRules);
 
 			addNotes(warband, chapter);
@@ -57,6 +73,505 @@ public class PdfPrinter {
 			return warband.toString().getBytes();
 		}
 	}
+
+	private static void handleCharacters(Warband warband, Chapter chapter, User user, boolean showRules) {
+
+		centeredCell.setBackgroundColor(GrayColor.CYAN);
+
+		float[] columnWidths = { 4, 1, 1, 1, 1, 1, 1, 1, 1, 4, 3, 1, 1, 4 };
+		PdfPTable pTable = new PdfPTable(columnWidths);
+		pTable.setWidthPercentage(100);
+
+		// ++++++++++++++++++++++++++
+
+		centeredCell.setPhrase(new Phrase("Name", font));
+		pTable.addCell(centeredCell);
+
+		centeredCell.setPhrase(new Phrase("Mov", font));
+		pTable.addCell(centeredCell);
+
+		centeredCell.setPhrase(new Phrase("Mel", font));
+		pTable.addCell(centeredCell);
+
+		centeredCell.setPhrase(new Phrase("Rng", font));
+		pTable.addCell(centeredCell);
+
+		centeredCell.setPhrase(new Phrase("Str", font));
+		pTable.addCell(centeredCell);
+
+		centeredCell.setPhrase(new Phrase("Met", font));
+		pTable.addCell(centeredCell);
+
+		centeredCell.setPhrase(new Phrase("Def", font));
+		pTable.addCell(centeredCell);
+
+		centeredCell.setPhrase(new Phrase("W", font));
+		pTable.addCell(centeredCell);
+
+		centeredCell.setPhrase(new Phrase("K", font));
+		pTable.addCell(centeredCell);
+
+		centeredCell.setPhrase(new Phrase("Weapons", font));
+		pTable.addCell(centeredCell);
+
+		centeredCell.setPhrase(new Phrase("Armor", font));
+		pTable.addCell(centeredCell);
+
+		centeredCell.setPhrase(new Phrase("BS", font));
+		pTable.addCell(centeredCell);
+
+		centeredCell.setPhrase(new Phrase("XP", font));
+		pTable.addCell(centeredCell);
+
+		centeredCell.setPhrase(new Phrase("Special", font));
+		pTable.addCell(centeredCell);
+
+		// ++++++++++++++++++++++++++++++++
+
+		Set<RangedWeapon> rangedWeapons = new HashSet<>();
+		Set<MeleeWeapon> meleeWeapons = new HashSet<>();
+		Set<Skill> skillList = new HashSet<>();
+		Set<Mutation> mutationList = new HashSet<>();
+		Set<Detriment> detrimentList = new HashSet<>();
+		Set<GeneralAbility> generalAbilityList = new HashSet<>();
+		Set<Injury> injuryList = new HashSet<>();
+		Set<Grenade> grenadeList = new HashSet<>();
+		Set<SpecialRule> specialRules = new HashSet<>();
+
+		int i = 0;
+		for (TntCharacter tntCharacter : warband.getTntCharacters()) {
+			if (++i % 2 == 0) {
+				centeredCell.setBackgroundColor(GrayColor.LIGHT_GRAY);
+				leftCell.setBackgroundColor(GrayColor.LIGHT_GRAY);
+			} else {
+				centeredCell.setBackgroundColor(GrayColor.WHITE);
+				leftCell.setBackgroundColor(GrayColor.WHITE);
+			}
+
+			leftCell.setPhrase(new Phrase(tntCharacter.getName(), font));
+			pTable.addCell(leftCell);
+
+			centeredCell.setPhrase(new Phrase(tntCharacter.getMove().toString(), font));
+			pTable.addCell(centeredCell);
+
+			centeredCell.setPhrase(new Phrase(tntCharacter.getMelee().toString(), font));
+			pTable.addCell(centeredCell);
+
+			centeredCell.setPhrase(new Phrase(tntCharacter.getRanged().toString(), font));
+			pTable.addCell(centeredCell);
+
+			centeredCell.setPhrase(new Phrase(tntCharacter.getStrength().toString(), font));
+			pTable.addCell(centeredCell);
+
+			centeredCell.setPhrase(new Phrase(tntCharacter.getMettle().toString(), font));
+			pTable.addCell(centeredCell);
+
+			centeredCell.setPhrase(new Phrase(tntCharacter.getDefense().toString(), font));
+			pTable.addCell(centeredCell);
+
+			centeredCell.setPhrase(new Phrase(tntCharacter.getWounds().toString(), font));
+			pTable.addCell(centeredCell);
+
+			centeredCell.setPhrase(new Phrase(" ", font)); // Kills
+			pTable.addCell(centeredCell);
+
+			String weapons = "";
+			for (RangedWeapon weapon : tntCharacter.getRangedWeapons()) {
+				weapons += weapon.getType() + ", ";
+				specialRules.addAll(weapon.getSpecialRules());
+				rangedWeapons.add(weapon);
+			}
+
+			for (MeleeWeapon weapon : tntCharacter.getMeleeWeapons()) {
+				weapons += weapon.getType() + ", ";
+				specialRules.addAll(weapon.getSpecialRules());
+				meleeWeapons.add(weapon);
+			}
+
+			leftCell.setPhrase(new Phrase(weapons, font));
+			pTable.addCell(leftCell);
+
+			String armors = "";
+			for (Armor armor : tntCharacter.getArmors()) {
+				armors += armor.getType() + ", ";
+			}
+
+			leftCell.setPhrase(new Phrase(armors, font));
+			pTable.addCell(leftCell);
+
+			centeredCell.setPhrase(new Phrase(tntCharacter.getBaseCost().toString(), font));
+			pTable.addCell(centeredCell);
+
+			centeredCell.setPhrase(new Phrase(" ", font)); // XP
+			pTable.addCell(centeredCell);
+
+			String text = "";
+			for (Skill skill : tntCharacter.getSkills()) {
+				text += skill.getName() + ", ";
+				skillList.add(skill);
+			}
+
+			for (Mutation mutation : tntCharacter.getMutations()) {
+				text += mutation.getName() + ", ";
+				mutationList.add(mutation);
+			}
+
+			for (Detriment detriment : tntCharacter.getDetriments()) {
+				text += detriment.getName() + ", ";
+				detrimentList.add(detriment);
+			}
+
+			for (GeneralAbility ability : tntCharacter.getGeneralAbilities()) {
+				text += ability.getName() + ", ";
+				generalAbilityList.add(ability);
+			}
+
+			for (Injury injury : tntCharacter.getInjuries()) {
+				text += injury.getName() + ", ";
+				injuryList.add(injury);
+			}
+
+			for (Grenade grenade : tntCharacter.getGrenades()) {
+				text += grenade.getType() + ", ";
+				grenadeList.add(grenade);
+			}
+
+			leftCell.setPhrase(new Phrase(text, font));
+			pTable.addCell(leftCell);
+		}
+
+		chapter.add(pTable);
+
+		if (!rangedWeapons.isEmpty()) {
+			chapter.add(new Paragraph(" "));
+			chapter.add(addRangedList(rangedWeapons));
+		}
+
+		if (!meleeWeapons.isEmpty()) {
+			chapter.add(new Paragraph(" "));
+			chapter.add(addMeleeList(meleeWeapons));
+		}
+
+		if (!mutationList.isEmpty()) {
+			chapter.add(new Paragraph(" "));
+			chapter.add(addMutationList(mutationList));
+		}
+
+		if (!detrimentList.isEmpty()) {
+			chapter.add(new Paragraph(" "));
+			chapter.add(addDetrimentList(detrimentList));
+		}
+
+		if (!injuryList.isEmpty()) {
+			chapter.add(new Paragraph(" "));
+			chapter.add(addInjuryList(injuryList));
+		}
+
+		if (!specialRules.isEmpty()) {
+			chapter.add(new Paragraph(" "));
+			chapter.add(addSpecialRulesList(specialRules));
+		}
+
+		if (!skillList.isEmpty()) {
+			chapter.add(new Paragraph(" "));
+			chapter.add(addSkillList(skillList));
+		}
+
+		if (!generalAbilityList.isEmpty()) {
+			chapter.add(new Paragraph(" "));
+			chapter.add(addGeneralAbilityList(generalAbilityList));
+		}
+	}
+
+	private static PdfPTable addSpecialRulesList(Set<SpecialRule> specialRules) {
+		Font font = new Font(FontFamily.HELVETICA, 8);
+		float[] columnWidths = { 1, 10 };
+		PdfPTable pTable = new PdfPTable(columnWidths);
+		pTable.setWidthPercentage(100);
+
+		centeredCell.setBackgroundColor(GrayColor.CYAN);
+
+		centeredCell.setPhrase(new Phrase("Special Rule", font));
+		pTable.addCell(centeredCell);
+		centeredCell.setPhrase(new Phrase("Description", font));
+		pTable.addCell(centeredCell);
+		int i = 0;
+		for (SpecialRule specialRule : specialRules) {
+			if (++i % 2 == 0) {
+				leftCell.setBackgroundColor(GrayColor.LIGHT_GRAY);
+			} else {
+				leftCell.setBackgroundColor(GrayColor.WHITE);
+			}
+
+			leftCell.setPhrase(new Phrase(specialRule.getName(), font));
+			pTable.addCell(leftCell);
+			leftCell.setPhrase(new Phrase(specialRule.getDescription(), font));
+			pTable.addCell(leftCell);
+		}
+
+		return pTable;
+	}
+
+	private static PdfPTable addRangedList(Set<RangedWeapon> rangedWeapons) {
+		float[] columnWidths = { 2, 1, 1, 1, 1, 5 };
+		PdfPTable pTable = new PdfPTable(columnWidths);
+		pTable.setWidthPercentage(100);
+
+		centeredCell.setBackgroundColor(GrayColor.CYAN);
+
+		centeredCell.setPhrase(new Phrase("Ranged Weapon", font));
+		pTable.addCell(centeredCell);
+		centeredCell.setPhrase(new Phrase("Range", font));
+		pTable.addCell(centeredCell);
+		centeredCell.setPhrase(new Phrase("Strength", font));
+		pTable.addCell(centeredCell);
+		centeredCell.setPhrase(new Phrase("Reliabiltiy", font));
+		pTable.addCell(centeredCell);
+		centeredCell.setPhrase(new Phrase("1H / 2H", font));
+		pTable.addCell(centeredCell);
+		centeredCell.setPhrase(new Phrase("Special Rules", font));
+		pTable.addCell(centeredCell);
+
+		int i = 0;
+		for (RangedWeapon weapon : rangedWeapons) {
+			if (++i % 2 == 0) {
+				centeredCell.setBackgroundColor(GrayColor.LIGHT_GRAY);
+				leftCell.setBackgroundColor(GrayColor.LIGHT_GRAY);
+			} else {
+				centeredCell.setBackgroundColor(GrayColor.WHITE);
+				leftCell.setBackgroundColor(GrayColor.WHITE);
+			}
+
+			leftCell.setPhrase(new Phrase(weapon.getType(), font));
+			pTable.addCell(leftCell);
+			centeredCell.setPhrase(new Phrase(weapon.getMaxRange().toString(), font));
+			pTable.addCell(centeredCell);
+			centeredCell.setPhrase(new Phrase(weapon.getStrength().toString(), font));
+			pTable.addCell(centeredCell);
+			centeredCell.setPhrase(new Phrase(weapon.getReliability().toString(), font));
+			pTable.addCell(centeredCell);
+			centeredCell.setPhrase(new Phrase(weapon.getOneHanded() ? "1H" : "2H", font));
+			pTable.addCell(centeredCell);
+
+			String specialRules = "";
+			for (SpecialRule specialRule : weapon.getSpecialRules()) {
+				specialRules += specialRule.getName() + ", ";
+			}
+			leftCell.setPhrase(new Phrase(specialRules, font));
+			pTable.addCell(leftCell);
+
+		}
+
+		return pTable;
+	}
+
+	private static PdfPTable addMeleeList(Set<MeleeWeapon> meleeWeapons) {
+		Font font = new Font(FontFamily.HELVETICA, 8);
+		float[] columnWidths = { 2, 1, 1, 1, 1, 1, 5 };
+		PdfPTable pTable = new PdfPTable(columnWidths);
+		pTable.setWidthPercentage(100);
+
+		centeredCell.setBackgroundColor(GrayColor.CYAN);
+
+		centeredCell.setPhrase(new Phrase("Melee Weapon", font));
+		pTable.addCell(centeredCell);
+		centeredCell.setPhrase(new Phrase("Melee Range", font));
+		pTable.addCell(centeredCell);
+		centeredCell.setPhrase(new Phrase("Thrown Range", font));
+		pTable.addCell(centeredCell);
+		centeredCell.setPhrase(new Phrase("Strength", font));
+		pTable.addCell(centeredCell);
+		centeredCell.setPhrase(new Phrase("1H / 2H", font));
+		pTable.addCell(centeredCell);
+		centeredCell.setPhrase(new Phrase("Reliabiltiy", font));
+		pTable.addCell(centeredCell);
+		centeredCell.setPhrase(new Phrase("Special Rules", font));
+		pTable.addCell(centeredCell);
+
+		int i = 0;
+		for (MeleeWeapon weapon : meleeWeapons) {
+			if (++i % 2 == 0) {
+				centeredCell.setBackgroundColor(GrayColor.LIGHT_GRAY);
+				leftCell.setBackgroundColor(GrayColor.LIGHT_GRAY);
+			} else {
+				centeredCell.setBackgroundColor(GrayColor.WHITE);
+				leftCell.setBackgroundColor(GrayColor.WHITE);
+			}
+
+			leftCell.setPhrase(new Phrase(weapon.getType(), font));
+			pTable.addCell(leftCell);
+			centeredCell.setPhrase(new Phrase(weapon.getMeleeRange().toString(), font));
+			pTable.addCell(centeredCell);
+			centeredCell.setPhrase(new Phrase(weapon.getThrownRange().toString(), font));
+			pTable.addCell(centeredCell);
+			centeredCell.setPhrase(new Phrase(weapon.getStrength().toString(), font));
+			pTable.addCell(centeredCell);
+			centeredCell.setPhrase(new Phrase(weapon.getReliability().toString(), font));
+			pTable.addCell(centeredCell);
+			centeredCell.setPhrase(new Phrase(weapon.getOneHanded() ? "1H" : "2H", font));
+			pTable.addCell(centeredCell);
+
+			String specialRules = "";
+			for (SpecialRule specialRule : weapon.getSpecialRules()) {
+				specialRules += specialRule.getName() + ", ";
+			}
+			leftCell.setPhrase(new Phrase(specialRules, font));
+			pTable.addCell(leftCell);
+
+		}
+
+		return pTable;
+	}
+
+	private static PdfPTable addMutationList(Set<Mutation> mutationList) {
+		Font font = new Font(FontFamily.HELVETICA, 8);
+		float[] columnWidths = { 1, 10 };
+		PdfPTable pTable = new PdfPTable(columnWidths);
+		pTable.setWidthPercentage(100);
+
+		centeredCell.setBackgroundColor(GrayColor.CYAN);
+
+		centeredCell.setPhrase(new Phrase("Mutation", font));
+		pTable.addCell(centeredCell);
+		centeredCell.setPhrase(new Phrase("Description", font));
+		pTable.addCell(centeredCell);
+		int i = 0;
+		for (Mutation mutation : mutationList) {
+			if (++i % 2 == 0) {
+				leftCell.setBackgroundColor(GrayColor.LIGHT_GRAY);
+			} else {
+				leftCell.setBackgroundColor(GrayColor.WHITE);
+			}
+
+			leftCell.setPhrase(new Phrase(mutation.getName(), font));
+			pTable.addCell(leftCell);
+			leftCell.setPhrase(new Phrase(mutation.getDescription(), font));
+			pTable.addCell(leftCell);
+		}
+
+		return pTable;
+	}
+
+	private static PdfPTable addSkillList(Set<Skill> skillList) {
+		Font font = new Font(FontFamily.HELVETICA, 8);
+		float[] columnWidths = { 1, 10 };
+		PdfPTable pTable = new PdfPTable(columnWidths);
+		pTable.setWidthPercentage(100);
+
+		centeredCell.setBackgroundColor(GrayColor.CYAN);
+
+		centeredCell.setPhrase(new Phrase("Skill", font));
+		pTable.addCell(centeredCell);
+		centeredCell.setPhrase(new Phrase("Description", font));
+		pTable.addCell(centeredCell);
+
+		int i = 0;
+		for (Skill skill : skillList) {
+			if (++i % 2 == 0) {
+				leftCell.setBackgroundColor(GrayColor.LIGHT_GRAY);
+			} else {
+				leftCell.setBackgroundColor(GrayColor.WHITE);
+			}
+
+			leftCell.setPhrase(new Phrase(skill.getName(), font));
+			pTable.addCell(leftCell);
+			leftCell.setPhrase(new Phrase(skill.getDescription(), font));
+			pTable.addCell(leftCell);
+		}
+		return pTable;
+	}
+
+	private static PdfPTable addInjuryList(Set<Injury> injuryList) {
+		Font font = new Font(FontFamily.HELVETICA, 8);
+		float[] columnWidths = { 1, 10 };
+		PdfPTable pTable = new PdfPTable(columnWidths);
+		pTable.setWidthPercentage(100);
+
+		centeredCell.setBackgroundColor(GrayColor.CYAN);
+
+		centeredCell.setPhrase(new Phrase("Injury", font));
+		pTable.addCell(centeredCell);
+		centeredCell.setPhrase(new Phrase("Description", font));
+		pTable.addCell(centeredCell);
+
+		int i = 0;
+		for (Injury injury : injuryList) {
+			if (++i % 2 == 0) {
+				leftCell.setBackgroundColor(GrayColor.LIGHT_GRAY);
+			} else {
+				leftCell.setBackgroundColor(GrayColor.WHITE);
+			}
+
+			leftCell.setPhrase(new Phrase(injury.getName(), font));
+			pTable.addCell(leftCell);
+			leftCell.setPhrase(new Phrase(injury.getDescription(), font));
+			pTable.addCell(leftCell);
+		}
+
+		return pTable;
+	}
+
+	private static PdfPTable addDetrimentList(Set<Detriment> detrimentList) {
+		Font font = new Font(FontFamily.HELVETICA, 8);
+		float[] columnWidths = { 1, 10 };
+		PdfPTable pTable = new PdfPTable(columnWidths);
+		pTable.setWidthPercentage(100);
+
+		centeredCell.setBackgroundColor(GrayColor.CYAN);
+
+		centeredCell.setPhrase(new Phrase("Detriment", font));
+		pTable.addCell(centeredCell);
+		centeredCell.setPhrase(new Phrase("Description", font));
+		pTable.addCell(centeredCell);
+
+		int i = 0;
+		for (Detriment detriment : detrimentList) {
+			if (++i % 2 == 0) {
+				leftCell.setBackgroundColor(GrayColor.LIGHT_GRAY);
+			} else {
+				leftCell.setBackgroundColor(GrayColor.WHITE);
+			}
+
+			leftCell.setPhrase(new Phrase(detriment.getName(), font));
+			pTable.addCell(leftCell);
+			leftCell.setPhrase(new Phrase(detriment.getDescription(), font));
+			pTable.addCell(leftCell);
+		}
+
+		return pTable;
+	}
+
+	private static PdfPTable addGeneralAbilityList(Set<GeneralAbility> generalAbilityList) {
+		Font font = new Font(FontFamily.HELVETICA, 8);
+		float[] columnWidths = { 1, 10 };
+		PdfPTable pTable = new PdfPTable(columnWidths);
+		pTable.setWidthPercentage(100);
+
+		centeredCell.setBackgroundColor(GrayColor.CYAN);
+
+		centeredCell.setPhrase(new Phrase("Ability", font));
+		pTable.addCell(centeredCell);
+		centeredCell.setPhrase(new Phrase("Description", font));
+		pTable.addCell(centeredCell);
+
+		int i = 0;
+		for (GeneralAbility generalAbility : generalAbilityList) {
+			if (++i % 2 == 0) {
+				leftCell.setBackgroundColor(GrayColor.LIGHT_GRAY);
+			} else {
+				leftCell.setBackgroundColor(GrayColor.WHITE);
+			}
+
+			leftCell.setPhrase(new Phrase(generalAbility.getName(), font));
+			pTable.addCell(leftCell);
+			leftCell.setPhrase(new Phrase(generalAbility.getDescription(), font));
+			pTable.addCell(leftCell);
+		}
+
+		return pTable;
+	}
+
+	// ++++++++++++++++++++++++++++++++++++++++++
 
 	private static void addNotes(Warband warband, Chapter chapter) {
 		Paragraph p = new Paragraph(warband.getNotes());
@@ -73,7 +588,7 @@ public class PdfPrinter {
 		}
 	}
 
-	private static void handleCharacters(Warband warband, Chapter chapter, User user, boolean showRules) {
+	private static void handleCharactersOld(Warband warband, Chapter chapter, User user, boolean showRules) {
 		for (TntCharacter tntCharacter : warband.getTntCharacters()) {
 			try {
 				handleCharacter(tntCharacter, chapter, user, showRules);
