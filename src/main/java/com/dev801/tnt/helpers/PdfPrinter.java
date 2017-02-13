@@ -340,7 +340,7 @@ public class PdfPrinter {
 	}
 
 	private static PdfPTable addGrenadeList(Set<Grenade> grenadeList) {
-		float[] columnWidths = { 2, 1, 1, 1, 1, 5 };
+		float[] columnWidths = { 2, 1, 5 };
 		PdfPTable pTable = new PdfPTable(columnWidths);
 		pTable.setWidthPercentage(100);
 
