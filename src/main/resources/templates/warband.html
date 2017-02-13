@@ -65,14 +65,26 @@
 						</span>
 						
 						<span th:if="${showRules} == true" class="character-add">
+							<button class="btn tn-default btn-warning printWarband" id="printWarband" value="true" name="printWarbandRulesShort">
+								<i class="glyphicon glyphicon-print"></i> Print Warband w/ Rules - Short
+							</button>
+						</span>
+						
+						<span th:if="${showRules} == true" class="character-add">
 							<button class="btn tn-default btn-warning printWarband" id="printWarband" value="true" name="printWarbandRules">
-								<i class="glyphicon glyphicon-print"></i> Print Warband w/ Rules
+								<i class="glyphicon glyphicon-print"></i> Print Warband w/ Rules - Long
+							</button>
+						</span>
+						
+						<span class="character-add">
+							<button class="btn tn-default btn-warning printWarband" id="printWarband" value="true" name="printWarbandShort">
+								<i class="glyphicon glyphicon-print"></i> Print Warband - Short
 							</button>
 						</span>
 						
 						<span class="character-add">
 							<button class="btn tn-default btn-warning printWarband" id="printWarband" value="true" name="printWarband">
-								<i class="glyphicon glyphicon-print"></i> Print Warband
+								<i class="glyphicon glyphicon-print"></i> Print Warband - Long
 							</button>
 						</span>
 						

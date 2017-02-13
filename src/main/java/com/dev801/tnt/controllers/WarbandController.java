@@ -127,7 +127,20 @@ public class WarbandController extends ControllerHelper {
 	public String printWarbandRules(@Valid Warband warband, BindingResult bindingResult, Model model, HttpSession session,
 					final HttpServletRequest req) {
 
-		LOGGER.info("print warband.  User: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+		LOGGER.info("print warband w/ rules long.  User: "
+						+ SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+
+		session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
+
+		return "redirect:/printWithRules?length=long";
+	}
+
+	@RequestMapping(value = "/warband", params = { "printWarbandRulesShort" }, method = RequestMethod.POST)
+	public String printWarbandRulesShort(@Valid Warband warband, BindingResult bindingResult, Model model, HttpSession session,
+					final HttpServletRequest req) {
+
+		LOGGER.info("print warband w/ rules short.  User: "
+						+ SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
 		session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
 
@@ -138,7 +151,19 @@ public class WarbandController extends ControllerHelper {
 	public String printWarbandNoRules(@Valid Warband warband, BindingResult bindingResult, Model model, HttpSession session,
 					final HttpServletRequest req) {
 
-		LOGGER.info("print warband.  User: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+		LOGGER.info("print warband long.  User: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+
+		session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
+
+		return "redirect:/print?length=long";
+	}
+
+	@RequestMapping(value = "/warband", params = { "printWarbandShort" }, method = RequestMethod.POST)
+	public String printWarbandNoRulesShort(@Valid Warband warband, BindingResult bindingResult, Model model, HttpSession session,
+					final HttpServletRequest req) {
+
+		LOGGER.info("print warband short .  User: "
+						+ SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
 		session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
 
