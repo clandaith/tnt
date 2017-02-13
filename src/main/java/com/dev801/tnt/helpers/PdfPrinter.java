@@ -270,11 +270,6 @@ public class PdfPrinter {
 				injuryList.put(injury.getName(), injury.getDescription());
 			}
 
-			for (Grenade grenade : tntCharacter.getGrenades()) {
-				text += grenade.getType() + ", ";
-				grenadeList.add(grenade);
-			}
-
 			pTable.addCell(addLeftCellText(text));
 		}
 	}
