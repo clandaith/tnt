@@ -1,7 +1,6 @@
 package com.dev801.tnt.helpers;
 
 import java.io.ByteArrayOutputStream;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -44,9 +43,9 @@ public class PdfPrinter {
 	private static final PdfPCell leftCell = new PdfPCell();
 	private static final PdfPCell centeredCell = new PdfPCell();
 
-	private static Set<RangedWeapon> rangedWeapons = new HashSet<>();
-	private static Set<MeleeWeapon> meleeWeapons = new HashSet<>();
-	private static Set<Grenade> grenadeList = new HashSet<>();
+	private static Map<Integer, RangedWeapon> rangedWeapons = new TreeMap<>();
+	private static Map<Integer, MeleeWeapon> meleeWeapons = new TreeMap<>();
+	private static Map<Integer, Grenade> grenadeList = new TreeMap<>();
 
 	private static Map<String, String> skillList = new TreeMap<>();
 	private static Map<String, String> mutationList = new TreeMap<>();
@@ -187,7 +186,15 @@ public class PdfPrinter {
 
 	private static void printShortCharacterSection(Warband warband, PdfPTable pTable) {
 		int i = 0;
+
+		Map<String, TntCharacter> sortedCharacterList = new TreeMap<String, TntCharacter>();
+
 		for (TntCharacter tntCharacter : warband.getTntCharacters()) {
+			sortedCharacterList
+							.put(tntCharacter.getWarbandUnit().getId() + tntCharacter.getName() + tntCharacter.getId(), tntCharacter);
+		}
+
+		for (TntCharacter tntCharacter : sortedCharacterList.values()) {
 			++i;
 			centeredCell.setBackgroundColor(getBackgroundColor(i));
 			leftCell.setBackgroundColor(getBackgroundColor(i));
@@ -210,7 +217,7 @@ public class PdfPrinter {
 					specialRules.put(specialRule.getName(), specialRule.getDescription());
 				}
 
-				rangedWeapons.add(weapon);
+				rangedWeapons.put(weapon.getId(), weapon);
 			}
 
 			for (MeleeWeapon weapon : tntCharacter.getMeleeWeapons()) {
@@ -220,7 +227,7 @@ public class PdfPrinter {
 					specialRules.put(specialRule.getName(), specialRule.getDescription());
 				}
 
-				meleeWeapons.add(weapon);
+				meleeWeapons.put(weapon.getId(), weapon);
 			}
 
 			for (Grenade grenade : tntCharacter.getGrenades()) {
@@ -230,7 +237,7 @@ public class PdfPrinter {
 					specialRules.put(specialRule.getName(), specialRule.getDescription());
 				}
 
-				grenadeList.add(grenade);
+				grenadeList.put(grenade.getId(), grenade);
 			}
 
 			pTable.addCell(addLeftCellText(weapons));
@@ -296,7 +303,7 @@ public class PdfPrinter {
 		return pTable;
 	}
 
-	private static PdfPTable addRangedList(Set<RangedWeapon> rangedWeapons) {
+	private static PdfPTable addRangedList(Map<Integer, RangedWeapon> rangedWeapons) {
 		float[] columnWidths = { 2, 1, 1, 1, 1, 5 };
 		PdfPTable pTable = new PdfPTable(columnWidths);
 		pTable.setWidthPercentage(100);
@@ -311,7 +318,7 @@ public class PdfPrinter {
 		pTable.addCell(addCenterCellText("Special Rules"));
 
 		int i = 0;
-		for (RangedWeapon weapon : rangedWeapons) {
+		for (RangedWeapon weapon : rangedWeapons.values()) {
 			++i;
 			centeredCell.setBackgroundColor(getBackgroundColor(i));
 			leftCell.setBackgroundColor(getBackgroundColor(i));
@@ -334,7 +341,7 @@ public class PdfPrinter {
 		return pTable;
 	}
 
-	private static PdfPTable addGrenadeList(Set<Grenade> grenadeList) {
+	private static PdfPTable addGrenadeList(Map<Integer, Grenade> grenadeList) {
 		float[] columnWidths = { 2, 1, 5 };
 		PdfPTable pTable = new PdfPTable(columnWidths);
 		pTable.setWidthPercentage(100);
@@ -346,7 +353,7 @@ public class PdfPrinter {
 		pTable.addCell(addCenterCellText("Special Rules"));
 
 		int i = 0;
-		for (Grenade grenade : grenadeList) {
+		for (Grenade grenade : grenadeList.values()) {
 			++i;
 			centeredCell.setBackgroundColor(getBackgroundColor(i));
 			leftCell.setBackgroundColor(getBackgroundColor(i));
@@ -366,7 +373,7 @@ public class PdfPrinter {
 		return pTable;
 	}
 
-	private static PdfPTable addMeleeList(Set<MeleeWeapon> meleeWeapons) {
+	private static PdfPTable addMeleeList(Map<Integer, MeleeWeapon> meleeWeapons) {
 		float[] columnWidths = { 2, 1, 1, 1, 1, 1, 5 };
 		PdfPTable pTable = new PdfPTable(columnWidths);
 		pTable.setWidthPercentage(100);
@@ -377,12 +384,12 @@ public class PdfPrinter {
 		pTable.addCell(addCenterCellText("Melee Range"));
 		pTable.addCell(addCenterCellText("Thrown Range"));
 		pTable.addCell(addCenterCellText("Strength"));
-		pTable.addCell(addCenterCellText("1H / 2H"));
 		pTable.addCell(addCenterCellText("Reliabiltiy"));
+		pTable.addCell(addCenterCellText("1H / 2H"));
 		pTable.addCell(addCenterCellText("Special Rules"));
 
 		int i = 0;
-		for (MeleeWeapon weapon : meleeWeapons) {
+		for (MeleeWeapon weapon : meleeWeapons.values()) {
 			++i;
 			centeredCell.setBackgroundColor(getBackgroundColor(i));
 			leftCell.setBackgroundColor(getBackgroundColor(i));
