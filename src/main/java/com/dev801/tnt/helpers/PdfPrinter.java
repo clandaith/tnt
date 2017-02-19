@@ -53,6 +53,7 @@ public class PdfPrinter {
 	private static Map<String, String> generalAbilityList = new TreeMap<>();
 	private static Map<String, String> injuryList = new TreeMap<>();
 	private static Map<String, String> specialRules = new TreeMap<>();
+	private static Map<String, String> equipmentList = new TreeMap<>();
 
 	static {
 		leftCell.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -155,32 +156,37 @@ public class PdfPrinter {
 
 		if (!mutationList.isEmpty() && showRules) {
 			chapter.add(new Paragraph(" "));
-			chapter.add(addSpecialRulesList("Mutation", mutationList));
+			chapter.add(addSpecialRulesList("Mutations", mutationList));
 		}
 
 		if (!detrimentList.isEmpty() && showRules) {
 			chapter.add(new Paragraph(" "));
-			chapter.add(addSpecialRulesList("Detriment", detrimentList));
+			chapter.add(addSpecialRulesList("Detriments", detrimentList));
 		}
 
 		if (!injuryList.isEmpty() && showRules) {
 			chapter.add(new Paragraph(" "));
-			chapter.add(addSpecialRulesList("Injury", injuryList));
+			chapter.add(addSpecialRulesList("Injuries", injuryList));
 		}
 
 		if (!specialRules.isEmpty() && showRules) {
 			chapter.add(new Paragraph(" "));
-			chapter.add(addSpecialRulesList("Special Rule", specialRules));
+			chapter.add(addSpecialRulesList("Special Rules", specialRules));
 		}
 
 		if (!skillList.isEmpty() && showRules) {
 			chapter.add(new Paragraph(" "));
-			chapter.add(addSpecialRulesList("Skill", skillList));
+			chapter.add(addSpecialRulesList("Skills", skillList));
 		}
 
 		if (!generalAbilityList.isEmpty() && showRules) {
 			chapter.add(new Paragraph(" "));
-			chapter.add(addSpecialRulesList("General Ability", generalAbilityList));
+			chapter.add(addSpecialRulesList("General Abilities", generalAbilityList));
+		}
+
+		if (!equipmentList.isEmpty() && showRules) {
+			chapter.add(new Paragraph(" "));
+			chapter.add(addSpecialRulesList("Equipment", equipmentList));
 		}
 	}
 
@@ -275,6 +281,11 @@ public class PdfPrinter {
 			for (Injury injury : tntCharacter.getInjuries()) {
 				text += injury.getName() + ", ";
 				injuryList.put(injury.getName(), injury.getDescription());
+			}
+
+			for (Equipment equipment : tntCharacter.getEquipment()) {
+				text += equipment.getItem() + ", ";
+				equipmentList.put(equipment.getItem(), equipment.getItem());
 			}
 
 			pTable.addCell(addLeftCellText(text));
@@ -421,7 +432,13 @@ public class PdfPrinter {
 	}
 
 	private static void handleWarbandSection(Warband warband, Chapter chapter, boolean useShortSheet) {
-		chapter.add(new Paragraph(warband.getWarbandName(), BOLD_FONT));
+		Integer totalBs = 0;
+
+		for (TntCharacter character : warband.getTntCharacters()) {
+			totalBs += character.getBaseCost();
+		}
+
+		chapter.add(new Paragraph(warband.getWarbandName() + " (" + totalBs + " BS)", BOLD_FONT));
 		chapter.add(new Paragraph(" "));
 
 		if (!useShortSheet && warband.getBackground() != null) {
