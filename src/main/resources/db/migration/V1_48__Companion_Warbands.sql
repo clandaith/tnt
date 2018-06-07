@@ -34,21 +34,36 @@ insert into warband_units (warband_type_id, title, unit_type_id, defense, wounds
  (select id from warband_unit_types where type = 'Specialist'), 6, 2, 5, 6, 6, 6, 7, 28);
 
 
- Leader 65
- Leader 70
- Elite 50
- Elite 40
-
- Elite 45 Scavenger and one skill
- Elite 50 Dark Past
- Rank and File 18 Replaceable, Soft-bellied
- Rank and File 13 Ragtag and Soft-bellied
- Specialist 32 Gunsmith and Up-Armed
- Specialist 30 Medic and Soft-bellied
-Regular Specialist 28
 
 
-insert into warband_types (name) values ('Caravanners');
+insert into warband_types (name) values ('Renegade Reclaimers');
 insert into warband_units (warband_type_id, title, unit_type_id, defense, wounds, move, melee, ranged, strength, mettle, base_cost)
- values ((select id from warband_types where name = 'Caravanners'), 'Trade', 
+ values ((select id from warband_types where name = 'Renegade Reclaimers'), 'Renegade Lord Reclaimer', 
  (select id from warband_unit_types where type = 'Leader'), 6, 2, 5, 6, 6, 6, 7, 80);
+insert into warband_units (warband_type_id, title, unit_type_id, defense, wounds, move, melee, ranged, strength, mettle, base_cost)
+ values ((select id from warband_types where name = 'Renegade Reclaimers'), 'Renegade Reclaimer', 
+ (select id from warband_unit_types where type = 'Elite'), 6, 1, 5, 5, 5, 5, 6, 50);
+insert into warband_units (warband_type_id, title, unit_type_id, defense, wounds, move, melee, ranged, strength, mettle, base_cost)
+ values ((select id from warband_types where name = 'Renegade Reclaimers'), 'Repressor', 
+ (select id from warband_unit_types where type = 'Elite'), 6, 1, 5, 5, 5, 5, 6, 55);
+insert into warband_units (warband_type_id, title, unit_type_id, defense, wounds, move, melee, ranged, strength, mettle, base_cost)
+ values ((select id from warband_types where name = 'Renegade Reclaimers'), 'Adjudicator', 
+ (select id from warband_unit_types where type = 'Elite'), 6, 1, 5, 5, 5, 5, 6, 60);
+insert into warband_units (warband_type_id, title, unit_type_id, defense, wounds, move, melee, ranged, strength, mettle, base_cost)
+ values ((select id from warband_types where name = 'Renegade Reclaimers'), 'Aspiring Reclaimer', 
+ (select id from warband_unit_types where type = 'Rank and File'), 6, 1, 5, 4, 4, 5, 5, 25);
+insert into warband_units (warband_type_id, title, unit_type_id, defense, wounds, move, melee, ranged, strength, mettle, base_cost)
+ values ((select id from warband_types where name = 'Renegade Reclaimers'), 'Indentured Wastelander', 
+ (select id from warband_unit_types where type = 'Rank and File'), 6, 1, 5, 4, 4, 5, 5, 15);
+insert into warband_units (warband_type_id, title, unit_type_id, defense, wounds, move, melee, ranged, strength, mettle, base_cost)
+ values ((select id from warband_types where name = 'Renegade Reclaimers'), 'Renegade Arbitrator', 
+ (select id from warband_unit_types where type = 'Specialist'), 6, 1, 5, 4, 4, 5, 5, 35);
+insert into warband_units (warband_type_id, title, unit_type_id, defense, wounds, move, melee, ranged, strength, mettle, base_cost)
+ values ((select id from warband_types where name = 'Renegade Reclaimers'), 'Renegade Tech-Bearer', 
+ (select id from warband_unit_types where type = 'Specialist'), 6, 1, 5, 4, 4, 5, 5, 30);
+insert into warband_units (warband_type_id, title, unit_type_id, defense, wounds, move, melee, ranged, strength, mettle, base_cost)
+ values ((select id from warband_types where name = 'Renegade Reclaimers'), 'Hijacked Robot', 
+ (select id from warband_unit_types where type = 'Specialist'), 7, 1, 5, 6, 3, 5, 5, 37);
+
+
+
