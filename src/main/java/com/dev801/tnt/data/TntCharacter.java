@@ -81,6 +81,9 @@ public class TntCharacter {
 	}
 
 	public void setXp(Integer xp) {
+		if (xp == null)
+			xp = 0;
+
 		this.xp = xp;
 	}
 
@@ -89,6 +92,8 @@ public class TntCharacter {
 	}
 
 	public void setUnusedXP(Integer unusedXP) {
+		if (unusedXP == null)
+			unusedXP = 0;
 		this.unusedXP = unusedXP;
 	}
 
@@ -165,6 +170,8 @@ public class TntCharacter {
 	}
 
 	public void setName(String name) {
+		if (name == null)
+			name = "Unnammed";
 		this.name = name;
 	}
 
@@ -237,6 +244,9 @@ public class TntCharacter {
 	}
 
 	public void setBaseCost(Integer baseCost) {
+		if (baseCost == null)
+			baseCost = 0;
+
 		this.baseCost = baseCost;
 	}
 
