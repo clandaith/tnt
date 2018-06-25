@@ -67,6 +67,31 @@ public class TntCharacter {
 	@Column(name = "base_cost")
 	private Integer baseCost;
 
+	@Min(0)
+	@NotNull
+	private Integer xp;
+
+	@Min(0)
+	@NotNull
+	@Column(name = "unused_xp")
+	private Integer unusedXP;
+
+	public Integer getXp() {
+		return xp;
+	}
+
+	public void setXp(Integer xp) {
+		this.xp = xp;
+	}
+
+	public Integer getUnusedXP() {
+		return unusedXP;
+	}
+
+	public void setUnusedXP(Integer unusedXP) {
+		this.unusedXP = unusedXP;
+	}
+
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "warband_character_skills_link", joinColumns = @JoinColumn(name = "warband_character_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "skill_id", referencedColumnName = "id"))
 	private Set<Skill> skills;
