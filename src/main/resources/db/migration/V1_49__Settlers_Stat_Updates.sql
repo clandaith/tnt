@@ -1,0 +1,11 @@
+update warband_units set wounds = 2, melee = 5, ranged = 5, strength = 6, mettle = 7 where title = 'Settlement Leader';
+update warband_units set wounds = 2, melee = 5, ranged = 6, strength = 6, mettle = 7 where title = 'Militant Leader';
+update warband_units set wounds = 1, melee = 5, ranged = 5, strength = 5, mettle = 6 where title = 'Sheriff';
+update warband_units set wounds = 1, melee = 4, ranged = 5, strength = 5, mettle = 6 where title = 'Missionary';
+update warband_units set wounds = 1, melee = 4, ranged = 5, strength = 5, mettle = 6 where title = 'Prominent Citizen';
+update warband_units set wounds = 1, melee = 4, ranged = 5, strength = 5, mettle = 6 where title = 'Mysterious Stranger';
+update warband_units set wounds = 1, melee = 3, ranged = 4, strength = 5, mettle = 6 where title = 'Militiaman';
+update warband_units set wounds = 1, melee = 3, ranged = 3, strength = 5, mettle = 5 where title = 'Citizen';
+update warband_units set wounds = 1, melee = 3, ranged = 4, strength = 5, mettle = 5 where title = 'Militia Gunsmith';
+update warband_units set wounds = 1, melee = 3, ranged = 4, strength = 5, mettle = 5 where title = 'Citizen Medic';
+update warband_units set wounds = 1, melee = 4, ranged = 5, strength = 5, mettle = 6 where title = 'Regular';
