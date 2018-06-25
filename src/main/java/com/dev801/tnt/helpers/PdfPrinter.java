@@ -112,7 +112,7 @@ public class PdfPrinter {
 
 		centeredCell.setBackgroundColor(GrayColor.CYAN);
 
-		float[] columnWidths = { 4, 1, 1, 1, 1, 1, 1, 1, 1, 4, 3, 1, 1, 4 };
+		float[] columnWidths = { 4, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 1, 1, 1, 4 };
 		PdfPTable pTable = new PdfPTable(columnWidths);
 		pTable.setWidthPercentage(100);
 
@@ -131,6 +131,7 @@ public class PdfPrinter {
 		pTable.addCell(addCenterCellText("Armor"));
 		pTable.addCell(addCenterCellText("BS"));
 		pTable.addCell(addCenterCellText("XP"));
+		pTable.addCell(addCenterCellText("UXP"));
 		pTable.addCell(addCenterCellText("Special"));
 
 		// ++++++++++++++++++++++++++++++++
@@ -206,8 +207,7 @@ public class PdfPrinter {
 			centeredCell.setBackgroundColor(getBackgroundColor(i));
 			leftCell.setBackgroundColor(getBackgroundColor(i));
 
-			pTable.addCell(addLeftCellText(tntCharacter.getName() + " (" + tntCharacter.getWarbandUnit().getTitle()
-					+ " :: " + tntCharacter.getWarbandUnit().getTypeName() + ")"));
+			pTable.addCell(addLeftCellText(tntCharacter.getName()));
 			pTable.addCell(addCenterCellText(tntCharacter.getMove().toString()));
 			pTable.addCell(addCenterCellText(tntCharacter.getMelee().toString()));
 			pTable.addCell(addCenterCellText(tntCharacter.getRanged().toString()));
@@ -257,9 +257,11 @@ public class PdfPrinter {
 
 			pTable.addCell(addLeftCellText(armors));
 			pTable.addCell(addCenterCellText(tntCharacter.getBaseCost().toString()));
-			pTable.addCell(addCenterCellText(" "));// XP
+			pTable.addCell(addCenterCellText(tntCharacter.getXp().toString()));// XP
+			pTable.addCell(addCenterCellText(tntCharacter.getUnusedXP().toString()));// Unused XP
 
-			String text = "";
+			String text = tntCharacter.getWarbandUnit().getTitle() + ", " + tntCharacter.getWarbandUnit().getTypeName()
+					+ ", ";
 			for (Skill skill : tntCharacter.getSkills()) {
 				text += skill.getName() + ", ";
 				skillList.put(skill.getName(), skill.getDescription());
