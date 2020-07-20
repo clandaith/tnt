@@ -10,8 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dev801.tnt.data.Warband;
@@ -19,19 +18,19 @@ import com.dev801.tnt.helpers.PdfPrinter;
 
 @Controller
 public class PrintController extends ControllerHelper {
-	private static Logger LOGGER = Logger.getLogger(PrintController.class);
+	private static final Logger LOGGER = Logger.getLogger(PrintController.class);
 
-	@RequestMapping(value = "/printWithRules", method = RequestMethod.GET)
+	@GetMapping(value = "/printWithRules")
 	public void printWarbandWithRules(@RequestParam(value = "length", defaultValue = "short") String length,
-					HttpServletResponse response, HttpSession session) {
+			HttpServletResponse response, HttpSession session) {
 		LOGGER.info("Printing Warband with rules");
 
 		printWarband(response, session, true, length);
 	}
 
-	@RequestMapping(value = "/print", method = RequestMethod.GET)
+	@GetMapping(value = "/print")
 	public void printWarbandNoRules(@RequestParam(value = "length", defaultValue = "short") String length,
-					HttpServletResponse response, HttpSession session) {
+			HttpServletResponse response, HttpSession session) {
 		LOGGER.info("Printing Warband no rules");
 
 		printWarband(response, session, false, length);
@@ -41,17 +40,18 @@ public class PrintController extends ControllerHelper {
 		LOGGER.info("Printing Warband");
 
 		try {
-			Warband warband = (Warband)session.getAttribute("warband");
+			Warband warband = (Warband) session.getAttribute("warband");
 
 			if (warband.getWarbandName() == null) {
 				warband.setWarbandName("Unknown");
 			}
 
-			byte[] warbandBytes = PdfPrinter.printWarband(warband, getUser(session), showRules, "short".equalsIgnoreCase(length) ? true
-							: false);
+			byte[] warbandBytes = PdfPrinter.printWarband(warband, showRules,
+					"short".equalsIgnoreCase(length) ? Boolean.TRUE : Boolean.FALSE);
 
 			response.setContentType("application/pdf");
-			response.setHeader("Content-Disposition", String.format("inline; filename=\"" + warband.getWarbandName() + ".pdf\""));
+			response.setHeader("Content-Disposition",
+					String.format("inline; filename=\"" + warband.getWarbandName() + ".pdf\""));
 			response.setContentLength(warbandBytes.length);
 
 			InputStream inputStream = new ByteArrayInputStream(warbandBytes);

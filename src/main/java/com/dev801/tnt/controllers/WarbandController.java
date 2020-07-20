@@ -11,8 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dev801.tnt.data.TntCharacter;
@@ -23,10 +23,13 @@ import com.dev801.tnt.helpers.ProjectHelpers;
 public class WarbandController extends ControllerHelper {
 	private static final Logger LOGGER = Logger.getLogger(WarbandController.class);
 
-	@RequestMapping(value = "/warband", method = RequestMethod.GET)
+	private static final String SHOW_RULES = "showRules";
+
+	@GetMapping(value = "/warband")
 	public String newWarband(Model model, @RequestParam(value = "warbandId", defaultValue = "-1") Integer warbandId,
-					HttpSession session) {
-		LOGGER.info("Loading a warband.  User: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+			HttpSession session) {
+		LOGGER.info("Loading a warband.  User: "
+				+ SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
 		Warband warband = new Warband();
 
@@ -35,7 +38,7 @@ public class WarbandController extends ControllerHelper {
 
 			warband = warbandsRepository.findOne(warbandId);
 
-			if (warband == null || !warband.getUserId().equals(getUser(session).getId())) {
+			if (warband == null || !warband.getUserId().equals(getUser().getId())) {
 				LOGGER.error("User tried to get a warband that doesn't belong to them or is null.");
 				model.addAttribute("returnMessage", "There was a problem getting that warband.  Please try again.");
 				return ProjectHelpers.WARBANDS_PAGE;
@@ -46,35 +49,38 @@ public class WarbandController extends ControllerHelper {
 
 		model.addAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
 		session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
-		model.addAttribute("showRules", getUser(session).getShowDetails());
+		model.addAttribute(SHOW_RULES, getUser().getShowDetails());
 
 		loadModelVariables(model);
 		return ProjectHelpers.WARBAND_PAGE;
 	}
 
-	@RequestMapping(value = "/warband", method = RequestMethod.POST)
-	public String addNewCharacter(@Valid Warband warband, BindingResult bindingResult, Model model, HttpServletRequest request,
-					HttpSession session) {
-		LOGGER.info("Add a character.  User: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+	@PostMapping(value = "/warband")
+	public String addNewCharacter(@Valid Warband warband, BindingResult bindingResult, Model model,
+			HttpServletRequest request, HttpSession session) {
+		LOGGER.info("Add a character.  User: "
+				+ SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
 		warband.addTntCharacter(new TntCharacter(ProjectHelpers.getIdHolder(), "New Character"));
 
 		session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
 		model.addAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
-		model.addAttribute("showRules", getUser(session).getShowDetails());
+		model.addAttribute(SHOW_RULES, getUser().getShowDetails());
 
 		loadModelVariables(model);
 		return ProjectHelpers.WARBAND_PAGE;
 	}
 
-	@RequestMapping(value = "/warband", params = { "saveWarband" }, method = RequestMethod.POST)
-	private String save(@Valid Warband warband, BindingResult bindingResult, Model model, HttpServletRequest request,
-					HttpSession session) {
-		LOGGER.info("Persist warband.  User: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+	@PostMapping(value = "/warband", params = { "saveWarband" })
+	public String save(@Valid Warband warband, BindingResult bindingResult, Model model, HttpServletRequest request,
+			HttpSession session) {
+		LOGGER.info("Persist warband.  User: "
+				+ SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
 		if (warband.getWarbandName() == null || warband.getWarbandTypeId() == null) {
 			LOGGER.info("The warband name is null");
-			model.addAttribute("warbandNameError", "The warband needs a name that it will be known throughout the wastelands!");
+			model.addAttribute("warbandNameError",
+					"The warband needs a name that it will be known throughout the wastelands!");
 
 			session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
 			model.addAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
@@ -82,20 +88,8 @@ public class WarbandController extends ControllerHelper {
 			return ProjectHelpers.WARBAND_PAGE;
 		}
 
-		warband.setUserId(getUser(session).getId());
+		warband.setUserId(getUser().getId());
 		warband.setDateCreated(new Date());
-
-		// if (bindingResult.hasErrors()) {
-		// LOGGER.info("Warband has errors");
-		//
-		// session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
-		// model.addAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
-		// model.addAttribute("returnMessage", "There was a problem saving the warband.  Please try again.");
-		//
-		// loadModelVariables(model);
-		// return ProjectHelpers.WARBAND_PAGE;
-		// }
-
 		boolean saveSuccessful = warbandService.saveWarband(warband);
 
 		LOGGER.info("Warband save success: " + saveSuccessful);
@@ -103,9 +97,9 @@ public class WarbandController extends ControllerHelper {
 		return "redirect:/" + ProjectHelpers.WARBANDS_PAGE + "?saved=" + saveSuccessful;
 	}
 
-	@RequestMapping(value = "/warband", params = { "removeCharacter" }, method = RequestMethod.POST)
+	@PostMapping(value = "/warband", params = { "removeCharacter" })
 	public String removeCharacter(@Valid Warband warband, BindingResult bindingResult, Model model, HttpSession session,
-					final HttpServletRequest req) {
+			final HttpServletRequest req) {
 		LOGGER.info("remove warband character id: " + Integer.valueOf(req.getParameter("removeCharacter")));
 
 		for (TntCharacter rogueStarCharacter : warband.getTntCharacters()) {
@@ -117,53 +111,54 @@ public class WarbandController extends ControllerHelper {
 
 		session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
 		model.addAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
-		model.addAttribute("showRules", getUser(session).getShowDetails());
+		model.addAttribute(SHOW_RULES, getUser().getShowDetails());
 		loadModelVariables(model);
 
 		return ProjectHelpers.WARBAND_PAGE;
 	}
 
-	@RequestMapping(value = "/warband", params = { "printWarbandRules" }, method = RequestMethod.POST)
-	public String printWarbandRules(@Valid Warband warband, BindingResult bindingResult, Model model, HttpSession session,
-					final HttpServletRequest req) {
+	@PostMapping(value = "/warband", params = { "printWarbandRules" })
+	public String printWarbandRules(@Valid Warband warband, BindingResult bindingResult, Model model,
+			HttpSession session, final HttpServletRequest req) {
 
 		LOGGER.info("print warband w/ rules long.  User: "
-						+ SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+				+ SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
 		session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
 
 		return "redirect:/printWithRules?length=long";
 	}
 
-	@RequestMapping(value = "/warband", params = { "printWarbandRulesShort" }, method = RequestMethod.POST)
-	public String printWarbandRulesShort(@Valid Warband warband, BindingResult bindingResult, Model model, HttpSession session,
-					final HttpServletRequest req) {
+	@PostMapping(value = "/warband", params = { "printWarbandRulesShort" })
+	public String printWarbandRulesShort(@Valid Warband warband, BindingResult bindingResult, Model model,
+			HttpSession session, final HttpServletRequest req) {
 
 		LOGGER.info("print warband w/ rules short.  User: "
-						+ SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+				+ SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
 		session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
 
 		return "redirect:/printWithRules";
 	}
 
-	@RequestMapping(value = "/warband", params = { "printWarband" }, method = RequestMethod.POST)
-	public String printWarbandNoRules(@Valid Warband warband, BindingResult bindingResult, Model model, HttpSession session,
-					final HttpServletRequest req) {
+	@PostMapping(value = "/warband", params = { "printWarband" })
+	public String printWarbandNoRules(@Valid Warband warband, BindingResult bindingResult, Model model,
+			HttpSession session, final HttpServletRequest req) {
 
-		LOGGER.info("print warband long.  User: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+		LOGGER.info("print warband long.  User: "
+				+ SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
 		session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
 
 		return "redirect:/print?length=long";
 	}
 
-	@RequestMapping(value = "/warband", params = { "printWarbandShort" }, method = RequestMethod.POST)
-	public String printWarbandNoRulesShort(@Valid Warband warband, BindingResult bindingResult, Model model, HttpSession session,
-					final HttpServletRequest req) {
+	@PostMapping(value = "/warband", params = { "printWarbandShort" })
+	public String printWarbandNoRulesShort(@Valid Warband warband, BindingResult bindingResult, Model model,
+			HttpSession session, final HttpServletRequest req) {
 
 		LOGGER.info("print warband short .  User: "
-						+ SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+				+ SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
 		session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
 

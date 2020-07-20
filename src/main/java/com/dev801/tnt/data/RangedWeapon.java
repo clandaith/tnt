@@ -1,5 +1,6 @@
 package com.dev801.tnt.data;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,7 +17,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ranged_weapons_view")
-public class RangedWeapon {
+public class RangedWeapon implements Serializable {
+	private static final long serialVersionUID = 346017312480302069L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;

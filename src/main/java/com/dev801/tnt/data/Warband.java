@@ -1,5 +1,6 @@
 package com.dev801.tnt.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,10 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "warband")
-public class Warband {
+public class Warband implements Serializable {
+
+	private static final long serialVersionUID = 6874804266819231623L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -90,13 +94,13 @@ public class Warband {
 
 	@Override
 	public String toString() {
-		String s = "\nWarband ID: '" + getId() + "' :: " + getWarbandName() + "\n";
+		var s = new StringBuilder("\nWarband ID: '" + getId() + "' :: " + getWarbandName() + "\n");
 
 		for (TntCharacter tntCharacter : tntCharacters) {
-			s += tntCharacter.toString() + "\n";
+			s.append(tntCharacter.toString() + "\n");
 		}
 
-		return s;
+		return s.toString();
 	}
 
 	public Integer getUserId() {

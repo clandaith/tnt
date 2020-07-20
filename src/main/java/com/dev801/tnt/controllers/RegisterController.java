@@ -10,8 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.dev801.tnt.data.User;
 import com.dev801.tnt.data.UserRole;
@@ -29,13 +28,13 @@ public class RegisterController {
 	@Autowired
 	UserRolesRepository userRolesRepository;
 
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	@GetMapping(value = "/register")
 	public String getPage(Model model) {
 		model.addAttribute("user", new User());
 		return "register";
 	}
 
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@GetMapping(value = "/register")
 	public String saveUser(@Valid User user, BindingResult result, Model model) {
 		LOGGER.info("Creating a new user: " + user.getUsername());
 
@@ -48,7 +47,6 @@ public class RegisterController {
 		}
 
 		BCryptPasswordEncoder bcryptEncoder = new BCryptPasswordEncoder();
-		// LOGGER.info("Password: " + user.getPassword() + " :: " + bcryptEncoder.encode(user.getPassword()));
 		user.setPassword(bcryptEncoder.encode(user.getPassword()));
 
 		user.setEnabled(true);

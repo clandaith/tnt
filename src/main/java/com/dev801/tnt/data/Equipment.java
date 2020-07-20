@@ -1,5 +1,7 @@
 package com.dev801.tnt.data;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,14 +11,18 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "equipment_view")
-public class Equipment {
+public class Equipment implements Serializable {
+	private static final long serialVersionUID = 7170132495636854470L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private String item;
 	private Integer cost;
-	private Integer rarity_id;
+
+	@Column(name = "rarity_id")
+	private Integer rarityId;
 
 	@Column(name = "rarity_level_name")
 	private String rarityLevelName;
@@ -45,12 +51,12 @@ public class Equipment {
 		this.cost = cost;
 	}
 
-	public Integer getRarity_id() {
-		return rarity_id;
+	public Integer getRarityId() {
+		return rarityId;
 	}
 
-	public void setRarity_id(Integer rarity_id) {
-		this.rarity_id = rarity_id;
+	public void setRarityId(Integer rarityId) {
+		this.rarityId = rarityId;
 	}
 
 	public String getRarityLevelName() {

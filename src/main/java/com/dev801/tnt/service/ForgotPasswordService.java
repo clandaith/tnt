@@ -42,7 +42,8 @@ public class ForgotPasswordService {
 			Email from = new Email("help@801dev.com");
 			String subject = "TNT Password Reset";
 			Email to = new Email(user.getEmailAddress());
-			Content content = new Content("text/plain", "You've requested a password reset.  Your new password is: " + newPassword);
+			Content content = new Content("text/plain",
+					"You've requested a password reset.  Your new password is: " + newPassword);
 			Mail mail = new Mail(from, subject, to, content);
 
 			SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
@@ -65,12 +66,12 @@ public class ForgotPasswordService {
 
 	private String generateRandomPassword() {
 		String chars = "abcdefghijklmnopqrstuvwxyz0123456789";
-		String randomString = "";
+		var randomString = new StringBuilder("");
 		for (int i = 1; i <= 6; i++) {
 			int x = RANDOM.nextInt(chars.length());
-			randomString += chars.substring(x, x + 1);
+			randomString.append(chars.substring(x, x + 1));
 		}
 
-		return randomString;
+		return randomString.toString();
 	}
 }

@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -81,8 +79,9 @@ public class ControllerHelper {
 	@Autowired
 	ForgotPasswordService forgotPasswordService;
 
-	protected User getUser(HttpSession session) {
-		User user = usersRepository.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+	protected User getUser() {
+		User user = usersRepository
+				.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
 		LOGGER.info("User from session: " + user.getUsername());
 		return user;

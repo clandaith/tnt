@@ -1,5 +1,6 @@
 package com.dev801.tnt.data;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -19,7 +20,9 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "warband_character")
-public class TntCharacter {
+public class TntCharacter implements Serializable {
+	private static final long serialVersionUID = 6086328523626626619L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;

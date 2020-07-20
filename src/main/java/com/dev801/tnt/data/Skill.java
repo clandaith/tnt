@@ -1,5 +1,7 @@
 package com.dev801.tnt.data;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "skills_view")
-public class Skill {
+public class Skill implements Serializable {
+	private static final long serialVersionUID = -9207748020739184660L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;

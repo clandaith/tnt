@@ -1,5 +1,6 @@
 package com.dev801.tnt.data;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,7 +16,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "grenades_view")
-public class Grenade {
+public class Grenade implements Serializable {
+	private static final long serialVersionUID = -5170350963423970319L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;

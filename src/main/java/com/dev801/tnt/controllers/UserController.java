@@ -6,8 +6,9 @@ import org.apache.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.dev801.tnt.data.User;
 
@@ -17,10 +18,10 @@ public class UserController extends ControllerHelper {
 
 	private static final Logger LOGGER = Logger.getLogger(UserController.class);
 
-	@RequestMapping(method = RequestMethod.GET)
+	@GetMapping
 	public String getUser(Model model, HttpSession session) {
 
-		User user = getUser(session);
+		User user = getUser();
 		user.setPassword("");
 		user.setPassword2("");
 		user.setCurrentPassword("");
@@ -30,10 +31,10 @@ public class UserController extends ControllerHelper {
 		return "userinfo";
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@PostMapping
 	public String updateUser(Model model, User user, HttpSession session) {
 
-		User repoUser = getUser(session);
+		User repoUser = getUser();
 		LOGGER.info("Repo user: " + repoUser.getUsername() + " :: " + repoUser.getEmailAddress());
 		LOGGER.info("Form User: " + " :: " + user.getEmailAddress());
 

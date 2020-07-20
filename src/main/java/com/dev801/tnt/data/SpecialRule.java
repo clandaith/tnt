@@ -1,5 +1,7 @@
 package com.dev801.tnt.data;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,7 +10,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "special_rules")
-public class SpecialRule {
+public class SpecialRule implements Serializable {
+	private static final long serialVersionUID = -8372743958210620330L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;

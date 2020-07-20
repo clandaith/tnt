@@ -12,6 +12,9 @@ public class ProjectHelpers {
 	public static final String WARBANDS_PAGE = "warbands";
 	public static final String WARBANDS_ATTRIBUTE = "warbands";
 
+	private ProjectHelpers() {
+	}
+
 	public static Integer getIdHolder() {
 		return Math.abs(RANDOM.nextInt()) * -1;
 	}

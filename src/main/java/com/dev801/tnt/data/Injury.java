@@ -1,5 +1,7 @@
 package com.dev801.tnt.data;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,7 +10,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "injuries")
-public class Injury {
+public class Injury implements Serializable {
+	private static final long serialVersionUID = -4868579508938034454L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
