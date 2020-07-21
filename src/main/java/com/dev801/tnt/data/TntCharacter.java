@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "warband_character")
-public class TntCharacter implements Serializable {
+public class TntCharacter implements TNTData, Serializable {
 	private static final long serialVersionUID = 6086328523626626619L;
 
 	@Id

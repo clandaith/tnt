@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "armors_view")
-public class Armor implements Serializable {
+public class Armor implements TNTData, Serializable {
 	private static final long serialVersionUID = 7982709915831409902L;
 
 	@Id

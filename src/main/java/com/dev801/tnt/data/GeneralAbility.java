@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "general_abilities")
-public class GeneralAbility implements Serializable {
+public class GeneralAbility implements TNTData, Serializable {
 	private static final long serialVersionUID = 3916747388649010085L;
 
 	@Id

@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "special_rules")
-public class SpecialRule implements Serializable {
+public class SpecialRule implements TNTData, Serializable {
 	private static final long serialVersionUID = -8372743958210620330L;
 
 	@Id

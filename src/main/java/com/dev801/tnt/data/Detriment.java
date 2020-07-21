@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "detriments_view")
-public class Detriment implements Serializable {
+public class Detriment implements TNTData, Serializable {
 	private static final long serialVersionUID = -4481029741710275506L;
 
 	@Id

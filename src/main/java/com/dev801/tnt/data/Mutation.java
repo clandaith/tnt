@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "mutations_view")
-public class Mutation implements Serializable {
+public class Mutation implements TNTData, Serializable {
 	private static final long serialVersionUID = -665209848507686624L;
 
 	@Id

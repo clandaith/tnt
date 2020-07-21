@@ -86,7 +86,7 @@ public class Warband implements Serializable {
 
 	public void addTntCharacter(TntCharacter tntCharacter) {
 		if (this.tntCharacters == null) {
-			this.tntCharacters = new ArrayList<TntCharacter>();
+			this.tntCharacters = new ArrayList<>();
 		}
 
 		this.tntCharacters.add(tntCharacter);

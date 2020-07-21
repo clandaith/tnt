@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "skills_view")
-public class Skill implements Serializable {
+public class Skill implements TNTData, Serializable {
 	private static final long serialVersionUID = -9207748020739184660L;
 
 	@Id

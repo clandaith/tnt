@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "grenades_view")
-public class Grenade implements Serializable {
+public class Grenade implements TNTData, Serializable {
 	private static final long serialVersionUID = -5170350963423970319L;
 
 	@Id

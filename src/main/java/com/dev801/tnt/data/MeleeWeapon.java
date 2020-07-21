@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "melee_weapons_view")
-public class MeleeWeapon implements Serializable {
+public class MeleeWeapon implements TNTData, Serializable {
 	private static final long serialVersionUID = -2883771832010638897L;
 
 	@Id

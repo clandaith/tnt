@@ -45,7 +45,6 @@ public class PdfPrinter {
 	private static Map<Integer, RangedWeapon> rangedWeapons = new TreeMap<>();
 	private static Map<Integer, MeleeWeapon> meleeWeapons = new TreeMap<>();
 	private static Map<Integer, Grenade> grenadeList = new TreeMap<>();
-
 	private static Map<String, String> skillList = new TreeMap<>();
 	private static Map<String, String> mutationList = new TreeMap<>();
 	private static Map<String, String> detrimentList = new TreeMap<>();
@@ -191,9 +190,13 @@ public class PdfPrinter {
 			chapter.add(addSpecialRulesList("General Abilities", generalAbilityList, showRules));
 		}
 
-		if (!equipmentList.isEmpty()) {
+		alterChapter(chapter, generalAbilityList, "General Abilities", showRules);
+	}
+
+	private static void alterChapter(Chapter chapter, Map<String, String> blah, String title, boolean showRules) {
+		if (!blah.isEmpty()) {
 			chapter.add(new Paragraph(" "));
-			chapter.add(addSpecialRulesList("Equipment", equipmentList, showRules));
+			chapter.add(addSpecialRulesList(title, blah, showRules));
 		}
 	}
 
