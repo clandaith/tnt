@@ -4,13 +4,15 @@ import java.util.Date;
 
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.dev801.tnt.data.User;
 import com.dev801.tnt.data.UserRole;
@@ -20,7 +22,7 @@ import com.dev801.tnt.repositories.UsersRepository;
 
 @Controller
 public class RegisterController {
-	private static final Logger LOGGER = Logger.getLogger(RegisterController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RegisterController.class);
 
 	@Autowired
 	UsersRepository usersRepository;
@@ -34,7 +36,7 @@ public class RegisterController {
 		return "register";
 	}
 
-	@GetMapping(value = "/register")
+	@PostMapping(value = "/register")
 	public String saveUser(@Valid User user, BindingResult result, Model model) {
 		LOGGER.info("Creating a new user: " + user.getUsername());
 

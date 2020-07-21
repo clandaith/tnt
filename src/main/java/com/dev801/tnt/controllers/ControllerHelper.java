@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
@@ -38,7 +39,7 @@ import com.dev801.tnt.service.WarbandService;
 import com.google.common.collect.Lists;
 
 public class ControllerHelper {
-	private static final Logger LOGGER = Logger.getLogger(ControllerHelper.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ControllerHelper.class);
 
 	@Autowired
 	ArmorsRepository armorsRepository;

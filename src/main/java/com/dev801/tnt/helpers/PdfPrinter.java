@@ -6,7 +6,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.dev801.tnt.data.Armor;
 import com.dev801.tnt.data.Detriment;
@@ -34,7 +35,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 public class PdfPrinter {
-	private static final Logger LOGGER = Logger.getLogger(PdfPrinter.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(PdfPrinter.class);
 	private static final Font BOLD_FONT = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
 
 	private static final Font font = new Font(FontFamily.HELVETICA, 8);

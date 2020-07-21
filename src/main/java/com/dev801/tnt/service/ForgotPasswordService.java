@@ -4,25 +4,26 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Random;
 
-import org.apache.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dev801.tnt.data.User;
 import com.dev801.tnt.repositories.UsersRepository;
-import com.sendgrid.Content;
-import com.sendgrid.Email;
-import com.sendgrid.Mail;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
 
 @Service
 public class ForgotPasswordService {
 	private static final Random RANDOM = new Random(new Date().getTime());
-	private static final Logger LOGGER = Logger.getLogger(ForgotPasswordService.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ForgotPasswordService.class);
 
 	@Autowired
 	UsersRepository usersRepository;
@@ -49,13 +50,13 @@ public class ForgotPasswordService {
 			SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
 			Request request = new Request();
 			try {
-				request.method = Method.POST;
-				request.endpoint = "mail/send";
-				request.body = mail.build();
+				request.setMethod(Method.POST);
+				request.setEndpoint("mail/send");
+				request.setBody(mail.build());
 				Response response = sg.api(request);
-				LOGGER.info("Response status code: " + response.statusCode);
-				LOGGER.info("Reponse body: " + response.body);
-				LOGGER.info("Response headers: " + response.headers);
+				LOGGER.info("Response status code: " + response.getStatusCode());
+				LOGGER.info("Reponse body: " + response.getBody());
+				LOGGER.info("Response headers: " + response.getHeaders());
 			} catch (IOException ex) {
 				LOGGER.error(ex.getMessage(), ex);
 			}

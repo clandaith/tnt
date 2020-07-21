@@ -6,7 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +22,7 @@ import com.dev801.tnt.helpers.ProjectHelpers;
 
 @Controller
 public class WarbandController extends ControllerHelper {
-	private static final Logger LOGGER = Logger.getLogger(WarbandController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(WarbandController.class);
 
 	private static final String SHOW_RULES = "showRules";
 
@@ -36,7 +37,7 @@ public class WarbandController extends ControllerHelper {
 		if (warbandId > -1) {
 			LOGGER.info("Getting the requested warband id: " + warbandId);
 
-			warband = warbandsRepository.findOne(warbandId);
+			warband = warbandsRepository.findById(warbandId).orElse(null);
 
 			if (warband == null || !warband.getUserId().equals(getUser().getId())) {
 				LOGGER.error("User tried to get a warband that doesn't belong to them or is null.");

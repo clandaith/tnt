@@ -1,6 +1,7 @@
 package com.dev801.tnt.controllers;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,7 @@ import com.dev801.tnt.repositories.UsersRepository;
 
 @Controller
 public class AdminController extends ControllerHelper {
-	private static final Logger LOGGER = Logger.getLogger(AdminController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AdminController.class);
 
 	private static final String ADMIN = "admin";
 	private static final String MESSAGE = "message";
@@ -37,7 +38,7 @@ public class AdminController extends ControllerHelper {
 	public String enableUser(Model model, @PathVariable(value = "id") Integer userId) {
 		LOGGER.info("enableUser ::  User: " + SecurityContextHolder.getContext().getAuthentication().getName());
 
-		User user = userRepository.findOne(userId);
+		User user = userRepository.findById(userId).orElse(null);
 		if (user == null) {
 			model.addAttribute(MESSAGE, USER_ID + userId + DOESNT_EXIST);
 		} else {
@@ -55,7 +56,7 @@ public class AdminController extends ControllerHelper {
 	public String showDetails(Model model, @PathVariable(value = "id") Integer userId) {
 		LOGGER.info("showDetails ::  User: " + SecurityContextHolder.getContext().getAuthentication().getName());
 
-		User user = userRepository.findOne(userId);
+		User user = userRepository.findById(userId).orElse(null);
 		if (user == null) {
 			model.addAttribute(MESSAGE, USER_ID + userId + DOESNT_EXIST);
 		} else {
@@ -73,7 +74,7 @@ public class AdminController extends ControllerHelper {
 	public String deleteUser(Model model, @PathVariable(value = "id") Integer userId) {
 		LOGGER.info("deleteUser ::  User: " + SecurityContextHolder.getContext().getAuthentication().getName());
 
-		User user = userRepository.findOne(userId);
+		User user = userRepository.findById(userId).orElse(null);
 		if (user == null) {
 			model.addAttribute(MESSAGE, USER_ID + userId + DOESNT_EXIST);
 		} else {

@@ -7,7 +7,8 @@ import java.io.InputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ import com.dev801.tnt.helpers.PdfPrinter;
 
 @Controller
 public class PrintController extends ControllerHelper {
-	private static final Logger LOGGER = Logger.getLogger(PrintController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(PrintController.class);
 
 	@GetMapping(value = "/printWithRules")
 	public void printWarbandWithRules(@RequestParam(value = "length", defaultValue = "short") String length,
