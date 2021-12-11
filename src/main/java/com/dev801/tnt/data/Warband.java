@@ -94,7 +94,7 @@ public class Warband implements Serializable {
 
 	@Override
 	public String toString() {
-		var s = new StringBuilder("\nWarband ID: '" + getId() + "' :: " + getWarbandName() + "\n");
+		StringBuilder s = new StringBuilder("\nWarband ID: '" + getId() + "' :: " + getWarbandName() + "\n");
 
 		for (TntCharacter tntCharacter : tntCharacters) {
 			s.append(tntCharacter.toString() + "\n");

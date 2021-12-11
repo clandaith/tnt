@@ -66,7 +66,7 @@ public class ForgotPasswordService {
 
 	private String generateRandomPassword() {
 		String chars = "abcdefghijklmnopqrstuvwxyz0123456789";
-		var randomString = new StringBuilder("");
+		StringBuilder randomString = new StringBuilder("");
 		for (int i = 1; i <= 6; i++) {
 			int x = RANDOM.nextInt(chars.length());
 			randomString.append(chars.substring(x, x + 1));

@@ -72,13 +72,13 @@ public class PdfPrinter {
 
 	public static byte[] printWarband(Warband warband, boolean showRules, boolean useShortSheet) {
 		try {
-			var document = new Document();
+			Document document = new Document();
 
 			var out = new ByteArrayOutputStream();
 			PdfWriter.getInstance(document, out);
 			document.open();
 
-			var chapter = new Chapter(1);
+			Chapter chapter = new Chapter(1);
 			handleWarbandSection(warband, chapter, useShortSheet);
 
 			chapter.setNumberDepth(0);
@@ -119,7 +119,7 @@ public class PdfPrinter {
 		centeredCell.setBackgroundColor(BaseColor.CYAN);
 
 		float[] columnWidths = { 4, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 1, 1, 1, 4 };
-		var pTable = new PdfPTable(columnWidths);
+		PdfPTable pTable = new PdfPTable(columnWidths);
 		pTable.setWidthPercentage(100);
 
 		// ++++++++++++++++++++++++++
@@ -223,7 +223,7 @@ public class PdfPrinter {
 			pTable.addCell(addCenterCellText(tntCharacter.getWounds().toString()));
 			pTable.addCell(addCenterCellText(" ")); // Kills
 
-			var weapons = new StringBuilder("");
+			StringBuilder weapons = new StringBuilder("");
 			for (RangedWeapon weapon : tntCharacter.getRangedWeapons()) {
 				weapons.append(weapon.getType() + ", ");
 
@@ -256,7 +256,7 @@ public class PdfPrinter {
 
 			pTable.addCell(addLeftCellText(weapons.toString()));
 
-			var armors = new StringBuilder("");
+			StringBuilder armors = new StringBuilder("");
 			for (Armor armor : tntCharacter.getArmors()) {
 				armors.append(armor.getType() + ", ");
 			}
@@ -266,7 +266,7 @@ public class PdfPrinter {
 			pTable.addCell(addCenterCellText(tntCharacter.getXp().toString()));// XP
 			pTable.addCell(addCenterCellText(tntCharacter.getUnusedXP().toString()));// Unused XP
 
-			var text = new StringBuilder(tntCharacter.getWarbandUnit().getTitle() + ", "
+			StringBuilder text = new StringBuilder(tntCharacter.getWarbandUnit().getTitle() + ", "
 					+ tntCharacter.getWarbandUnit().getTypeName() + ", ");
 			for (Skill skill : tntCharacter.getSkills()) {
 				text.append(skill.getName() + ", ");
@@ -351,7 +351,7 @@ public class PdfPrinter {
 			pTable.addCell(
 					addCenterCellText(showRules ? (Boolean.TRUE.equals(weapon.getOneHanded()) ? "1H" : "2H") : ""));
 
-			var specialRules = new StringBuilder("");
+			StringBuilder specialRules = new StringBuilder("");
 			for (SpecialRule specialRule : weapon.getSpecialRules()) {
 				specialRules.append(specialRule.getName() + ", ");
 			}
@@ -383,7 +383,7 @@ public class PdfPrinter {
 			pTable.addCell(addLeftCellText(grenade.getType()));
 			pTable.addCell(addCenterCellText(showRules ? grenade.getStrength().toString() : ""));
 
-			var specialRules = new StringBuilder("");
+			StringBuilder specialRules = new StringBuilder("");
 			for (SpecialRule specialRule : grenade.getSpecialRules()) {
 				specialRules.append(specialRule.getName() + ", ");
 			}
@@ -424,7 +424,7 @@ public class PdfPrinter {
 			pTable.addCell(
 					addCenterCellText(showRules ? (Boolean.TRUE.equals(weapon.getOneHanded()) ? "1H" : "2H") : ""));
 
-			var specialRules = new StringBuilder("");
+			StringBuilder specialRules = new StringBuilder("");
 			for (SpecialRule specialRule : weapon.getSpecialRules()) {
 				specialRules.append(specialRule.getName() + ", ");
 			}
@@ -580,7 +580,7 @@ public class PdfPrinter {
 		equipmentTable.setWidthPercentage(100);
 		equipmentTable.addCell("Equipment");
 
-		var equipmentText = new StringBuilder("");
+		StringBuilder equipmentText = new StringBuilder("");
 		for (Equipment equipment : tntCharacter.getEquipment()) {
 			equipmentText.append(equipment.getItem() + ", ");
 		}
@@ -596,7 +596,7 @@ public class PdfPrinter {
 		mutationTable.setWidthPercentage(100);
 		mutationTable.addCell("Mutations");
 
-		var mutationText = new StringBuilder("");
+		StringBuilder mutationText = new StringBuilder("");
 		for (Mutation mutation : tntCharacter.getMutations()) {
 			mutationText.append(mutation.getName()
 					+ (showRules ? " [" + mutation.getMutationTypeName() + "]  : " + mutation.getDescription() : "")
@@ -615,7 +615,7 @@ public class PdfPrinter {
 		detrimentTable.setWidthPercentage(100);
 		detrimentTable.addCell("Detriments");
 
-		var detrimentsText = new StringBuilder("");
+		StringBuilder detrimentsText = new StringBuilder("");
 		for (Detriment detriment : tntCharacter.getDetriments()) {
 			detrimentsText.append(detriment.getName()
 					+ (showRules ? " [" + detriment.getDetrimentTypeId() + "] : " + detriment.getDescription() : "")
@@ -634,7 +634,7 @@ public class PdfPrinter {
 		skillsTable.setWidthPercentage(100);
 		skillsTable.addCell("Skills");
 
-		var skillText = new StringBuilder("");
+		StringBuilder skillText = new StringBuilder("");
 		for (Skill skill : tntCharacter.getSkills()) {
 			skillText.append(skill.getName() + (showRules ? ": " + skill.getDescription() : "") + ", ");
 		}
@@ -651,7 +651,7 @@ public class PdfPrinter {
 		specialRulesTable.setWidthPercentage(100);
 		specialRulesTable.addCell(SPECIAL_RULES);
 
-		var specialRulesText = new StringBuilder("");
+		StringBuilder specialRulesText = new StringBuilder("");
 		for (GeneralAbility generalAbility : tntCharacter.getGeneralAbilities()) {
 			specialRulesText.append(
 					generalAbility.getName() + (showRules ? ": " + generalAbility.getDescription() : "") + ", ");
@@ -668,7 +668,7 @@ public class PdfPrinter {
 		PdfPTable injuryTable = new PdfPTable(8);
 		injuryTable.addCell("Injuries");
 
-		var injuriesText = new StringBuilder("");
+		StringBuilder injuriesText = new StringBuilder("");
 		for (Injury injury : tntCharacter.getInjuries()) {
 			injuriesText.append(injury.getName() + (showRules ? ": " + injury.getDescription() : "") + ", ");
 		}
@@ -691,7 +691,7 @@ public class PdfPrinter {
 		if (showRules) {
 			cell = new PdfPCell(buildArmorBlah(tntCharacter));
 		} else {
-			var armorText = new StringBuilder("");
+			StringBuilder armorText = new StringBuilder("");
 			for (Armor armor : tntCharacter.getArmors()) {
 				armorText.append(armor.getType() + ", ");
 			}
@@ -732,7 +732,7 @@ public class PdfPrinter {
 			armorTable.addCell(armor.getMeleeBonus().toString());
 			armorTable.addCell(armor.getRangedBonus().toString());
 
-			var specialRules = new StringBuilder("");
+			StringBuilder specialRules = new StringBuilder("");
 			for (SpecialRule specialRule : armor.getSpecialRules()) {
 				specialRules.append(specialRule.getName() + ",");
 			}
