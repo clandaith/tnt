@@ -1,8 +1,10 @@
 package com.dev801.tnt.helpers;
 
 import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Stream;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -74,7 +76,7 @@ public class PdfPrinter {
 		try {
 			Document document = new Document();
 
-			var out = new ByteArrayOutputStream();
+			OutputStream out = new ByteArrayOutputStream();
 			PdfWriter.getInstance(document, out);
 			document.open();
 
@@ -93,7 +95,7 @@ public class PdfPrinter {
 			document.add(chapter);
 			document.close();
 
-			return out.toByteArray();
+			return out.toString().getBytes();
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 			return warband.toString().getBytes();
