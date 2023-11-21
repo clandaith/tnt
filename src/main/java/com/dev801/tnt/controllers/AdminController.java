@@ -1,6 +1,7 @@
 package com.dev801.tnt.controllers;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,7 @@ import com.dev801.tnt.repositories.UsersRepository;
 
 @Controller
 public class AdminController extends ControllerHelper {
-	private static final Logger LOGGER = Logger.getLogger(AdminController.class);
+	private static final Logger LOGGER = LogManager.getLogger(AdminController.class);
 
 	private static final String ADMIN = "admin";
 	private static final String MESSAGE = "message";

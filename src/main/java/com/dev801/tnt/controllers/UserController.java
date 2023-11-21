@@ -2,7 +2,8 @@ package com.dev801.tnt.controllers;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,7 @@ import com.dev801.tnt.data.User;
 @RequestMapping(value = "/userinfo")
 public class UserController extends ControllerHelper {
 
-	private static final Logger LOGGER = Logger.getLogger(UserController.class);
+	private static final Logger LOGGER = LogManager.getLogger(UserController.class);
 
 	@GetMapping
 	public String getUser(Model model, HttpSession session) {

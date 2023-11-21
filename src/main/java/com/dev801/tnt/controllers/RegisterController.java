@@ -4,7 +4,8 @@ import java.util.Date;
 
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -20,7 +21,7 @@ import com.dev801.tnt.repositories.UsersRepository;
 
 @Controller
 public class RegisterController {
-	private static final Logger LOGGER = Logger.getLogger(RegisterController.class);
+	private static final Logger LOGGER = LogManager.getLogger(RegisterController.class);
 
 	@Autowired
 	UsersRepository usersRepository;
