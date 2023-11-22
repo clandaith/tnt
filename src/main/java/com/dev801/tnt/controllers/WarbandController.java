@@ -1,6 +1,7 @@
 package com.dev801.tnt.controllers;
 
 import java.util.Date;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,24 +33,22 @@ public class WarbandController extends ControllerHelper {
 		LOGGER.info("Loading a warband.  User: "
 				+ SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
-		Warband warband = new Warband();
+		Optional<Warband> warband = warbandsRepository.findById(warbandId);
 
-		if (warbandId > -1) {
+		if (warband.isPresent()) {
 			LOGGER.info("Getting the requested warband id: " + warbandId);
 
-			warband = warbandsRepository.findOne(warbandId);
-
-			if (warband == null || !warband.getUserId().equals(getUser().getId())) {
+			if (!warband.get().getUserId().equals(getUser().getId())) {
 				LOGGER.error("User tried to get a warband that doesn't belong to them or is null.");
 				model.addAttribute("returnMessage", "There was a problem getting that warband.  Please try again.");
 				return ProjectHelpers.WARBANDS_PAGE;
 			}
 		} else {
-			warband.addTntCharacter(new TntCharacter(ProjectHelpers.getIdHolder(), "New Character"));
+			warband.orElse(new Warband()).addTntCharacter(new TntCharacter(ProjectHelpers.getIdHolder(), "New Character"));
 		}
 
-		model.addAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
-		session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband);
+		model.addAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband.get());
+		session.setAttribute(ProjectHelpers.WARBAND_ATTRIBUTE, warband.get());
 		model.addAttribute(SHOW_RULES, getUser().getShowDetails());
 
 		loadModelVariables(model);

@@ -1,5 +1,7 @@
 package com.dev801.tnt.controllers;
 
+import java.util.Optional;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
@@ -33,10 +35,10 @@ public class WarbandsController extends ControllerHelper {
 		LOGGER.info("Deleting warband id: " + warbandId);
 
 		Integer userId = getUser().getId();
-		Warband warband = warbandsRepository.findOne(warbandId);
+		Optional<Warband> warband = warbandsRepository.findById(warbandId);
 
-		if (warband != null && warband.getUserId().equals(userId)) {
-			warbandsRepository.delete(warband);
+		if (warband.isPresent() && warband.get().getUserId().equals(userId)) {
+			warbandsRepository.delete(warband.get());
 		}
 
 		return "redirect:/" + ProjectHelpers.WARBANDS_PAGE;

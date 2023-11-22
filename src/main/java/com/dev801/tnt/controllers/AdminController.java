@@ -1,5 +1,7 @@
 package com.dev801.tnt.controllers;
 
+import java.util.Optional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,13 +40,13 @@ public class AdminController extends ControllerHelper {
 	public String enableUser(Model model, @PathVariable(value = "id") Integer userId) {
 		LOGGER.info("enableUser ::  User: " + SecurityContextHolder.getContext().getAuthentication().getName());
 
-		User user = userRepository.findOne(userId);
-		if (user == null) {
+		Optional<User> user = userRepository.findById(userId);
+		if (!user.isPresent()) {
 			model.addAttribute(MESSAGE, USER_ID + userId + DOESNT_EXIST);
 		} else {
-			user.setEnabled(!user.getEnabled());
-			userRepository.save(user);
-			model.addAttribute(MESSAGE, "'" + user.getUsername() + "' has been enabled.");
+			user.get().setEnabled(!user.get().getEnabled());
+			userRepository.save(user.get());
+			model.addAttribute(MESSAGE, "'" + user.get().getUsername() + "' has been enabled.");
 		}
 
 		model.addAttribute(USERS, userRepository.findAll());
@@ -56,13 +58,13 @@ public class AdminController extends ControllerHelper {
 	public String showDetails(Model model, @PathVariable(value = "id") Integer userId) {
 		LOGGER.info("showDetails ::  User: " + SecurityContextHolder.getContext().getAuthentication().getName());
 
-		User user = userRepository.findOne(userId);
-		if (user == null) {
+		Optional<User> user = userRepository.findById(userId);
+		if (!user.isPresent()) {
 			model.addAttribute(MESSAGE, USER_ID + userId + DOESNT_EXIST);
 		} else {
-			user.setShowDetails(!user.getShowDetails());
-			userRepository.save(user);
-			model.addAttribute(MESSAGE, "'" + user.getUsername() + "' has been set to show details.");
+			user.get().setShowDetails(!user.get().getShowDetails());
+			userRepository.save(user.get());
+			model.addAttribute(MESSAGE, "'" + user.get().getUsername() + "' has been set to show details.");
 		}
 
 		model.addAttribute(USERS, userRepository.findAll());
@@ -74,13 +76,13 @@ public class AdminController extends ControllerHelper {
 	public String deleteUser(Model model, @PathVariable(value = "id") Integer userId) {
 		LOGGER.info("deleteUser ::  User: " + SecurityContextHolder.getContext().getAuthentication().getName());
 
-		User user = userRepository.findOne(userId);
-		if (user == null) {
+		Optional<User> user = userRepository.findById(userId);
+		if (!user.isPresent()) {
 			model.addAttribute(MESSAGE, USER_ID + userId + DOESNT_EXIST);
 		} else {
-			user.setEnabled(true);
-			userRepository.delete(user);
-			model.addAttribute(MESSAGE, "'" + user.getUsername() + "' has been deleted.");
+			user.get().setEnabled(true);
+			userRepository.delete(user.get());
+			model.addAttribute(MESSAGE, "'" + user.get().getUsername() + "' has been deleted.");
 		}
 		model.addAttribute(USERS, userRepository.findAll());
 
