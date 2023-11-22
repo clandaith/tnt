@@ -2,7 +2,7 @@ package com.dev801.tnt.controllers;
 
 import java.util.Date;
 
-import javax.validation.Valid;
+
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,12 +12,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.dev801.tnt.data.User;
 import com.dev801.tnt.data.UserRole;
 import com.dev801.tnt.data.UserRole.ROLE;
 import com.dev801.tnt.repositories.UserRolesRepository;
 import com.dev801.tnt.repositories.UsersRepository;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class RegisterController {
@@ -35,7 +38,7 @@ public class RegisterController {
 		return "register";
 	}
 
-	@GetMapping(value = "/register")
+	@PostMapping(value = "/register")
 	public String saveUser(@Valid User user, BindingResult result, Model model) {
 		LOGGER.info("Creating a new user: " + user.getUsername());
 

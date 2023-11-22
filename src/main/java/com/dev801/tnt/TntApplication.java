@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ImportResource;
 public class TntApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TntApplication.class);
+		SpringApplication.run(TntApplication.class, args);
 	}
 
 }

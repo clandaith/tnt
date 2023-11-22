@@ -4,9 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -16,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dev801.tnt.data.Warband;
 import com.dev801.tnt.helpers.PdfPrinter;
+
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class PrintController extends ControllerHelper {

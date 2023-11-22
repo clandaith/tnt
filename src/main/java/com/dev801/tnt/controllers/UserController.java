@@ -1,6 +1,5 @@
 package com.dev801.tnt.controllers;
 
-import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dev801.tnt.data.User;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "/userinfo")
